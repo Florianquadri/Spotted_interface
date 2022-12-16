@@ -1,0 +1,7 @@
+{
+  "name": "Spotted",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
