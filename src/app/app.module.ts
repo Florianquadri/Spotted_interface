@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 // TODO: import the ionic storage module.
 import { IonicStorageModule } from "@ionic/storage-angular";
 
-
+//test
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
