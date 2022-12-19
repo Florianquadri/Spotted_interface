@@ -10,5 +10,24 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  Search for a place
+
+  <ion-searchbar [debounce]="50" (ionChange)="handleChange($event)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let result of results">
+      <ion-label>{{ result.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label class="hidden">Search places</ion-label>
+    <ion-input type="text" placeholder="Search for a place" [(ngModel)]="whichPlace" name="whichPlace"></ion-input>
+  </ion-item>
+<p>Place recherchée : {{whichPlace}}</p>
+  <ul>
+    <li *ngFor="let place of places">
+      {{place.name}} |
+      {{place.canton}}
+    </li>
+  </ul>
 </ion-content>

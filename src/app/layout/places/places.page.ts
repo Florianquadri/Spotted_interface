@@ -5,6 +5,9 @@ import { AuthService } from "src/app/auth/auth.service";
 import { HttpClient } from "@angular/common/http";
 import { ViewWillEnter } from "@ionic/angular";
 import { environment } from "src/environments/environment";
+import { PlacesService } from 'src/app/services/places.service';
+import { Place } from 'src/app/models/place';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-places',
@@ -13,20 +16,39 @@ import { environment } from "src/environments/environment";
 })
 export class PlacesPage implements ViewWillEnter {
 
+  whichPlace: string;
+
+  public places: Place[];
+
+  public results = [];
+   public data = []; 
+ 
+
+
+  handleChange(event) {
+    const query = event.target.value.toLowerCase();
+    this.results = this.data.filter(d => d.name.toLowerCase().indexOf(query) > -1);
+    console.log(this.results)
+  }
+
   constructor( // Inject the authentication provider.
     private auth: AuthService,
-    public http: HttpClient,
+    private placeService: PlacesService,
     // Inject the router
     private router: Router) { }
-    ionViewWillEnter(): void {
-      // Make an HTTP request to retrieve the trips.
-     const url = `${environment.apiUrl}/places`;
-      this.http.get(url).subscribe((users) => {
-        console.log(`Places`, users);
-      });
-    }
+
+
+  ionViewWillEnter(): void {
+    // Make an HTTP request to retrieve the trips.
+    this.placeService.getPlaces$().subscribe(places => {
+      console.log(places)
+      this.places = places;
+      this.data = places;
+    })
+  }
 
   ngOnInit() {
+
   }
 
   logOut() {

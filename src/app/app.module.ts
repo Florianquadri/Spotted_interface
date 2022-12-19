@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // TODO: import the ionic storage module.
 import { IonicStorageModule } from "@ionic/storage-angular";
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 //test
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
+  imports: [ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true,},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
