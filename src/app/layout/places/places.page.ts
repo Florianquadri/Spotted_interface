@@ -4,6 +4,7 @@ import { AuthService } from "src/app/auth/auth.service";
 // TODO: import Angular's HTTP client.
 import { HttpClient } from "@angular/common/http";
 import { ViewWillEnter } from "@ionic/angular";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: 'app-places',
@@ -19,7 +20,7 @@ export class PlacesPage implements ViewWillEnter {
     private router: Router) { }
     ionViewWillEnter(): void {
       // Make an HTTP request to retrieve the trips.
-      const url = "https://spotted-rest-api.onrender.com/places";
+     const url = `${environment.apiUrl}/places`;
       this.http.get(url).subscribe((users) => {
         console.log(`Places`, users);
       });

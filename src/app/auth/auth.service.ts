@@ -7,8 +7,8 @@ import { AuthResponse } from "../models/auth-response";
 import { User } from "../models/user";
 import { AuthRequest } from "../models/auth-request";
 import { Storage } from "@ionic/storage";
+import { environment } from "src/environments/environment";
 
-const API_URL = "https://spotted-rest-api.onrender.com";
 
 /**
  * Authentication service for login/logout.
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   logIn$(authRequest: AuthRequest): Observable<User> {
-    const authUrl = `${API_URL}/login`;
+   const authUrl = `${environment.apiUrl}/login`;
     return this.http.post<AuthResponse>(authUrl, authRequest).pipe(
       delayWhen((auth) => this.saveAuth$(auth)),
       map((auth) => {
