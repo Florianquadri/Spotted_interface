@@ -18,7 +18,14 @@
       <ion-label>{{ result.name }}</ion-label>
     </ion-item>
   </ion-list>
-
+<!--   <div class="map" leaflet [leafletOptions]="mapOptions"></div> -->
+<div
+  class="leaflet-map map"
+  leaflet
+  [leafletOptions]="mapOptions"
+  (leafletMapReady)="onMapReady($event)"
+  [leafletLayers]="mapMarkers"
+></div>
   <!-- <ion-item>
     <ion-label class="hidden">Search places</ion-label>
     <ion-input type="text" placeholder="Search for a place" [(ngModel)]="whichPlace" name="whichPlace"></ion-input>

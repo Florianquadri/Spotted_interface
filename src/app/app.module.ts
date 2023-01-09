@@ -11,12 +11,13 @@ import { AppRoutingModule } from './app-routing.module';
 // TODO: import the ionic storage module.
 import { IonicStorageModule } from "@ionic/storage-angular";
 import { ReactiveFormsModule } from '@angular/forms';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 //test
 @NgModule({
   declarations: [AppComponent],
-  imports: [ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
+  imports: [LeafletModule,ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true,},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
