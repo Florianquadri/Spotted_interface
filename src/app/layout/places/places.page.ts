@@ -27,8 +27,11 @@ export class PlacesPage implements ViewWillEnter {
 
   handleChange(event) {
     const query = event.target.value.toLowerCase();
-    this.results = this.data.filter(d => d.name.toLowerCase().indexOf(query) > -1);
-    console.log(this.results)
+    if(query==""){
+      this.results = [];
+    } else{  this.results = this.data.filter(d => d.name.toLowerCase().indexOf(query) > -1);
+      console.log(this.results)}
+  
   }
 
   constructor( // Inject the authentication provider.
