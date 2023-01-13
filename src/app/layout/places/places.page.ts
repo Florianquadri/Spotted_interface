@@ -8,17 +8,11 @@ import { environment } from "src/environments/environment";
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
 import { FormsModule } from '@angular/forms';
-<<<<<<< Updated upstream
-import { latLng, MapOptions, tileLayer, Map, marker, Marker} from 'leaflet';
-import { defaultIcon } from '../../utile_files/default-marker';
-import { locateMeIcon } from '../../utile_files/locateMe-marker';
-=======
 import { latLng, Map, MapOptions, marker, Marker, tileLayer } from 'leaflet';
 import { defaultIcon } from '../../default-marker';
 import * as L from 'leaflet';
 //import 'leaflet-geolocation';
 
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-places',
@@ -29,15 +23,6 @@ export class PlacesPage implements ViewWillEnter {
 
   mapOptions: MapOptions;
   whichPlace: string;
-<<<<<<< Updated upstream
-  public places: Place[];
-  public results = [];
-  public data = [];
-  mapOptions: MapOptions;
-  mapMarkers: Marker[];
-  map : Map;
-
-=======
   
   map: L.Map;
   marker: L.Marker;
@@ -54,7 +39,6 @@ export class PlacesPage implements ViewWillEnter {
     const center = this.map.getCenter();
     this.locateMe();
     this.getMapCurrentPosition();
->>>>>>> Stashed changes
 
 
     this.map.on('click', e => {
@@ -103,14 +87,9 @@ export class PlacesPage implements ViewWillEnter {
 
   }
 
-  onMapReady(map: Map) {
-    setTimeout(() => map.invalidateSize(), 0);
-    this.map = map;
-    const center = this.map.getCenter();
-    this.locateMe();
-  }
+
   
-locateMe() {
+/* locateMe() {
   this.map.locate({setView: true, maxZoom: 16});
 
   this.map.on('locationfound', (e) => {
@@ -126,33 +105,12 @@ locateMe() {
     alert(e.message);
   });
 
-}
+} */
 
   constructor( // Inject the authentication provider.
     private auth: AuthService,
     private placeService: PlacesService,
     // Inject the router
-<<<<<<< Updated upstream
-    private router: Router) { 
-
-      this.mapMarkers = [
-        marker([ 46.778186, 6.641524 ], { icon: defaultIcon }),
-        marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
-        marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
-      ];
-
-      this.mapOptions = {
-        layers: [
-          tileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            { maxZoom: 18 }
-          )
-        ],
-        zoom: 13,
-        center: latLng(46.778186, 6.641524)
-      };
-    }
-=======
     private router: Router) {
       this.mapOptions = {
              layers: [
@@ -171,7 +129,6 @@ locateMe() {
                  marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
                ];
      }
->>>>>>> Stashed changes
 
 
   ionViewWillEnter(): void {
