@@ -18,6 +18,7 @@
       <ion-label>{{ result.name }}</ion-label>
     </ion-item>
   </ion-list>
+<<<<<<< Updated upstream
 <!--   <div class="map" leaflet [leafletOptions]="mapOptions"></div> -->
 <div
   class="leaflet-map map"
@@ -26,6 +27,12 @@
   (leafletMapReady)="onMapReady($event)"
   [leafletLayers]="mapMarkers"
 ></div>
+=======
+
+
+
+
+>>>>>>> Stashed changes
   <!-- <ion-item>
     <ion-label class="hidden">Search places</ion-label>
     <ion-input type="text" placeholder="Search for a place" [(ngModel)]="whichPlace" name="whichPlace"></ion-input>
@@ -37,4 +44,23 @@
       {{place.canton}}
     </li>
   </ul>
+
+
+  <div
+  class="leaflet-map"
+  leaflet
+  [leafletOptions]="mapOptions"
+  [leafletLayers]="mapMarkers"
+  (leafletMapReady)="onMapReady($event)"
+  >
+</div>
+
+ <ion-button class="locateMe" (click)="locateMe()">
+  <ion-icon name="pin"></ion-icon>
+  <ion-label>Locate Me</ion-label>
+</ion-button> 
+
+<ion-button class="addMarker" (click)="addMarker()">Add Marker</ion-button> 
+
+
 </ion-content>

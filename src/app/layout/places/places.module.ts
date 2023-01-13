@@ -15,7 +15,11 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     FormsModule,
     IonicModule,
     PlacesPageRoutingModule,
+<<<<<<< Updated upstream
     LeafletModule
+=======
+    LeafletModule 
+>>>>>>> Stashed changes
   ],
   declarations: [PlacesPage]
 })

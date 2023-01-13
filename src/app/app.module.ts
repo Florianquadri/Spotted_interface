@@ -12,12 +12,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from "@ionic/storage-angular";
 import { ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 //test
 @NgModule({
   declarations: [AppComponent],
+<<<<<<< Updated upstream
   imports: [LeafletModule,ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
+=======
+  imports: [ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot(),LeafletModule],
+>>>>>>> Stashed changes
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true,},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

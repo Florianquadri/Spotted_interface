@@ -8,9 +8,17 @@ import { environment } from "src/environments/environment";
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
 import { FormsModule } from '@angular/forms';
+<<<<<<< Updated upstream
 import { latLng, MapOptions, tileLayer, Map, marker, Marker} from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
 import { locateMeIcon } from '../../utile_files/locateMe-marker';
+=======
+import { latLng, Map, MapOptions, marker, Marker, tileLayer } from 'leaflet';
+import { defaultIcon } from '../../default-marker';
+import * as L from 'leaflet';
+//import 'leaflet-geolocation';
+
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-places',
@@ -19,7 +27,9 @@ import { locateMeIcon } from '../../utile_files/locateMe-marker';
 })
 export class PlacesPage implements ViewWillEnter {
 
+  mapOptions: MapOptions;
   whichPlace: string;
+<<<<<<< Updated upstream
   public places: Place[];
   public results = [];
   public data = [];
@@ -27,7 +37,60 @@ export class PlacesPage implements ViewWillEnter {
   mapMarkers: Marker[];
   map : Map;
 
+=======
+  
+  map: L.Map;
+  marker: L.Marker;
+  public places: Place[];
+  mapMarkers: L.Marker[] = [];
+  
+  public results = [];
+   public data = []; 
+   map2: L.Map;
+ 
+   onMapReady(map: Map) {
+    setTimeout(() => map.invalidateSize(), 0);
+    this.map = map;
+    const center = this.map.getCenter();
+    this.locateMe();
+    this.getMapCurrentPosition();
+>>>>>>> Stashed changes
 
+
+    this.map.on('click', e => {
+      
+      this.marker = L.marker(e.latlng).addTo(this.map);
+
+      this.mapMarkers.push(this.marker);
+    
+      this.mapOptions.center = this.marker.getLatLng();
+    this.map.setView( 
+      this.marker.getLatLng(),
+      
+    )
+
+    this.marker.bindPopup("Nouveau marker").openPopup();
+
+    this.mapMarkers.forEach(marker => {
+      marker.setIcon(defaultIcon);
+    });
+
+ 
+
+  console.log(this.mapMarkers);
+
+    });
+  }
+
+  getMapCurrentPosition(){
+    this.map.on('locationfound', (e) => {
+      const radius = e.accuracy / 2;
+
+      const position = e.latlng
+      console.log(position);
+    }
+    );
+  }
 
   handleChange(event) {
     const query = event.target.value.toLowerCase();
@@ -69,6 +132,7 @@ locateMe() {
     private auth: AuthService,
     private placeService: PlacesService,
     // Inject the router
+<<<<<<< Updated upstream
     private router: Router) { 
 
       this.mapMarkers = [
@@ -88,6 +152,26 @@ locateMe() {
         center: latLng(46.778186, 6.641524)
       };
     }
+=======
+    private router: Router) {
+      this.mapOptions = {
+             layers: [
+               tileLayer(
+                 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                 { maxZoom: 18 }
+               )
+             ],
+             zoom: 13,
+             center: latLng(46.778186, 6.641524)
+           };
+
+           this.mapMarkers = [
+                 marker([ 46.778186, 6.641524 ], { icon: defaultIcon }).bindPopup('Hello'),
+                 marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
+                 marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
+               ];
+     }
+>>>>>>> Stashed changes
 
 
   ionViewWillEnter(): void {
@@ -100,7 +184,7 @@ locateMe() {
   }
 
   ngOnInit() {
-
+    
   }
 
   logOut() {
@@ -109,4 +193,59 @@ locateMe() {
     this.router.navigateByUrl("/login");
   }
 
+
+  async locateMe() {  
+    const location = await this.map.locate({setView: true, maxZoom: 16});
+
+    this.map.on('locationfound', (e) => {
+      const radius = e.accuracy / 2;
+      marker((e.latlng),{icon: defaultIcon}).addTo(this.map)
+          .bindPopup("Vous êtes ici").openPopup();
+      // circle(e.latlng, radius).addTo(this.map);
+    }
+    );
+
+    this.map.on('locationerror', (e) => {
+      console.log(e);
+      alert(e.message);
+    });
+
+  }
+
+
+
+  addMarker(){
+  
+/*     navigator.geolocation.getCurrentPosition(position => {
+      this.marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(this.map);
+}); */
+
+ // var marker = L.marker(e.latlng).addTo(this.map);
+
+     const marker = L.marker([46.778186, 6.651524]).addTo(this.map);
+     
+     this.getMapCurrentPosition();
+
+
+    
+        // add the marker to the array
+      this.mapMarkers.push(marker);
+    
+      this.mapOptions.center = marker.getLatLng();
+    this.map.setView( 
+      marker.getLatLng(),
+      16
+    )
+    marker.bindPopup("Nouveau marker").openPopup();
+  
+
+
+    this.mapMarkers.forEach(marker => {
+      marker.setIcon(defaultIcon);
+    });
+  
+  console.log(this.mapMarkers);
+  
+    }
+  
 }
