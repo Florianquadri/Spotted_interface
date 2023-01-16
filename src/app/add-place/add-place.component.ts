@@ -43,6 +43,9 @@ export class AddPlaceComponent {
 
   ngOnInit() {}
 
+  onPlaceCreate(placeInfos: {placeName: string, placeCanton: string}){
+
+  }
   
 }
 

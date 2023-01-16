@@ -202,7 +202,6 @@ export class PlacesPage implements ViewWillEnter {
 
   ngOnInit() {
 
-
   }
 
   logOut() {

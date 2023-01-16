@@ -4,19 +4,21 @@
       <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
     </ion-buttons>
     <ion-title>Ajout de place</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="confirm()">Confirm</ion-button>
-    </ion-buttons>
+    
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+
+<form #placeForm ngForm>
+<!-- <form #placeForm ngForm (ngSubmit)="onPlaceCreate(placeForm[placeInfos])"> -->
+  
   <ion-item>
     <ion-label position="stacked">Nom de la place</ion-label>
-    <ion-input required [clearInput]="true" placeholder="Name of the place"></ion-input>
+    <ion-input required [clearInput]="true" name="placeName" placeholder="Name of the place" ngModel></ion-input>
   </ion-item>
   <ion-list>
     <ion-item>
-      <ion-select placeholder="Selectionner le canton">
+      <ion-select name="placeCanton" placeholder="Selectionner le canton" ngModel>
         <ion-select-option value="Appenzell Rhodes-Extérieures">Appenzell Rhodes-Extérieures</ion-select-option>
         <ion-select-option value="Appenzell Rhodes-Extérieures">Appenzell Rhodes-Extérieures</ion-select-option>
         <ion-select-option value="Argovie">Argovie</ion-select-option>
@@ -49,15 +51,12 @@
 
   <ion-item>
     <ion-label position="stacked">Pictures</ion-label>
-    <ion-button (click)="takePicture()">Select Images</ion-button> 
+    <ion-button name="placePicture" (click)="takePicture()">Select Images</ion-button> 
    
   </ion-item>
-  
-
-
-  <ion-item>
-    <ion-label position="stacked">Note</ion-label>
-    <ion-input [clearInput]="true" placeholder="Note sur la place"></ion-input>
-  </ion-item>
+  <ion-buttons slot="end">
+    <ion-button type="ngSubmit" (click)="confirm()">Confirm</ion-button>
+  </ion-buttons>
+</form>
   
 </ion-content>
