@@ -51,7 +51,36 @@ export class PlacesPage implements ViewWillEnter {
   marker: L.Marker;
   mapMarkers: L.Marker[] = [];
   message = 'This modal example uses the modalController to present and dismiss modals.';
-  chosenPlace : Place;
+  chosenPlace: Place;
+  chosenCanton: string;
+
+  public cantons = ["Appenzell Rhodes-Extérieures",
+    "Appenzell Rhodes-Extérieures",
+    "Argovie",
+    "Bâle-Campagne",
+    "Bâle-Ville",
+    "Berne",
+    "Fribourg",
+    "Genève",
+    "Glaris",
+    "Grisons",
+    "Jura",
+    "Lucerne",
+    "Neuchâtel",
+    "Nidwald",
+    "Obwald",
+    "Saint-Gall",
+    "Schaffhouse",
+    "Schwytz",
+    "Soleure",
+    "Tessin",
+    "Thurgovie",
+    "Uri",
+    "Valais",
+    "Vaud",
+    "Zoug",
+    "Zurich"
+  ]
 
 
   constructor( // Inject the authentication provider.
@@ -101,20 +130,17 @@ export class PlacesPage implements ViewWillEnter {
 
   async addDataToMap() {
 
+    //reinitialiser avant d'ajouter
+    this.mapMarkers = [];
+
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
 
-      const marker = L.marker(([this.data[i].location.coordinates[0], 
-        this.data[i].location.coordinates[1]]), 
-        { icon: defaultIcon }).addTo(this.map);
-        await marker.on('click',() => this.displayPlaceModal(this.data[i]))
 
-        if (this.marker == this.mapMarkers[i]) {
-
-      } else {
-        this.mapMarkers.push(marker);
-      }
       
+      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).bindPopup(this.data[i].name);
+      await marker.on('click',() => this.displayPlaceModal(this.data[i]))
+      this.mapMarkers.push(marker);
     }
     console.log(this.mapMarkers);
   }
@@ -162,13 +188,55 @@ export class PlacesPage implements ViewWillEnter {
 
   }
 
-  goOnChosenPoint(chosenPlace){
+  goOnChosenPoint(chosenPlace) {
     console.log(chosenPlace.location.coordinates)
     this.map.setView(
       [chosenPlace.location.coordinates[0],
       chosenPlace.location.coordinates[1]]
     )
     this.results = [];
+  }
+
+  filterByCanton(chosenCanton) {
+    console.log(chosenCanton.detail.value)
+    this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
+      console.log(places)
+      if (places.length == 0) {
+        //ouverture popup avec message
+        console.log("pas de place pour ce canton")
+        /*         this.data = places;
+                this.places = places;
+                this.addDataToMap(); */
+
+      }
+      else {
+        console.log("y'a des places")
+        this.data = places;
+        this.places = places;
+        this.addDataToMap();
+        console.log("test", this.data)
+      }
+      //console.log(places)
+
+
+      /* console.log(this.data)
+      console.log(this.data[4]) */
+
+    })
+    //faire filtre en faisant appel à l'api
+  }
+
+  reinitialiseFiltres() {
+    //penser à réinitialiser si appui sur bouton réinitialiser
+    this.placeService.getPlaces$().subscribe(places => {
+      //console.log(places)
+      this.places = places;
+      this.data = places;
+      this.addDataToMap();
+      /* console.log(this.data)
+      console.log(this.data[4]) */
+    })
+
   }
 
 

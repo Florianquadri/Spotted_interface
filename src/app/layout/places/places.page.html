@@ -12,13 +12,23 @@
 
 <ion-content class="ion-padding">
 
-  <ion-searchbar [debounce]="50" (ionChange)="handleChange($event)"></ion-searchbar>
+  <ion-searchbar [debounce]="500" (ionChange)="handleChange($event)"></ion-searchbar>
 
   <ion-list>
     <ion-item *ngFor="let result of results">
       <ion-label (click)="goOnChosenPoint(result)">{{ result.name }}</ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
+        <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
 
 
 
@@ -28,36 +38,32 @@
   </ion-item>
 <p>Place recherchée : {{whichPlace}}</p> -->
 
-  
+
   <ul>
     <li *ngFor="let place of places">
       {{place.name}} |
       {{place.canton}}
-      
+
     </li>
   </ul>
 
 
-  <div
-  class="leaflet-map"
-  leaflet
-  [leafletOptions]="mapOptions"
-  [leafletLayers]="mapMarkers"
-  (leafletMapReady)="onMapReady($event)"
-  >
-</div>
 
- <ion-button class="locateMe" (click)="locateMe()">
-  <ion-icon name="pin"></ion-icon>
-  <ion-label>Locate Me</ion-label>
-</ion-button> 
+  <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
+    (leafletMapReady)="onMapReady($event)">
+  </div>
 
-<ion-button class="addMarker" (click)="addMarker()">Add Marker
-</ion-button> 
+  <ion-button class="locateMe" (click)="locateMe()">
+    <ion-icon name="pin"></ion-icon>
+    <ion-label>Locate Me</ion-label>
+  </ion-button>
 
-<!--  <ion-button expand="block" (click)="openModal()">Open</ion-button>
+  <ion-button class="addMarker" (click)="addMarker()">Add Marker
+  </ion-button>
+
+  <!--  <ion-button expand="block" (click)="openModal()">Open</ion-button>
   <p>{{ message }}</p>  -->
 
-<!-- <ion-button class="addDataToMap" (click)="addDataToMap()">Add Data to Map</ion-button>  -->
+  <!-- <ion-button class="addDataToMap" (click)="addDataToMap()">Add Data to Map</ion-button>  -->
 
 </ion-content>
