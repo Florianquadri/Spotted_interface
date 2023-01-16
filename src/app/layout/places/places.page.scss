@@ -14,4 +14,18 @@
     cursor: url("../../utile_files/locate-outline.svg") auto;
  }
 
+ .containerRow {
+  display:flex;
+  flex-direction: row;
+ }
+
+ .spaceBetween{
+  justify-content: space-between;
+ }
+
+ .start{
+  justify-content: flex-start;
+ }
+
+
 

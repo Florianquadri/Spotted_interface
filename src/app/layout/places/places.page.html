@@ -20,13 +20,26 @@
     </ion-item>
   </ion-list>
 
-  <ion-list>
-    <ion-item>
-      <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
-        <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+  <div class="containerRow start">
+    <p>Filtrer</p>
+
+    <ion-list>
+      <ion-item>
+        <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
+          <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item>
+        <ion-select  (ionChange)="filterByTag($event)" interface="popover" placeholder="Tags">
+          <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </div>
+ 
 
   <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
 
@@ -38,15 +51,13 @@
   </ion-item>
 <p>Place recherchée : {{whichPlace}}</p> -->
 
-
-  <ul>
+<!--   <ul>
     <li *ngFor="let place of places">
       {{place.name}} |
       {{place.canton}}
 
     </li>
-  </ul>
-
+  </ul> -->
 
 
   <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"

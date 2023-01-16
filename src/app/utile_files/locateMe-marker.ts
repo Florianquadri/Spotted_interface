@@ -8,7 +8,7 @@ export const locateIcon = Marker.prototype.options.icon = icon({
 });
  export const locateMeIcon: Icon<IconOptions> = icon({
   // This define the displayed icon size, in pixel
-  iconSize: [60, 60],
+  iconSize: [45, 45],
   // This defines the pixel that should be placed right above the location
   // If not provided, the image center will be used, and that could be awkward
   iconAnchor: [13, 41],

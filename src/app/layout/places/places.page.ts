@@ -35,12 +35,13 @@ export class PlacesPage implements ViewWillEnter {
   message = 'This modal example uses the modalController to present and dismiss modals.';
   chosenPlace: Place;
   chosenCanton: string;
+  tagChosen : string;
 
   public cantons = ["Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
     "Argovie",
     "Bâle-Campagne",
-    "Bâle-Ville",
+    "Bâle-Stadt",
     "Berne",
     "Fribourg",
     "Genève",
@@ -52,17 +53,19 @@ export class PlacesPage implements ViewWillEnter {
     "Nidwald",
     "Obwald",
     "Saint-Gall",
-    "Schaffhouse",
+    "Schaffhausen",
     "Schwytz",
     "Soleure",
-    "Tessin",
-    "Thurgovie",
+    "Ticino",
+    "Thurgovia",
     "Uri",
     "Valais",
     "Vaud",
-    "Zoug",
+    "Zug",
     "Zurich"
   ]
+
+  public tags = ["waow", "insane", "sunset", "eau", "montagne", "calme"];
 
 
   constructor( // Inject the authentication provider.
@@ -163,6 +166,10 @@ export class PlacesPage implements ViewWillEnter {
     this.results = [];
   }
 
+  filterByTag(tagChosen){
+    console.log(tagChosen);
+  }
+
   filterByCanton(chosenCanton) {
     console.log(chosenCanton.detail.value)
     this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
@@ -181,14 +188,20 @@ export class PlacesPage implements ViewWillEnter {
         this.places = places;
         this.addDataToMap();
         console.log("test", this.data)
+        //zoomer sur coordonnées centrales du canton + zoom plus vaste
+        
       }
-      //console.log(places)
-
-
-      /* console.log(this.data)
-      console.log(this.data[4]) */
-
+ 
     })
+
+    this.placeService.getCoordinatesForCantons$(chosenCanton.detail.value).subscribe(
+      coordinates => {
+        console.log(coordinates)
+        this.map.setView([coordinates[1], coordinates[0]], 8  )
+/*         this.mapOptions.zoom = 10; */
+      }
+      
+    )
     //faire filtre en faisant appel à l'api
   }
 
@@ -199,6 +212,7 @@ export class PlacesPage implements ViewWillEnter {
       this.places = places;
       this.data = places;
       this.addDataToMap();
+      this.locateMe();
       /* console.log(this.data)
       console.log(this.data[4]) */
     })
