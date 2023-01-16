@@ -114,6 +114,7 @@ export class PlacesPage implements ViewWillEnter {
       } else {
         this.mapMarkers.push(marker);
       }
+      
     }
     console.log(this.mapMarkers);
   }
