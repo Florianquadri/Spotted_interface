@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { PlaceModalComponentComponent } from './../../place-modal-component/place-modal-component.component';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth/auth.service";
 // TODO: import Angular's HTTP client.
 import { HttpClient } from "@angular/common/http";
 import { ViewWillEnter } from "@ionic/angular";
 import { environment } from "src/environments/environment";
+import { NotesService } from 'src/app/services/notes.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
 import { FormsModule } from '@angular/forms';
+import { Note } from 'src/app/models/note';
 import { latLng, MapOptions, tileLayer, Map, marker, Marker } from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
 import { locateMeIcon } from '../../utile_files/locateMe-marker';
@@ -24,9 +27,24 @@ import { AddPlaceComponent } from '../../add-place/add-place.component';
 })
 export class PlacesPage implements ViewWillEnter {
 
+
+
+  // TRuc à faire dans un nouveau component modal onclick sur le HTML
+  @Input() placeId: number = 0;
+
+  ngOnInit() {
+    this.noteService.getNote$(this.placeId);
+  }
+
+
+
+
   mapOptions: MapOptions;
   whichPlace: string;
   public places: Place[];
+  public notes: Note[];
+
+ 
   public results = [];
   public data = [];
   map: Map;
@@ -39,6 +57,8 @@ export class PlacesPage implements ViewWillEnter {
   constructor( // Inject the authentication provider.
     private auth: AuthService,
     private placeService: PlacesService,
+    private noteService: NotesService,
+    
     // Inject the router
     private router: Router,
     private http: HttpClient,
@@ -79,21 +99,36 @@ export class PlacesPage implements ViewWillEnter {
 
   }
 
-  addDataToMap() {
+  async addDataToMap() {
 
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
 
-      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).addTo(this.map);
-      marker.bindPopup(this.data[i].name).openPopup();
+      const marker = L.marker(([this.data[i].location.coordinates[0], 
+        this.data[i].location.coordinates[1]]), 
+        { icon: defaultIcon }).addTo(this.map);
+        await marker.on('click',() => this.displayPlaceModal(this.data[i]))
 
-      if (this.marker == this.mapMarkers[i]) {
+        if (this.marker == this.mapMarkers[i]) {
 
       } else {
         this.mapMarkers.push(marker);
       }
+      
     }
     console.log(this.mapMarkers);
+  }
+
+  async displayPlaceModal(place: []) {
+
+    const modal = await this.modalCtrl.create({
+      component: PlaceModalComponentComponent,
+      componentProps: { place}
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+  
   }
 
   getMapCurrentPosition() {
@@ -181,7 +216,6 @@ export class PlacesPage implements ViewWillEnter {
 
 
     });
-
   }
 
 
@@ -192,17 +226,18 @@ export class PlacesPage implements ViewWillEnter {
       //console.log(places)
       this.places = places;
       this.data = places;
+
+      let placeId = null;
+      this.noteService.getNote$(placeId).subscribe(notes => {
+        console.log(notes)
+      });
       this.addDataToMap();
       /* console.log(this.data)
       console.log(this.data[4]) */
 
     })
-    
   }
 
-  ngOnInit() {
-
-  }
 
   logOut() {
     console.log("logging out...");
