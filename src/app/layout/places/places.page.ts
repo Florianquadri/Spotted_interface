@@ -14,6 +14,7 @@ import { Note } from 'src/app/models/note';
 import { latLng, MapOptions, tileLayer, Map, marker, Marker } from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
 import { locateMeIcon } from '../../utile_files/locateMe-marker';
+
 import * as L from 'leaflet';
 import { ModalController } from '@ionic/angular';
 import { AddPlaceComponent } from '../../add-place/add-place.component';
@@ -246,7 +247,7 @@ export class PlacesPage implements ViewWillEnter {
 
     this.map.on('locationfound', (e) => {
       const radius = e.accuracy / 2;
-      marker((e.latlng), { icon: defaultIcon }).addTo(this.map)
+      marker((e.latlng), { icon: locateMeIcon }).addTo(this.map)
         .bindPopup("Vous êtes ici").openPopup();
       // circle(e.latlng, radius).addTo(this.map);
     }
