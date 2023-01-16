@@ -37,17 +37,7 @@ export class PlacesPage implements ViewWillEnter {
   }
 
 
-  async displayPlaceModal(id: string) {
 
-    const modal = await this.modalCtrl.create({
-      component: PlaceModalComponentComponent,
-      componentProps: { [this.placeId]: id}
-    });
-    modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
-  
-  }
 
   mapOptions: MapOptions;
   whichPlace: string;
@@ -68,7 +58,7 @@ export class PlacesPage implements ViewWillEnter {
     private auth: AuthService,
     private placeService: PlacesService,
     private noteService: NotesService,
-    private modal: PlaceModalComponentComponent,
+    
     // Inject the router
     private router: Router,
     private http: HttpClient,
@@ -109,21 +99,35 @@ export class PlacesPage implements ViewWillEnter {
 
   }
 
-  addDataToMap() {
+  async addDataToMap() {
 
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
 
-      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).addTo(this.map);
-      marker.bindPopup(this.data[i].name).openPopup();
+      const marker = L.marker(([this.data[i].location.coordinates[0], 
+        this.data[i].location.coordinates[1]]), 
+        { icon: defaultIcon }).addTo(this.map);
+        await marker.on('click',() => this.displayPlaceModal(this.data[i]))
 
-      if (this.marker == this.mapMarkers[i]) {
+        if (this.marker == this.mapMarkers[i]) {
 
       } else {
         this.mapMarkers.push(marker);
       }
     }
     console.log(this.mapMarkers);
+  }
+
+  async displayPlaceModal(place: []) {
+
+    const modal = await this.modalCtrl.create({
+      component: PlaceModalComponentComponent,
+      componentProps: { place}
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+  
   }
 
   getMapCurrentPosition() {
@@ -211,7 +215,6 @@ export class PlacesPage implements ViewWillEnter {
 
 
     });
-
   }
 
 
@@ -232,13 +235,8 @@ export class PlacesPage implements ViewWillEnter {
       console.log(this.data[4]) */
 
     })
-    
   }
 
-  ngOnInit() {
-
-
-  }
 
   logOut() {
     console.log("logging out...");

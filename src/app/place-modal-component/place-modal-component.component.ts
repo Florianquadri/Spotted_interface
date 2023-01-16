@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Place } from '../models/place';
 
 
 @Component({
@@ -7,18 +8,15 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './place-modal-component.component.html',
   styleUrls: ['./place-modal-component.component.scss'],
 })
+
 export class PlaceModalComponentComponent implements OnInit {
+  public place : Place[];
 
   constructor(private modalCtrl: ModalController) { }
-  name: string;
-  placeId : string;
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  confirm() {
-    return this.modalCtrl.dismiss(this.name, 'confirm');
-  }
   ngOnInit() {}
 
 }
