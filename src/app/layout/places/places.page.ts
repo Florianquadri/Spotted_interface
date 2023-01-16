@@ -10,11 +10,11 @@ import { Place } from 'src/app/models/place';
 import { FormsModule } from '@angular/forms';
 import { latLng, MapOptions, tileLayer, Map, marker, Marker} from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
-import { locateMeIcon } from '../../utile_files/locateMe-marker';
+
 import * as L from 'leaflet';
 import { ModalController } from '@ionic/angular';
 import { ModalExampleComponent } from '../../add-place/add-place.component';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-places',
