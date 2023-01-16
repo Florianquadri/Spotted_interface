@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 // TODO: import the ionic storage module.
 import { IonicStorageModule } from "@ionic/storage-angular";
 import { ReactiveFormsModule } from '@angular/forms';
+import { PlaceModalComponentComponent } from './place-modal-component/place-modal-component.component';
 
 
 //test

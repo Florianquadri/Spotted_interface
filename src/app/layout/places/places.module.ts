@@ -1,3 +1,4 @@
+import { PlaceModalComponentComponent } from './../../place-modal-component/place-modal-component.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,8 +14,8 @@ import { PlacesPage } from './places.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PlacesPageRoutingModule
+    PlacesPageRoutingModule,
   ],
-  declarations: [PlacesPage]
+  declarations: [PlacesPage,PlaceModalComponentComponent]
 })
 export class PlacesPageModule {}

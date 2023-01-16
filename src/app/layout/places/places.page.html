@@ -25,7 +25,7 @@
   </ion-item>
 <p>Place recherchée : {{whichPlace}}</p>
   <ul>
-    <li *ngFor="let place of places">
+    <li *ngFor="let place of places"(click)="displayPlaceModal(place.id)">
       {{place.name}} |
       {{place.canton}}
     </li>
