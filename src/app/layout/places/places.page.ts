@@ -33,7 +33,7 @@ export class PlacesPage implements ViewWillEnter {
   mapMarkers: L.Marker[] = [];
   message = 'This modal example uses the modalController to present and dismiss modals.';
   chosenPlace: Place;
-  chosenCanton : string;
+  chosenCanton: string;
 
   public cantons = ["Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
@@ -109,17 +109,15 @@ export class PlacesPage implements ViewWillEnter {
 
   addDataToMap() {
 
+    //reinitialiser avant d'ajouter
+    this.mapMarkers = [];
+
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
 
-      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).addTo(this.map);
-      marker.bindPopup(this.data[i].name).openPopup();
+      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).bindPopup(this.data[i].name);
 
-      if (this.marker == this.mapMarkers[i]) {
-
-      } else {
-        this.mapMarkers.push(marker);
-      }
+      this.mapMarkers.push(marker);
     }
     console.log(this.mapMarkers);
   }
@@ -164,15 +162,28 @@ export class PlacesPage implements ViewWillEnter {
     this.results = [];
   }
 
-  filterByCanton(chosenCanton){
+  filterByCanton(chosenCanton) {
     console.log(chosenCanton.detail.value)
     this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
+      console.log(places)
+      if (places.length == 0) {
+        //ouverture popup avec message
+        console.log("pas de place pour ce canton")
+        /*         this.data = places;
+                this.places = places;
+                this.addDataToMap(); */
 
-
+      }
+      else {
+        console.log("y'a des places")
+        this.data = places;
+        this.places = places;
+        this.addDataToMap();
+        console.log("test", this.data)
+      }
       //console.log(places)
-      this.places = places;
-      this.data = places;
-      this.addDataToMap();
+
+
       /* console.log(this.data)
       console.log(this.data[4]) */
 
@@ -180,8 +191,16 @@ export class PlacesPage implements ViewWillEnter {
     //faire filtre en faisant appel à l'api
   }
 
-  reinitialiseFiltres(){
+  reinitialiseFiltres() {
     //penser à réinitialiser si appui sur bouton réinitialiser
+    this.placeService.getPlaces$().subscribe(places => {
+      //console.log(places)
+      this.places = places;
+      this.data = places;
+      this.addDataToMap();
+      /* console.log(this.data)
+      console.log(this.data[4]) */
+    })
 
   }
 
