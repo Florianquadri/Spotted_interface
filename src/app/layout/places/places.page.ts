@@ -10,10 +10,11 @@ import { Place } from 'src/app/models/place';
 import { FormsModule } from '@angular/forms';
 import { latLng, MapOptions, tileLayer, Map, marker, Marker } from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
-
+import { locateMeIcon } from '../../utile_files/locateMe-marker';
 import * as L from 'leaflet';
 import { ModalController } from '@ionic/angular';
-import { ModalExampleComponent } from '../../add-place/add-place.component';
+import { AddPlaceComponent } from '../../add-place/add-place.component';
+
 
 
 @Component({
@@ -58,7 +59,7 @@ export class PlacesPage implements ViewWillEnter {
 
   async openModal() {
     const modal = await this.modalCtrl.create({
-      component: ModalExampleComponent,
+      component: AddPlaceComponent,
     });
     modal.present();
 
@@ -136,9 +137,9 @@ export class PlacesPage implements ViewWillEnter {
   }
 
 
-  async locateMe() {
-    this.addDataToMap();
-    const location = await this.map.locate({ setView: true, maxZoom: 16 });
+  async locateMe() {  
+   
+    const location = await this.map.locate({setView: true, maxZoom: 16});
 
     this.map.on('locationfound', (e) => {
       const radius = e.accuracy / 2;
@@ -185,8 +186,6 @@ export class PlacesPage implements ViewWillEnter {
 
 
 
-
-
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
     this.placeService.getPlaces$().subscribe(places => {
@@ -198,6 +197,7 @@ export class PlacesPage implements ViewWillEnter {
       console.log(this.data[4]) */
 
     })
+    
   }
 
   ngOnInit() {

@@ -49,12 +49,8 @@
 
   <ion-item>
     <ion-label position="stacked">Pictures</ion-label>
-   <!--  <ion-button (click)="imagePicker()">Select Images</ion-button> -->
-    <div class="images-wrapper">
-      <div class="pick-single-image" *ngFor="let image of imgRes">
-        <img src="{{image}}" alt="" srcset="">
-      </div>
-    </div>
+    <ion-button (click)="takePicture()">Select Images</ion-button> 
+   
   </ion-item>
   
 

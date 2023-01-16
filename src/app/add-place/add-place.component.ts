@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
-
 import { ModalController } from '@ionic/angular';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
-/* import { ImagePicker } from '@ionic-native/image-picker';
-import { Observable } from 'rxjs'; */
 
 @Component({
   selector: 'app-add-place',
   templateUrl: './add-place.component.html',
   styleUrls: ['./add-place.component.scss'],
 })
-export class ModalExampleComponent {
+export class AddPlaceComponent {
     name: string;
     imgRes: any;
     options: any;
 
-    constructor(private modalCtrl: ModalController,/* private imgPicker: ImagePicker */) {}
-  
- /*    imagePicker() {
-      this.options = {
-        width: 200,
-        quality: 30,
-        outputType: 1
-      };
-      this.imgRes = [];
-      this.imgPicker.getPictures(this.options).then((results) => {
-        for (var i = 0; i < results.length; i++) {
-          this.imgRes.push('data:image/jpeg;base64,' + results[i]);
-        }
-      }, (error) => {
-        alert(error);
+    constructor(private modalCtrl: ModalController) {}
+
+    takePicture = async () => {
+      
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.Uri
       });
-    } */
+    
+      // image.webPath will contain a path that can be set as an image src.
+      // You can access the original file using image.path, which can be
+      // passed to the Filesystem API to read the raw data of the image,
+      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+      var imageUrl = image.webPath;
+    
+      // Can be set to the src of an image now
+     // imageElement.src = imageUrl;
+    };
 
     cancel() {
       return this.modalCtrl.dismiss(null, 'cancel');

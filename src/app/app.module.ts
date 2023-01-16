@@ -12,15 +12,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FormsModule } from '@angular/forms';
 import { PlacesPage } from './layout/places/places.page';
-import { ModalExampleComponent } from './add-place/add-place.component';
-/* import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
-import { Observable } from 'rxjs'; */
+import { Observable } from 'rxjs'; 
+
 
 //test
 @NgModule({
-  declarations: [AppComponent, ModalExampleComponent,],
+  declarations: [AppComponent,],
   imports: [LeafletModule,ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
-  providers: [/* ImagePicker, */{
+  providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true,},
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

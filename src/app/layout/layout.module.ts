@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { LayoutPageRoutingModule } from './layout-routing.module';
 
 import { LayoutPage } from './layout.page';
+import { AddPlaceComponent } from '../add-place/add-place.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { LayoutPage } from './layout.page';
     IonicModule,
     LayoutPageRoutingModule
   ],
-  declarations: [LayoutPage]
+  declarations: [LayoutPage,AddPlaceComponent,]
 })
 export class LayoutPageModule {}
