@@ -32,7 +32,36 @@ export class PlacesPage implements ViewWillEnter {
   marker: L.Marker;
   mapMarkers: L.Marker[] = [];
   message = 'This modal example uses the modalController to present and dismiss modals.';
-  chosenPlace : Place;
+  chosenPlace: Place;
+  chosenCanton : string;
+
+  public cantons = ["Appenzell Rhodes-Extérieures",
+    "Appenzell Rhodes-Extérieures",
+    "Argovie",
+    "Bâle-Campagne",
+    "Bâle-Ville",
+    "Berne",
+    "Fribourg",
+    "Genève",
+    "Glaris",
+    "Grisons",
+    "Jura",
+    "Lucerne",
+    "Neuchâtel",
+    "Nidwald",
+    "Obwald",
+    "Saint-Gall",
+    "Schaffhouse",
+    "Schwytz",
+    "Soleure",
+    "Tessin",
+    "Thurgovie",
+    "Uri",
+    "Valais",
+    "Vaud",
+    "Zoug",
+    "Zurich"
+  ]
 
 
   constructor( // Inject the authentication provider.
@@ -126,13 +155,34 @@ export class PlacesPage implements ViewWillEnter {
 
   }
 
-  goOnChosenPoint(chosenPlace){
+  goOnChosenPoint(chosenPlace) {
     console.log(chosenPlace.location.coordinates)
     this.map.setView(
       [chosenPlace.location.coordinates[0],
       chosenPlace.location.coordinates[1]]
     )
     this.results = [];
+  }
+
+  filterByCanton(chosenCanton){
+    console.log(chosenCanton.detail.value)
+    this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
+
+
+      //console.log(places)
+      this.places = places;
+      this.data = places;
+      this.addDataToMap();
+      /* console.log(this.data)
+      console.log(this.data[4]) */
+
+    })
+    //faire filtre en faisant appel à l'api
+  }
+
+  reinitialiseFiltres(){
+    //penser à réinitialiser si appui sur bouton réinitialiser
+
   }
 
 

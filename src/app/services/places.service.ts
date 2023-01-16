@@ -18,5 +18,9 @@ export class PlacesService {
     return this.http.get<Place[]>(`${environment.apiUrl}/places`);
   }
 
+  getPlacesByCantons$(canton): Observable<Place[]> {
+    return this.http.get<Place[]>(`${environment.apiUrl}/places?canton=${canton}`);
+  }
+
   
 }
