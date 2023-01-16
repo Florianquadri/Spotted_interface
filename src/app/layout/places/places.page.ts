@@ -8,17 +8,13 @@ import { environment } from "src/environments/environment";
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
 import { FormsModule } from '@angular/forms';
-<<<<<<< Updated upstream
 import { latLng, MapOptions, tileLayer, Map, marker, Marker} from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
 import { locateMeIcon } from '../../utile_files/locateMe-marker';
-=======
-import { latLng, Map, MapOptions, marker, Marker, tileLayer } from 'leaflet';
-import { defaultIcon } from '../../default-marker';
 import * as L from 'leaflet';
-//import 'leaflet-geolocation';
-
->>>>>>> Stashed changes
+import { ModalController } from '@ionic/angular';
+import { ModalExampleComponent } from '../../add-place/add-place.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-places',
@@ -29,60 +25,76 @@ export class PlacesPage implements ViewWillEnter {
 
   mapOptions: MapOptions;
   whichPlace: string;
-<<<<<<< Updated upstream
   public places: Place[];
   public results = [];
   public data = [];
-  mapOptions: MapOptions;
-  mapMarkers: Marker[];
   map : Map;
-
-=======
-  
-  map: L.Map;
   marker: L.Marker;
-  public places: Place[];
   mapMarkers: L.Marker[] = [];
+  message = 'This modal example uses the modalController to present and dismiss modals.';
   
-  public results = [];
-   public data = []; 
-   map2: L.Map;
  
+   constructor( // Inject the authentication provider.
+   private auth: AuthService,
+   private placeService: PlacesService,
+   // Inject the router
+   private router: Router,
+   private http: HttpClient,
+   private modalCtrl: ModalController,
+   ) {
+     this.mapOptions = {
+       layers: [
+         tileLayer(
+           'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+           { maxZoom: 18 }
+         )
+       ],
+       zoom: 13,
+       center: latLng(46.778186, 6.641524)
+     };
+    }
+
+
+    async openModal() {
+      const modal = await this.modalCtrl.create({
+        component: ModalExampleComponent,
+      });
+      modal.present();
+  
+      const { data, role } = await modal.onWillDismiss();
+  
+      if (role === 'confirm') {
+        this.message = `Hello, ${data}!`;
+      }
+    }
+
    onMapReady(map: Map) {
     setTimeout(() => map.invalidateSize(), 0);
     this.map = map;
     const center = this.map.getCenter();
     this.locateMe();
     this.getMapCurrentPosition();
->>>>>>> Stashed changes
-
-
-    this.map.on('click', e => {
-      
-      this.marker = L.marker(e.latlng).addTo(this.map);
-
-      this.mapMarkers.push(this.marker);
-    
-      this.mapOptions.center = this.marker.getLatLng();
-    this.map.setView( 
-      this.marker.getLatLng(),
-      
-    )
-
-    this.marker.bindPopup("Nouveau marker").openPopup();
-
-    this.mapMarkers.forEach(marker => {
-      marker.setIcon(defaultIcon);
-    });
-
- 
-
-  console.log(this.mapMarkers);
-
-    });
+  
   }
 
-  getMapCurrentPosition(){
+   addDataToMap() {
+
+        for (let i = 0; i < this.data.length; i++) {
+          //const e = this.data[i];
+
+        const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]),{icon: defaultIcon}).addTo(this.map);
+       marker.bindPopup(this.data[i].name).openPopup();
+ 
+       if (this.marker==this.mapMarkers[i]) {
+        
+       }else{
+  this.mapMarkers.push(marker); 
+       }
+     } 
+      console.log(this.mapMarkers);
+}
+
+   getMapCurrentPosition(){
     this.map.on('locationfound', (e) => {
       const radius = e.accuracy / 2;
 
@@ -91,10 +103,20 @@ export class PlacesPage implements ViewWillEnter {
     }
     );
   }
+   
+ 
+
+/*  changeIcon(){
+  this.mapMarkers.forEach(marker => {
+    marker.setIcon(defaultIcon);
+  });
+ } */
+
+  
 
   handleChange(event) {
     const query = event.target.value.toLowerCase();
-    if (query == "") {
+    if(query==""){
       this.results = [];
     } else {
       this.results = this.data.filter(d => d.name.toLowerCase().indexOf(query) > -1);
@@ -103,98 +125,10 @@ export class PlacesPage implements ViewWillEnter {
 
   }
 
-  onMapReady(map: Map) {
-    setTimeout(() => map.invalidateSize(), 0);
-    this.map = map;
-    const center = this.map.getCenter();
-    this.locateMe();
-  }
-  
-locateMe() {
-  this.map.locate({setView: true, maxZoom: 16});
-
-  this.map.on('locationfound', (e) => {
-    const radius = e.accuracy / 2;
-    marker((e.latlng),{icon: locateMeIcon}).addTo(this.map)
-        .bindPopup("Vous êtes ici").openPopup();
-    // circle(e.latlng, radius).addTo(this.map);
-  }
-  );
-
-  this.map.on('locationerror', (e) => {
-    console.log(e);
-    alert(e.message);
-  });
-
-}
-
-  constructor( // Inject the authentication provider.
-    private auth: AuthService,
-    private placeService: PlacesService,
-    // Inject the router
-<<<<<<< Updated upstream
-    private router: Router) { 
-
-      this.mapMarkers = [
-        marker([ 46.778186, 6.641524 ], { icon: defaultIcon }),
-        marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
-        marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
-      ];
-
-      this.mapOptions = {
-        layers: [
-          tileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            { maxZoom: 18 }
-          )
-        ],
-        zoom: 13,
-        center: latLng(46.778186, 6.641524)
-      };
-    }
-=======
-    private router: Router) {
-      this.mapOptions = {
-             layers: [
-               tileLayer(
-                 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                 { maxZoom: 18 }
-               )
-             ],
-             zoom: 13,
-             center: latLng(46.778186, 6.641524)
-           };
-
-           this.mapMarkers = [
-                 marker([ 46.778186, 6.641524 ], { icon: defaultIcon }).bindPopup('Hello'),
-                 marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
-                 marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
-               ];
-     }
->>>>>>> Stashed changes
-
-
-  ionViewWillEnter(): void {
-    // Make an HTTP request to retrieve the trips.
-    this.placeService.getPlaces$().subscribe(places => {
-      console.log(places)
-      this.places = places;
-      this.data = places;
-    })
-  }
-
-  ngOnInit() {
-    
-  }
-
-  logOut() {
-    console.log("logging out...");
-    this.auth.logOut();
-    this.router.navigateByUrl("/login");
-  }
 
 
   async locateMe() {  
+    this.addDataToMap();
     const location = await this.map.locate({setView: true, maxZoom: 16});
 
     this.map.on('locationfound', (e) => {
@@ -209,43 +143,67 @@ locateMe() {
       console.log(e);
       alert(e.message);
     });
-
+    this.addDataToMap();
   }
 
 
-
   addMarker(){
-  
-/*     navigator.geolocation.getCurrentPosition(position => {
-      this.marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(this.map);
-}); */
-
- // var marker = L.marker(e.latlng).addTo(this.map);
-
-     const marker = L.marker([46.778186, 6.651524]).addTo(this.map);
-     
-     this.getMapCurrentPosition();
-
-
     
-        // add the marker to the array
-      this.mapMarkers.push(marker);
+    this.map.on('click', e => {
+      
+      this.marker = L.marker(e.latlng).addTo(this.map);
+
+      this.mapMarkers.push(this.marker);
     
-      this.mapOptions.center = marker.getLatLng();
+      this.mapOptions.center = this.marker.getLatLng();
     this.map.setView( 
-      marker.getLatLng(),
-      16
+      this.marker.getLatLng(),
     )
-    marker.bindPopup("Nouveau marker").openPopup();
-  
-
+   /*  this.marker.bindPopup("Nouveau marker").openPopup(); */
 
     this.mapMarkers.forEach(marker => {
       marker.setIcon(defaultIcon);
     });
+    console.log(this.mapMarkers);
+
+ setTimeout(() => {
+  this.openModal();
+}, 200); 
+
+
+    });
   
-  console.log(this.mapMarkers);
+  }
+
+
+
+
+
+  ionViewWillEnter(): void {
+    // Make an HTTP request to retrieve the trips.
+    this.placeService.getPlaces$().subscribe(places => {
+      //console.log(places)
+      this.places = places;
+      this.data = places;
+      /* console.log(this.data)
+      console.log(this.data[4]) */
+      
+    })
+  }
+
+  ngOnInit() {
   
-    }
-  
+    
+  }
+
+  logOut() {
+    console.log("logging out...");
+    this.auth.logOut();
+    this.router.navigateByUrl("/login");
+  }
+
+
+
+
+
 }

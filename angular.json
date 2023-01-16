@@ -31,11 +31,7 @@
                 "output": "./svg"
               }
             ],
-<<<<<<< Updated upstream
             "styles": ["src/theme/variables.scss", "src/global.scss", "node_modules/leaflet/dist/leaflet.css"],
-=======
-            "styles": ["src/theme/variables.scss", "src/global.scss","node_modules/leaflet/dist/leaflet.css"],
->>>>>>> Stashed changes
             "scripts": []
           },
           "configurations": {

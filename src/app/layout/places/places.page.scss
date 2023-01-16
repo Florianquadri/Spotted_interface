@@ -1,11 +1,7 @@
 .hidden{
     display:none;
 }
-<<<<<<< Updated upstream
-.map {
-    height: 100%;
-  }
-=======
+
 
 .map {
     height: 70%;
@@ -14,6 +10,8 @@
     height: 70%;
   }
 
+  .customcursor {
+    cursor: url("../../utile_files/locate-outline.svg") auto;
+ }
 
 
->>>>>>> Stashed changes
