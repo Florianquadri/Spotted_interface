@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { PlacesPageRoutingModule } from './places-routing.module';
 
 import { PlacesPage } from './places.page';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PlacesPage } from './places.page';
     FormsModule,
     IonicModule,
     PlacesPageRoutingModule,
+    LeafletModule,
   ],
   declarations: [PlacesPage,PlaceModalComponentComponent]
 })

@@ -9,25 +9,55 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content class="ion-padding">
 
   <ion-searchbar [debounce]="50" (ionChange)="handleChange($event)"></ion-searchbar>
 
   <ion-list>
     <ion-item *ngFor="let result of results">
-      <ion-label>{{ result.name }}</ion-label>
+      <ion-label (click)="goOnChosenPoint(result)">{{ result.name }}</ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-item>
+
+
+  <!-- <ion-item>
     <ion-label class="hidden">Search places</ion-label>
     <ion-input type="text" placeholder="Search for a place" [(ngModel)]="whichPlace" name="whichPlace"></ion-input>
   </ion-item>
-<p>Place recherchée : {{whichPlace}}</p>
+<p>Place recherchée : {{whichPlace}}</p> -->
+
+  
   <ul>
     <li *ngFor="let place of places"(click)="displayPlaceModal(place.id)">
       {{place.name}} |
       {{place.canton}}
+      
     </li>
   </ul>
+
+
+  <div
+  class="leaflet-map"
+  leaflet
+  [leafletOptions]="mapOptions"
+  [leafletLayers]="mapMarkers"
+  (leafletMapReady)="onMapReady($event)"
+  >
+</div>
+
+ <ion-button class="locateMe" (click)="locateMe()">
+  <ion-icon name="pin"></ion-icon>
+  <ion-label>Locate Me</ion-label>
+</ion-button> 
+
+<ion-button class="addMarker" (click)="addMarker()">Add Marker
+</ion-button> 
+
+<!--  <ion-button expand="block" (click)="openModal()">Open</ion-button>
+  <p>{{ message }}</p>  -->
+
+<!-- <ion-button class="addDataToMap" (click)="addDataToMap()">Add Data to Map</ion-button>  -->
+
 </ion-content>
