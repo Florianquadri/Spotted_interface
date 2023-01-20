@@ -1,5 +1,5 @@
 export type Place = {
-    id: string;
+    _id: string;
     name: string;
     creator:string;
     canton:string;

@@ -150,7 +150,7 @@ export class PlacesPage implements ViewWillEnter {
 
     const modal = await this.modalCtrl.create({
       component: PlaceModalComponentComponent,
-      componentProps: { place}
+      componentProps: { data: place }
     });
     modal.present();
 
@@ -163,7 +163,6 @@ export class PlacesPage implements ViewWillEnter {
       const radius = e.accuracy / 2;
 
       const position = e.latlng
-      console.log(position);
     }
     );
   }
