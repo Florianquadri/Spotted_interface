@@ -29,5 +29,12 @@ export class PlacesService {
       map((obj) => obj.features[0].center));
   }
 
-  
+  getPlacesByTags$(tag): Observable<Place[]> {
+    return this.http.get<Place[]>(`${environment.apiUrl}/places?tag=${tag}`);
+  }
+
+  getPlacesByTagsAndCantons$(tag, canton): Observable<Place[]> {
+    return this.http.get<Place[]>(`${environment.apiUrl}/places?tag=${tag}&canton=${canton}`);
+  }
+
 }

@@ -36,6 +36,8 @@ export class PlacesPage implements ViewWillEnter {
   chosenPlace: Place;
   chosenCanton: string;
   tagChosen : string;
+  searchByTAgActivated : boolean = false;
+  searchByCantonActivated : boolean = false;
 
   public cantons = ["Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
@@ -65,7 +67,7 @@ export class PlacesPage implements ViewWillEnter {
     "Zurich"
   ]
 
-  public tags = ["waow", "insane", "sunset", "eau", "montagne", "calme"];
+  public tags = ["Piscine","forêt", "street photography", "lac", "montagne", "sunrise", "sunset", "treck", "monument", "panorama", "urbex", "glacier", "barrage", "incontournable", "astrophotographie", "lost but worth it" ];
 
 
   constructor( // Inject the authentication provider.
@@ -161,13 +163,27 @@ export class PlacesPage implements ViewWillEnter {
     console.log(chosenPlace.location.coordinates)
     this.map.setView(
       [chosenPlace.location.coordinates[0],
-      chosenPlace.location.coordinates[1]]
+      chosenPlace.location.coordinates[1]], 13
     )
     this.results = [];
   }
 
   filterByTag(tagChosen){
-    console.log(tagChosen);
+    console.log(tagChosen.detail.value);
+    this.placeService.getPlacesByTags$(tagChosen.detail.value).subscribe(places => {
+      console.log(places)
+      if (places.length == 0) {
+        this.mapMarkers = [];
+        //ouverture popup avec message
+        console.log("pas de place pour ce tag")
+      } else {
+        console.log("places trouvées")
+        this.data = places;
+        this.places = places;
+        this.addDataToMap();
+        this.map.setView([46.7985624, 8.2319736], 7  )
+      }
+    })
   }
 
   filterByCanton(chosenCanton) {
@@ -175,6 +191,7 @@ export class PlacesPage implements ViewWillEnter {
     this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
       console.log(places)
       if (places.length == 0) {
+        this.mapMarkers = [];
         //ouverture popup avec message
         console.log("pas de place pour ce canton")
         /*         this.data = places;
