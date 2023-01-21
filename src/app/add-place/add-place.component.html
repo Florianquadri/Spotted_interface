@@ -4,59 +4,40 @@
       <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
     </ion-buttons>
     <ion-title>Ajout de place</ion-title>
-    
+    <ion-buttons slot="end">
+      <!-- <ion-button type="Submit" (click)="confirm()">Confirm</ion-button> -->
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
 
-<form #placeForm ngForm>
-<!-- <form #placeForm ngForm (ngSubmit)="onPlaceCreate(placeForm[placeInfos])"> -->
-  
+
+<!--   <form [formGroup]="form"> -->
+    <form (ngSubmit)="confirm()">
   <ion-item>
     <ion-label position="stacked">Nom de la place</ion-label>
-    <ion-input required [clearInput]="true" name="placeName" placeholder="Name of the place" ngModel></ion-input>
+    <ion-input required [clearInput]="true" [(ngModel)]="data.name" name="placeName" placeholder="Name of the place"></ion-input>
   </ion-item>
   <ion-list>
     <ion-item>
-      <ion-select name="placeCanton" placeholder="Selectionner le canton" ngModel>
-        <ion-select-option value="Appenzell Rhodes-Extérieures">Appenzell Rhodes-Extérieures</ion-select-option>
-        <ion-select-option value="Appenzell Rhodes-Extérieures">Appenzell Rhodes-Extérieures</ion-select-option>
-        <ion-select-option value="Argovie">Argovie</ion-select-option>
-        <ion-select-option value="Bâle-Campagne">Bâle-Campagne</ion-select-option>
-        <ion-select-option value="Bâle-Ville">Bâle-Ville</ion-select-option>
-        <ion-select-option value="Berne">Berne</ion-select-option>
-        <ion-select-option value="Fribourg">Fribourg</ion-select-option>
-        <ion-select-option value="Genève">Genève</ion-select-option>
-        <ion-select-option value="Glaris">Glaris</ion-select-option>
-        <ion-select-option value="Grisons">Grisons</ion-select-option>
-        <ion-select-option value="Jura">Jura</ion-select-option>
-        <ion-select-option value="Lucerne">Lucerne</ion-select-option>
-        <ion-select-option value="Neuchâtel">Neuchâtel</ion-select-option>
-        <ion-select-option value="Nidwald">Nidwald</ion-select-option>
-        <ion-select-option value="Obwald">Obwald</ion-select-option>
-        <ion-select-option value="Saint-Gall">Saint-Gall</ion-select-option>
-        <ion-select-option value="Schaffhouse">Schaffhouse</ion-select-option>
-        <ion-select-option value="Schwytz">Schwytz</ion-select-option>
-        <ion-select-option value="Soleure">Soleure</ion-select-option>
-        <ion-select-option value="Tessin">Tessin</ion-select-option>
-        <ion-select-option value="Thurgovie">Thurgovie</ion-select-option>
-        <ion-select-option value="Uri">Uri</ion-select-option>
-        <ion-select-option value="Valais">Valais</ion-select-option>
-        <ion-select-option value="Vaud">Vaud</ion-select-option>
-        <ion-select-option value="Zoug">Zoug</ion-select-option>
-        <ion-select-option value="Zurich">Zurich</ion-select-option>
+      <ion-label position="stacked">Canton</ion-label>
+      <ion-select required [(ngModel)]="data.canton" name="placeCanton" placeholder="Cantons">
+        <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
 
-  <ion-item>
-    <ion-label position="stacked">Pictures</ion-label>
-    <ion-button name="placePicture" (click)="takePicture()">Select Images</ion-button> 
-   
-  </ion-item>
-  <ion-buttons slot="end">
-    <ion-button type="ngSubmit" (click)="confirm()">Confirm</ion-button>
-  </ion-buttons>
+  <ion-button type="submit" expand="block">Submit</ion-button>
 </form>
+  <!-- <ion-item>
+    <ion-label position="stacked">Pictures</ion-label>
+    <ion-button name="placePicture" (click)="takePicture()">Take picture</ion-button> 
+  </ion-item> -->
+
+  <ion-item>
+  <img *ngIf="picture" [src]="picture.url" />
+</ion-item>
+
+
   
 </ion-content>

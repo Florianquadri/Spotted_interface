@@ -39,7 +39,9 @@ export class PlacesPage implements ViewWillEnter {
 
 
 
-
+  map: Map;
+  marker: L.Marker;
+  mapMarkers: L.Marker[] = [];
   mapOptions: MapOptions;
   whichPlace: string;
   public places: Place[];
@@ -48,9 +50,7 @@ export class PlacesPage implements ViewWillEnter {
  
   public results = [];
   public data = [];
-  map: Map;
-  marker: L.Marker;
-  mapMarkers: L.Marker[] = [];
+ 
   message = 'This modal example uses the modalController to present and dismiss modals.';
   chosenPlace: Place;
   chosenCanton: string;
@@ -110,7 +110,10 @@ export class PlacesPage implements ViewWillEnter {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: AddPlaceComponent,
+      componentProps: { coordinate: this.marker.getLatLng }
+      
     });
+   
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
@@ -167,16 +170,6 @@ export class PlacesPage implements ViewWillEnter {
     );
   }
 
-
-
-  /*  changeIcon(){
-    this.mapMarkers.forEach(marker => {
-      marker.setIcon(defaultIcon);
-    });
-   } */
-
-
-
   handleChange(event) {
     const query = event.target.value.toLowerCase();
     if (query == "") {
@@ -196,6 +189,7 @@ export class PlacesPage implements ViewWillEnter {
     )
     this.results = [];
   }
+    
 
   filterByCanton(chosenCanton) {
     console.log(chosenCanton.detail.value)
@@ -283,7 +277,9 @@ export class PlacesPage implements ViewWillEnter {
       }, 200);
 
 
+
     });
+    this.addDataToMap();
   }
 
 
