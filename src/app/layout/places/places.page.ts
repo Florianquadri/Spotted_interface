@@ -36,6 +36,8 @@ export class PlacesPage implements ViewWillEnter {
   chosenPlace: Place;
   chosenCanton: string;
   tagChosen : string;
+  //comment réinitialiser champ menu déroulant ?
+  //pour savoir si un filtre est déjà activé et s'il faut ainsi les mixer
   searchByTAgActivated : boolean = false;
   searchByCantonActivated : boolean = false;
 
@@ -156,7 +158,6 @@ export class PlacesPage implements ViewWillEnter {
       this.results = this.data.filter(d => d.name.toLowerCase().indexOf(query) > -1);
       console.log(this.results)
     }
-
   }
 
   goOnChosenPoint(chosenPlace) {
@@ -167,9 +168,30 @@ export class PlacesPage implements ViewWillEnter {
     )
     this.results = [];
   }
-
   filterByTag(tagChosen){
+    this.searchByTAgActivated = true;
+    this.tagChosen = tagChosen.detail.value;
     console.log(tagChosen.detail.value);
+
+    if(this.searchByCantonActivated){
+      this.placeService.getPlacesByTagsAndCantons$(this.tagChosen, this.chosenCanton).subscribe(places=>{
+        if (places.length == 0) {
+          this.mapMarkers = [];
+          //ouverture popup avec message
+          console.log("pas de place pour ce canton")
+          /*         this.data = places;
+                  this.places = places;
+                  this.addDataToMap(); */
+        } else {
+          console.log("y'a des places")
+          this.data = places;
+          this.places = places;
+          this.addDataToMap();
+        }
+      })     
+    }
+    else 
+{
     this.placeService.getPlacesByTags$(tagChosen.detail.value).subscribe(places => {
       console.log(places)
       if (places.length == 0) {
@@ -185,9 +207,30 @@ export class PlacesPage implements ViewWillEnter {
       }
     })
   }
+  }
 
   filterByCanton(chosenCanton) {
+    this.searchByCantonActivated = true;
+    this.chosenCanton = chosenCanton.detail.value;
     console.log(chosenCanton.detail.value)
+
+    if(this.searchByTAgActivated){
+      this.placeService.getPlacesByTagsAndCantons$(this.tagChosen, this.chosenCanton).subscribe(places=>{
+        if (places.length == 0) {
+          this.mapMarkers = [];
+          //ouverture popup avec message
+          console.log("pas de place pour ce canton")
+        } else {
+          console.log("y'a des places")
+          this.data = places;
+          this.places = places;
+          this.addDataToMap();
+        }
+      })
+      
+    }
+else 
+{
     this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
       console.log(places)
       if (places.length == 0) {
@@ -210,6 +253,7 @@ export class PlacesPage implements ViewWillEnter {
       }
  
     })
+  }
 
     this.placeService.getCoordinatesForCantons$(chosenCanton.detail.value).subscribe(
       coordinates => {
@@ -223,6 +267,8 @@ export class PlacesPage implements ViewWillEnter {
   }
 
   reinitialiseFiltres() {
+    this.searchByTAgActivated = false;
+    this.searchByCantonActivated = false;
     //penser à réinitialiser si appui sur bouton réinitialiser
     this.placeService.getPlaces$().subscribe(places => {
       //console.log(places)
