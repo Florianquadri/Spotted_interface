@@ -88,23 +88,16 @@ console.log(this.picture)
   
 
     confirm() {
-      console.log("ici : "+this.coordinates);
-      
-      
 
       this.dataForm.push(this.form.value);
-      /* console.log("this.dataForm");
-      console.log(this.dataForm); */
+ 
+     /*  this.auth.getUser$().subscribe((users) => {
 
-      this.auth.getUser$().subscribe((users) => {
-
-        /* console.log('ce que je recois', users);
-        console.log(users.id); */
         this.idUser = null;
         this.idUser = users.id;
         this.surnameUser = null;
       this.surnameUser = users.surname;
-      });
+      }); */
       
      this.data = {"name": this.dataForm[0].placeName,
                   "canton": this.dataForm[0].placeCanton,
