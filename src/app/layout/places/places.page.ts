@@ -42,7 +42,7 @@ export class PlacesPage implements ViewWillEnter {
   searchByCantonActivated : boolean = false;
   mapViewChosen : boolean = true;
 
-  public cantons = ["Appenzell Rhodes-Extérieures",
+  public cantons = [/* "Tous", */"Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
     "Argovie",
     "Bâle-Campagne",
@@ -272,6 +272,8 @@ else
   }
 
   reinitialiseFiltres() {
+/*     let dropDown = document.getElementById("dropDown");
+    dropDown.selectedIndex = 0; */
     this.searchByTAgActivated = false;
     this.searchByCantonActivated = false;
     //penser à réinitialiser si appui sur bouton réinitialiser

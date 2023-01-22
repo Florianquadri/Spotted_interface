@@ -26,6 +26,7 @@
     <ion-list>
       <ion-item>
         <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
+<!--           <ion-select-option  selected disabled hidden  > Cantons </ion-select-option>  -->
           <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -55,23 +56,6 @@
     <ion-button shape="round" (click)="activateListView()">Liste</ion-button>
 
   </div>
-
-
-
-
-  <!-- <ion-item>
-    <ion-label class="hidden">Search places</ion-label>
-    <ion-input type="text" placeholder="Search for a place" [(ngModel)]="whichPlace" name="whichPlace"></ion-input>
-  </ion-item>
-<p>Place recherchée : {{whichPlace}}</p> -->
-
-<!--    <ul>
-    <li *ngFor="let place of places">
-      {{place.name}} |
-      {{place.canton}}
-
-    </li>
-  </ul>  -->
 
 <!--   //mettre display none plutôt que ngIf pour éviter erreur console car là disparaît du dom donc certaines fonctions bug -->
 <div [class.hidden]="!mapViewChosen" class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
