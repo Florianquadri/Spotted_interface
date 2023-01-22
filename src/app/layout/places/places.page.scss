@@ -6,12 +6,48 @@
 .map {
     height: 70%;
   }
+
+
+
   .leaflet-map{
-    height: 70%;
+    height: 65%;
   }
 
   .customcursor {
     cursor: url("../../utile_files/locate-outline.svg") auto;
  }
 
+ ul{
+  list-style: none;
+  padding: 0;
+ }
+
+ .containerRow {
+  display:flex;
+  flex-direction: row;
+ }
+
+ .spaceBetween{
+  justify-content: space-between;
+ }
+
+ .start{
+  justify-content: flex-start;
+ }
+
+ .listPlace{
+  padding: 15px 5px;
+  margin-bottom:10px;
+  border: 1px solid yellow;
+  border-radius:50px;
+ }
+
+.fullSpace{
+  margin:0px;
+  padding:0px;
+}
+
+.space{
+  margin:0px 10px;
+}
 

@@ -20,45 +20,71 @@
     </ion-item>
   </ion-list>
 
-  <ion-list>
-    <ion-item>
-      <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
-        <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+  <div class="containerRow start">
+    <p>Filtrer</p>
 
-  <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
+    <ion-list>
+      <ion-item>
+        <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
+<!--           <ion-select-option  selected disabled hidden  > Cantons </ion-select-option>  -->
+          <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
+    <ion-list>
+      <ion-item>
+        <ion-select  (ionChange)="filterByTag($event)" interface="popover" placeholder="Tags">
+          <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
-
-  <!-- <ion-item>
-    <ion-label class="hidden">Search places</ion-label>
-    <ion-input type="text" placeholder="Search for a place" [(ngModel)]="whichPlace" name="whichPlace"></ion-input>
-  </ion-item>
-<p>Place recherchée : {{whichPlace}}</p> -->
-
-
-  <ul>
-    <li *ngFor="let place of places">
-      {{place.name}} |
-      {{place.canton}}
-
-    </li>
-  </ul>
-
-
-
-  <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
-    (leafletMapReady)="onMapReady($event)">
+    <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
   </div>
 
-  <ion-button class="locateMe" (click)="locateMe()">
+  <div class="containerRow start">
+    <ion-item>
+      <ion-label>Map View</ion-label>
+      <ion-toggle (ionChange)="toggleView($event)" slot="end" [checked]="true"></ion-toggle>
+    </ion-item>
+  </div>
+
+  <div class="containerRow start">
+    <p>View</p>
+    <ion-button shape="round" (click)="activateMapView()">Map</ion-button>
+    <ion-button shape="round" (click)="activateListView()">Liste</ion-button>
+
+  </div>
+
+<!--   //mettre display none plutôt que ngIf pour éviter erreur console car là disparaît du dom donc certaines fonctions bug -->
+<div [class.hidden]="!mapViewChosen" class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
+(leafletMapReady)="onMapReady($event)">
+</div>
+<!--   <div *ngIf="mapViewChosen" class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
+    (leafletMapReady)="onMapReady($event)">
+  </div> -->
+
+  <div *ngIf="!mapViewChosen">
+    <p>Résultat</p>
+    <ul class="fullspace">
+      <div class="containerRow listPlace" *ngFor="let place of data">
+        <p class="space">{{place.name}}</p>
+        <p class="space">  10 Km</p>
+        <p class="space">*****</p>
+        <p class="space">note</p>
+ 
+  
+      </div>
+    </ul> 
+  </div>
+
+  <ion-button *ngIf="mapViewChosen" class="locateMe" (click)="locateMe()">
     <ion-icon name="pin"></ion-icon>
     <ion-label>Locate Me</ion-label>
   </ion-button>
 
-  <ion-button class="addMarker" (click)="addMarker()">Add Marker
+  <ion-button *ngIf="mapViewChosen" class="addMarker" (click)="addMarker()">Add Marker
   </ion-button>
 
   <!--  <ion-button expand="block" (click)="openModal()">Open</ion-button>

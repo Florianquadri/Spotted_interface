@@ -53,12 +53,18 @@ public coordinate: number[];
   message = 'This modal example uses the modalController to present and dismiss modals.';
   chosenPlace: Place;
   chosenCanton: string;
+  tagChosen : string;
+  //comment réinitialiser champ menu déroulant ?
+  //pour savoir si un filtre est déjà activé et s'il faut ainsi les mixer
+  searchByTAgActivated : boolean = false;
+  searchByCantonActivated : boolean = false;
+  mapViewChosen : boolean = true;
 
-  public cantons = ["Appenzell Rhodes-Extérieures",
+  public cantons = [/* "Tous", */"Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
     "Argovie",
     "Bâle-Campagne",
-    "Bâle-Ville",
+    "Bâle-Stadt",
     "Berne",
     "Fribourg",
     "Genève",
@@ -70,17 +76,19 @@ public coordinate: number[];
     "Nidwald",
     "Obwald",
     "Saint-Gall",
-    "Schaffhouse",
+    "Schaffhausen",
     "Schwytz",
     "Soleure",
-    "Tessin",
-    "Thurgovie",
+    "Ticino",
+    "Thurgovia",
     "Uri",
     "Valais",
     "Vaud",
-    "Zoug",
+    "Zug",
     "Zurich"
   ]
+
+  public tags = ["Piscine","forêt", "street photography", "lac", "montagne", "sunrise", "sunset", "treck", "monument", "panorama", "urbex", "glacier", "barrage", "incontournable", "astrophotographie", "lost but worth it" ];
 
 
   constructor( // Inject the authentication provider.
@@ -175,24 +183,87 @@ public coordinate: number[];
       this.results = this.data.filter(d => d.name.toLowerCase().indexOf(query) > -1);
       console.log(this.results)
     }
-
   }
 
   goOnChosenPoint(chosenPlace) {
     console.log(chosenPlace.location.coordinates)
     this.map.setView(
       [chosenPlace.location.coordinates[0],
-      chosenPlace.location.coordinates[1]]
+      chosenPlace.location.coordinates[1]], 13
     )
     this.results = [];
   }
-    
+  filterByTag(tagChosen){
+    this.searchByTAgActivated = true;
+    this.tagChosen = tagChosen.detail.value;
+    console.log(tagChosen.detail.value);
+
+    if(this.searchByCantonActivated){
+      this.placeService.getPlacesByTagsAndCantons$(this.tagChosen, this.chosenCanton).subscribe(places=>{
+        if (places.length == 0) {
+          this.data=[];
+          this.mapMarkers = [];
+          //ouverture popup avec message
+          console.log("pas de place pour ce canton")
+          /*         this.data = places;
+                  this.places = places;
+                  this.addDataToMap(); */
+        } else {
+          console.log("y'a des places")
+          this.data = places;
+          this.places = places;
+          this.addDataToMap();
+        }
+      })     
+    }
+    else 
+{
+    this.placeService.getPlacesByTags$(tagChosen.detail.value).subscribe(places => {
+      console.log(places)
+      if (places.length == 0) {
+        this.mapMarkers = [];
+        this.data=[];
+        //ouverture popup avec message
+        console.log("pas de place pour ce tag")
+      } else {
+        console.log("places trouvées")
+        this.data = places;
+        this.places = places;
+        this.addDataToMap();
+        this.map.setView([46.7985624, 8.2319736], 7  )
+      }
+    })
+  }
+  }
 
   filterByCanton(chosenCanton) {
+    this.searchByCantonActivated = true;
+    this.chosenCanton = chosenCanton.detail.value;
     console.log(chosenCanton.detail.value)
+
+    if(this.searchByTAgActivated){
+      this.placeService.getPlacesByTagsAndCantons$(this.tagChosen, this.chosenCanton).subscribe(places=>{
+        if (places.length == 0) {
+          this.mapMarkers = [];
+          this.data=[];
+          //ouverture popup avec message
+          console.log("pas de place pour ce canton")
+        } else {
+          console.log("y'a des places")
+          this.data = places;
+          this.places = places;
+          this.addDataToMap();
+        }
+      })
+      
+    }
+else 
+{
     this.placeService.getPlacesByCantons$(chosenCanton.detail.value).subscribe(places => {
       console.log(places)
       if (places.length == 0) {
+        this.mapMarkers = [];
+        this.data=[];
         //ouverture popup avec message
         console.log("pas de place pour ce canton")
         /*         this.data = places;
@@ -206,24 +277,36 @@ public coordinate: number[];
         this.places = places;
         this.addDataToMap();
         console.log("test", this.data)
+        //zoomer sur coordonnées centrales du canton + zoom plus vaste
+        
       }
-      //console.log(places)
-
-
-      /* console.log(this.data)
-      console.log(this.data[4]) */
-
+ 
     })
+  }
+
+    this.placeService.getCoordinatesForCantons$(chosenCanton.detail.value).subscribe(
+      coordinates => {
+        console.log(coordinates)
+        this.map.setView([coordinates[1], coordinates[0]], 8  )
+/*         this.mapOptions.zoom = 10; */
+      }
+      
+    )
     //faire filtre en faisant appel à l'api
   }
 
   reinitialiseFiltres() {
+/*     let dropDown = document.getElementById("dropDown");
+    dropDown.selectedIndex = 0; */
+    this.searchByTAgActivated = false;
+    this.searchByCantonActivated = false;
     //penser à réinitialiser si appui sur bouton réinitialiser
     this.placeService.getPlaces$().subscribe(places => {
       //console.log(places)
       this.places = places;
       this.data = places;
       this.addDataToMap();
+      this.locateMe();
       /* console.log(this.data)
       console.log(this.data[4]) */
     })
@@ -283,7 +366,20 @@ console.log(this.coordinate)
     this.addDataToMap();
   }
 
+activateMapView(){
+  console.log("vue map activée");
+  this.mapViewChosen = true;
+}
 
+activateListView(){
+  console.log("vue liste activée")
+  this.mapViewChosen = false;
+}
+
+toggleView(event){
+  console.log("toggle")
+  this.mapViewChosen =   !this.mapViewChosen;
+}
 
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
