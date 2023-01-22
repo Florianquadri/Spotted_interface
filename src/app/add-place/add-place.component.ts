@@ -12,7 +12,7 @@ import { environment } from "src/environments/environment"
 import { CreateRequestOptions } from 'ionic';
 import { CLIENT_RENEG_LIMIT } from 'tls';
 import { User } from '../models/user';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavParams } from 'node_modules/@ionic/angular';
 
 
@@ -35,8 +35,8 @@ export class AddPlaceComponent {
     public surnameUser: string;
     public placeId = null;
     public place: Place[];
- 
   coordinates: number[];
+
 
 
 
@@ -54,8 +54,8 @@ export class AddPlaceComponent {
       private navParams: NavParams
       ) {
         this.form = this.fb.group({
-          placeName: [''],
-          placeCanton: ['']
+          placeName: new FormControl('', [Validators.required]),
+          placeCanton: new FormControl('',[Validators.required])
         });
         this.coordinates = this.navParams.get('coordinates');
         
@@ -88,16 +88,8 @@ console.log(this.picture)
   
 
     confirm() {
-
+  
       this.dataForm.push(this.form.value);
- 
-     /*  this.auth.getUser$().subscribe((users) => {
-
-        this.idUser = null;
-        this.idUser = users.id;
-        this.surnameUser = null;
-      this.surnameUser = users.surname;
-      }); */
       
      this.data = {"name": this.dataForm[0].placeName,
                   "canton": this.dataForm[0].placeCanton,
@@ -108,19 +100,20 @@ console.log(this.picture)
 
     console.log(this.data);
 
-       this.placeService.addPlace$(this.data).subscribe();
+      /*  this.placeService.addPlace$(this.data).subscribe(); */
     
       this.refreshPlace();
       this.form.reset();
-      return this.modalCtrl.dismiss(this.name, 'confirm');
+
+      return this.modalCtrl.dismiss('confirm');
     }
 
     refreshPlace() {
-      /* this.placeService.getPlaces$()
+      this.placeService.getPlaces$()
         .subscribe(data => {
-          console.log(data)
-             this.place = data;
-        })      */
+        
+          
+        })     
     }
 
 
@@ -157,5 +150,7 @@ console.log(this.picture)
 ]
 
 }
+
+
 
 

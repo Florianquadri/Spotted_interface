@@ -27,6 +27,7 @@ import { AddPlaceComponent } from '../../add-place/add-place.component';
 })
 export class PlacesPage implements ViewWillEnter {
 
+  canActivate = true;
 
 
   // TRuc à faire dans un nouveau component modal onclick sur le HTML
@@ -49,6 +50,7 @@ public coordinates: any;
 public coordinate: number[];
   public results = [];
   public data = [];
+
  
   message = 'This modal example uses the modalController to present and dismiss modals.';
   chosenPlace: Place;
@@ -128,7 +130,23 @@ public coordinate: number[];
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
     }
+
+    modal.onDidDismiss().then(data => {
+
+      this.marker.addTo(this.map);
+      this.mapMarkers.push(this.marker);
+      this.mapMarkers.forEach(marker => {
+        marker.setIcon(defaultIcon);
+      });
+      console.log(this.mapMarkers);
+      
+      
+
+    });
+
   }
+
+  
 
   onMapReady(map: Map) {
     setTimeout(() => map.invalidateSize(), 0);
@@ -146,7 +164,7 @@ public coordinate: number[];
 
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
-
+      
       const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).bindPopup(this.data[i].name);
       await marker.on('click',() => this.displayPlaceModal(this.data[i]))
       this.mapMarkers.push(marker);
@@ -334,35 +352,32 @@ else
 
 
   addMarker() {
-
+    this.resetMethod();
     this.map.on('click', e => {
-      
-      this.marker = L.marker(e.latlng).addTo(this.map);
+
+      if (this.canActivate==true) {
+        
+      //this.marker = L.marker(e.latlng).addTo(this.map);
+      this.marker = L.marker(e.latlng);
            this.coordinates = this.marker.getLatLng();
         
 this.coordinate = [this.coordinates.lat, this.coordinates.lng]
-console.log(this.coordinate)
-
-      this.mapMarkers.push(this.marker);
 
       this.mapOptions.center = this.marker.getLatLng();
       this.map.setView(
         this.marker.getLatLng(),
       )
-      /*  this.marker.bindPopup("Nouveau marker").openPopup(); */
-
-      this.mapMarkers.forEach(marker => {
-        marker.setIcon(defaultIcon);
-      });
-      console.log(this.mapMarkers);
 
       setTimeout(() => {
         this.openModal();
       }, 200);
-
-
-
+this.canActivate = false;
+      
+    }
     });
+    
+  
+  
     this.addDataToMap();
   }
 
@@ -380,6 +395,12 @@ toggleView(event){
   console.log("toggle")
   this.mapViewChosen =   !this.mapViewChosen;
 }
+
+resetMethod() {
+    this.canActivate = true;
+  }
+
+
 
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
