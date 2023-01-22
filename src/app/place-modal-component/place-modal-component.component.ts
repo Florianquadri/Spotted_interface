@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from 'node_modules/@ionic/angular';
 import { Place } from '../models/place';
 import { NotesService } from '../services/notes.service';
 
