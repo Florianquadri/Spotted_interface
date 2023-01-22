@@ -38,10 +38,24 @@
         </ion-select>
       </ion-item>
     </ion-list>
-  </div>
- 
 
-  <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
+    <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
+  </div>
+
+  <div class="containerRow start">
+    <ion-item>
+      <ion-label>Map View</ion-label>
+      <ion-toggle (ionChange)="toggleView($event)" slot="end" [checked]="true"></ion-toggle>
+    </ion-item>
+  </div>
+
+  <div class="containerRow start">
+    <p>View</p>
+    <ion-button shape="round" (click)="activateMapView()">Map</ion-button>
+    <ion-button shape="round" (click)="activateListView()">Liste</ion-button>
+
+  </div>
+
 
 
 
@@ -51,25 +65,42 @@
   </ion-item>
 <p>Place recherchée : {{whichPlace}}</p> -->
 
-<!--   <ul>
+<!--    <ul>
     <li *ngFor="let place of places">
       {{place.name}} |
       {{place.canton}}
 
     </li>
-  </ul> -->
+  </ul>  -->
 
-
-  <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
+<!--   //mettre display none plutôt que ngIf pour éviter erreur console car là disparaît du dom donc certaines fonctions bug -->
+<div [class.hidden]="!mapViewChosen" class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
+(leafletMapReady)="onMapReady($event)">
+</div>
+<!--   <div *ngIf="mapViewChosen" class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
     (leafletMapReady)="onMapReady($event)">
+  </div> -->
+
+  <div *ngIf="!mapViewChosen">
+    <p>Résultat</p>
+    <ul class="fullspace">
+      <div class="containerRow listPlace" *ngFor="let place of data">
+        <p class="space">{{place.name}}</p>
+        <p class="space">  10 Km</p>
+        <p class="space">*****</p>
+        <p class="space">note</p>
+ 
+  
+      </div>
+    </ul> 
   </div>
 
-  <ion-button class="locateMe" (click)="locateMe()">
+  <ion-button *ngIf="mapViewChosen" class="locateMe" (click)="locateMe()">
     <ion-icon name="pin"></ion-icon>
     <ion-label>Locate Me</ion-label>
   </ion-button>
 
-  <ion-button class="addMarker" (click)="addMarker()">Add Marker
+  <ion-button *ngIf="mapViewChosen" class="addMarker" (click)="addMarker()">Add Marker
   </ion-button>
 
   <!--  <ion-button expand="block" (click)="openModal()">Open</ion-button>

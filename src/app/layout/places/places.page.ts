@@ -40,6 +40,7 @@ export class PlacesPage implements ViewWillEnter {
   //pour savoir si un filtre est déjà activé et s'il faut ainsi les mixer
   searchByTAgActivated : boolean = false;
   searchByCantonActivated : boolean = false;
+  mapViewChosen : boolean = true;
 
   public cantons = ["Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
@@ -176,6 +177,7 @@ export class PlacesPage implements ViewWillEnter {
     if(this.searchByCantonActivated){
       this.placeService.getPlacesByTagsAndCantons$(this.tagChosen, this.chosenCanton).subscribe(places=>{
         if (places.length == 0) {
+          this.data=[];
           this.mapMarkers = [];
           //ouverture popup avec message
           console.log("pas de place pour ce canton")
@@ -196,6 +198,7 @@ export class PlacesPage implements ViewWillEnter {
       console.log(places)
       if (places.length == 0) {
         this.mapMarkers = [];
+        this.data=[];
         //ouverture popup avec message
         console.log("pas de place pour ce tag")
       } else {
@@ -218,6 +221,7 @@ export class PlacesPage implements ViewWillEnter {
       this.placeService.getPlacesByTagsAndCantons$(this.tagChosen, this.chosenCanton).subscribe(places=>{
         if (places.length == 0) {
           this.mapMarkers = [];
+          this.data=[];
           //ouverture popup avec message
           console.log("pas de place pour ce canton")
         } else {
@@ -235,6 +239,7 @@ else
       console.log(places)
       if (places.length == 0) {
         this.mapMarkers = [];
+        this.data=[];
         //ouverture popup avec message
         console.log("pas de place pour ce canton")
         /*         this.data = places;
@@ -330,7 +335,20 @@ else
 
   }
 
+activateMapView(){
+  console.log("vue map activée");
+  this.mapViewChosen = true;
+}
 
+activateListView(){
+  console.log("vue liste activée")
+  this.mapViewChosen = false;
+}
+
+toggleView(event){
+  console.log("toggle")
+  this.mapViewChosen =   !this.mapViewChosen;
+}
 
 
 
