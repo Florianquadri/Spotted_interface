@@ -12,16 +12,16 @@
 <ion-content class="ion-padding">
 
 
-<!--   <form [formGroup]="form"> -->
-    <form (ngSubmit)="confirm()">
+  <form (ngSubmit)="confirm()" [formGroup]="form">
+    <!-- <form > -->
   <ion-item>
     <ion-label position="stacked">Nom de la place</ion-label>
-    <ion-input required [clearInput]="true" [(ngModel)]="data.name" name="placeName" placeholder="Name of the place"></ion-input>
+    <ion-input required [clearInput]="true" formControlName="placeName" placeholder="Name of the place"></ion-input>
   </ion-item>
   <ion-list>
     <ion-item>
       <ion-label position="stacked">Canton</ion-label>
-      <ion-select required [(ngModel)]="data.canton" name="placeCanton" placeholder="Cantons">
+      <ion-select required  formControlName="placeCanton"name="placeCanton" placeholder="Cantons">
         <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
       </ion-select>
     </ion-item>

@@ -3,6 +3,6 @@ export type Place = {
     name: string;
     creator:string;
     canton:string;
-    coordinates: [number];
+    location: [number];
     tags : [string]
   };

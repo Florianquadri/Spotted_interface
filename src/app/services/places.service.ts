@@ -27,23 +27,10 @@ export class PlacesService {
     return this.http.get<Place[]>(`${environment.apiUrl}/places?canton=${canton}`);
   }
 
-/*   postPlace$(): Observable<placeInfos[]>{
-    return this.http.post<placeInfos[]>(`${environment.apiUrl}/places/placeId`);
-  } */
 
-  addPlace(data){ 
-    
-    return this.http.post(`${environment.apiUrl}/places`, data)
-   // return this.http.post(`${environment.apiUrl}/places`, { data$, coordinate });
-  
-  
+  addPlace$(data: any[]){ 
+    return this.http.post(`${environment.apiUrl}/places`, data);
   }
-
-
-/*   add(data: any, marker: L.Marker) {
-    const location = marker.getLatLng();
-    return this.http.post(`${environment.apiUrl}/places`, { data, location });
-  } */
 
   handleError<T>(arg0: string): (err: any, caught: Observable<any>) => import("rxjs").ObservableInput<any> {
     throw new Error('Method not implemented.');

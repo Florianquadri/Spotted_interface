@@ -1,22 +1,19 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from 'node_modules/@ionic/angular';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { PictureService } from 'src/app/services/picture.service';
 import { subscribeOn } from 'rxjs';
 import { PlacesService } from 'src/app/services/places.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { Place } from "../models/place";
-import { FormGroup, FormControl } from '@angular/forms';
-import { latLng, MapOptions, tileLayer, Map, marker, Marker } from 'leaflet';
-import * as L from 'leaflet';
 import { AuthService } from "src/app/auth/auth.service";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment"
 import { CreateRequestOptions } from 'ionic';
 import { CLIENT_RENEG_LIMIT } from 'tls';
-
-
-
+import { User } from '../models/user';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavParams } from 'node_modules/@ionic/angular';
 
 
 @Component({
@@ -26,31 +23,43 @@ import { CLIENT_RENEG_LIMIT } from 'tls';
 })
 export class AddPlaceComponent {
     name: string;
+    canton: string;
     imgRes: any;
     options: any;
     picture: any;
-    public places: Place[];
-    public place;
-    map: Map;
-    marker: L.Marker;
-    mapMarkers: L.Marker[] = [];
-    mapOptions: MapOptions;
-    coordinate: L.LatLng;
-    creator = undefined;
-     userId = null;
+   data:any;
+    form: FormGroup;
+    dataForm: any[] = [];
+    public users: User[];
+    public idUser : string;
+    public surnameUser: string;
+    public placeId = null;
+    public place: Place[];
+ 
+  coordinates: number[];
 
-    /////// test
-    form = new FormGroup({
-      placeName: new FormControl(),
-      placeCanton: new FormControl(),
-    });
 
-    data = { name: '', canton: '' };
 
-   
+    
 
-    constructor(private http: HttpClient,private modalCtrl: ModalController,private pictureService: PictureService,private placeService: PlacesService,private auth: AuthService,) {
-      
+
+
+    constructor(
+      private http: HttpClient,
+      private modalCtrl: ModalController,
+      private pictureService: PictureService,
+      private placeService: PlacesService,
+      private auth: AuthService,
+      private fb: FormBuilder,
+      private navParams: NavParams
+      ) {
+        this.form = this.fb.group({
+          placeName: [''],
+          placeCanton: ['']
+        });
+        this.coordinates = this.navParams.get('coordinates');
+        
+     
     }
 
     takePicture = async () => {
@@ -77,45 +86,54 @@ console.log(this.picture)
       return this.modalCtrl.dismiss(null, 'cancel');
     }
   
+
     confirm() {
-this.getCreator();
-      console.log(this.form.value.placeName)
-      console.log(this.creator)
+      console.log("ici : "+this.coordinates);
+      
+      
 
-      /* this.placeService
-    .addPlace(this.place,this.coordinate)
-    .subscribe(place => {
-      this.places.push(this.place)
-    }); */
-         
-    this.http.post(`${environment.apiUrl}/places`, this.data).subscribe(response => {
-      console.log(response);
-    });
+      this.dataForm.push(this.form.value);
+      /* console.log("this.dataForm");
+      console.log(this.dataForm); */
 
+      this.auth.getUser$().subscribe((users) => {
+
+        /* console.log('ce que je recois', users);
+        console.log(users.id); */
+        this.idUser = null;
+        this.idUser = users.id;
+        this.surnameUser = null;
+      this.surnameUser = users.surname;
+      });
+      
+     this.data = {"name": this.dataForm[0].placeName,
+                  "canton": this.dataForm[0].placeCanton,
+                  "location": {
+                    "type": "Point",
+                     "coordinates": this.coordinates},
+                     "tags": ["tréjoli","trébo"]};
+
+    console.log(this.data);
+
+       this.placeService.addPlace$(this.data).subscribe();
+    
       this.refreshPlace();
+      this.form.reset();
       return this.modalCtrl.dismiss(this.name, 'confirm');
     }
 
-
-getCreator(){
-  
-  this.creator = this.auth.getUser$();
-  
-}
-
-
-
     refreshPlace() {
-      this.placeService.getPlaces$()
+      /* this.placeService.getPlaces$()
         .subscribe(data => {
           console.log(data)
-          this.place=data;
-        })     
+             this.place = data;
+        })      */
     }
+
 
   ngOnInit() {}
 
-  onPlaceCreate(placeInfos: {placeName: string, placeCanton: string}){}
+
   
   public cantons = ["Appenzell Rhodes-Extérieures",
   "Appenzell Rhodes-Extérieures",

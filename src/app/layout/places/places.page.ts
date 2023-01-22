@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth/auth.service";
 // TODO: import Angular's HTTP client.
 import { HttpClient } from "@angular/common/http";
-import { ViewWillEnter } from "@ionic/angular";
+import { ViewWillEnter } from "node_modules/@ionic/angular";
 import { environment } from "src/environments/environment";
 import { NotesService } from 'src/app/services/notes.service';
 import { PlacesService } from 'src/app/services/places.service';
@@ -14,9 +14,8 @@ import { Note } from 'src/app/models/note';
 import { latLng, MapOptions, tileLayer, Map, marker, Marker } from 'leaflet';
 import { defaultIcon } from '../../utile_files/default-marker';
 import { locateMeIcon } from '../../utile_files/locateMe-marker';
-
 import * as L from 'leaflet';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from 'node_modules/@ionic/angular';
 import { AddPlaceComponent } from '../../add-place/add-place.component';
 
 
@@ -46,8 +45,8 @@ export class PlacesPage implements ViewWillEnter {
   whichPlace: string;
   public places: Place[];
   public notes: Note[];
-
- 
+public coordinates: any;
+public coordinate: number[];
   public results = [];
   public data = [];
  
@@ -110,7 +109,7 @@ export class PlacesPage implements ViewWillEnter {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: AddPlaceComponent,
-      componentProps: { coordinate: this.marker.getLatLng }
+      componentProps: { coordinates: this.coordinate }
       
     });
    
@@ -140,8 +139,6 @@ export class PlacesPage implements ViewWillEnter {
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
 
-
-      
       const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).bindPopup(this.data[i].name);
       await marker.on('click',() => this.displayPlaceModal(this.data[i]))
       this.mapMarkers.push(marker);
@@ -256,8 +253,12 @@ export class PlacesPage implements ViewWillEnter {
   addMarker() {
 
     this.map.on('click', e => {
-
+      
       this.marker = L.marker(e.latlng).addTo(this.map);
+           this.coordinates = this.marker.getLatLng();
+        
+this.coordinate = [this.coordinates.lat, this.coordinates.lng]
+console.log(this.coordinate)
 
       this.mapMarkers.push(this.marker);
 

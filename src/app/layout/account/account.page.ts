@@ -2,7 +2,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { AuthService } from './../../auth/auth.service';
 import { User } from './../../models/user';
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from 'node_modules/@ionic/angular';
 import { NotesService } from 'src/app/services/notes.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
