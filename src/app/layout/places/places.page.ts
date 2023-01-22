@@ -411,6 +411,7 @@ resetMethod() {
 
       let placeId = null;
       this.noteService.getNote$(placeId).subscribe(notes => {
+        console.log(placeId)
         console.log(notes)
       });
       this.addDataToMap();
