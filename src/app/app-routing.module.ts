@@ -1,3 +1,4 @@
+import { PlaceFromLieuxComponent } from './place-from-lieux/place-from-lieux.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from "./auth/auth.guard";
@@ -14,6 +15,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
   },
+  
 ];
 
 @NgModule({
