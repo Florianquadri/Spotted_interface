@@ -13,7 +13,7 @@ import { environment } from "src/environments/environment"
 import { User } from '../models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavParams } from 'node_modules/@ionic/angular';
-
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-place',
@@ -34,7 +34,7 @@ export class AddPlaceComponent {
     public surnameUser: string;
     public placeId = null;
     public place: Place[];
- 
+    imageUrl: any;
   coordinates: number[];
 
 
@@ -50,7 +50,8 @@ export class AddPlaceComponent {
       private placeService: PlacesService,
       private auth: AuthService,
       private fb: FormBuilder,
-      private navParams: NavParams
+      private navParams: NavParams,
+      private sanitizer: DomSanitizer
       ) {
         this.form = this.fb.group({
           placeName: [''],
@@ -123,10 +124,14 @@ console.log(this.picture.url)
         })      */
     }
 
+    onFileSelected(event) {
+      const file = event.target.files[0];
+      this.pictureService.uploadImage(file);
+    }
 
+
+    
   ngOnInit() {}
-
-
   
   public cantons = ["Appenzell Rhodes-Extérieures",
   "Appenzell Rhodes-Extérieures",

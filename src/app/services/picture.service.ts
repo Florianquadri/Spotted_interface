@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   Camera,
@@ -98,5 +98,20 @@ export class PictureService {
     );
     
   }
+
+  uploadImage(image: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imageData = reader.result;
+      this.http.post('your api endpoint', {image: imageData}, {
+        headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      }).subscribe(response => {
+        console.log(response);
+       /*  this.imageUrl = response.dataUrl; */
+      });
+    };
+    reader.readAsDataURL(image);
+  }
+
   
 }

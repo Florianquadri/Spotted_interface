@@ -38,6 +38,13 @@
   <img *ngIf="picture" [src]="picture.url" />
 </ion-item>
 
+<ion-item>
+  <input type="file" (change)="onFileSelected($event)"/>
+</ion-item>
+
+<ion-item>
+<!--   <img [src]="sanitizer.bypassSecurityTrustUrl(imageUrl)"> -->
+</ion-item>
 
   
 </ion-content>
