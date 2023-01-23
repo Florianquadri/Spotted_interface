@@ -5,27 +5,19 @@
 </ion-header>
 <ion-content>
   <ion-title> {{pseudo}} {{name}} </ion-title>
-<ion-segment (ionChange)="segmentChanged($event)">
-  <ion-segment-button value="photos">
-    Mes photos
-  </ion-segment-button>
-  <ion-segment-button value="lieux">
-    Lieux visités
-  </ion-segment-button>
-</ion-segment>
-<ion-title>
-  <p *ngIf=" currentSegment === 'photos'"> Mes photos</p>
-  <p *ngIf=" currentSegment === 'lieux'"> Mes lieux</p>
-</ion-title>
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="photos"> Mes photos </ion-segment-button>
+    <ion-segment-button value="lieux"> Lieux visités </ion-segment-button>
+  </ion-segment>
+  <ion-title>
+    <p *ngIf=" currentSegment === 'photos'">Mes photos</p>
+    <p *ngIf=" currentSegment === 'lieux'">Mes lieux</p>
+  </ion-title>
 
-<ion-list [inset]="true" *ngIf=" currentSegment === 'lieux'">
-  <li *ngFor="let place of data">
-    <p tappable (click)="goOnChosenPlace(place)">{{place.name}}</p>
-  </li>
-    <div>
-      {{notePassee2}}
-    </div>
-  
-</ion-list>
-
+  <ion-list [inset]="true" *ngIf=" currentSegment === 'lieux'">
+    <li *ngFor="let place of places">
+      <p tappable (click)="goOnChosenPlace(place)">{{place.name}}</p>
+      <div *ngIf="place.averageNote">{{ place.averageNote}}</div>
+    </li>
+  </ion-list>
 </ion-content>
