@@ -29,10 +29,10 @@
 
   <ion-button type="submit" [disabled]="!form.valid" expand="block">Submit</ion-button>
 </form>
-  <!-- <ion-item>
+  <ion-item>
     <ion-label position="stacked">Pictures</ion-label>
     <ion-button name="placePicture" (click)="takePicture()">Take picture</ion-button> 
-  </ion-item> -->
+  </ion-item>
 
   <ion-item>
   <img *ngIf="picture" [src]="picture.url" />

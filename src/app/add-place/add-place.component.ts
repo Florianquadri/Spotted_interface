@@ -9,7 +9,6 @@ import { Place } from "../models/place";
 import { AuthService } from "src/app/auth/auth.service";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment"
-
 /* import { CLIENT_RENEG_LIMIT } from 'tls'; */
 import { User } from '../models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -63,7 +62,7 @@ export class AddPlaceComponent {
     }
 
     takePicture = async () => {
-      /* const image = await Camera.getPhoto({
+     /*  const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: true,
         resultType: CameraResultType.Uri
@@ -80,6 +79,7 @@ export class AddPlaceComponent {
 
      this.picture = this.pictureService.takeAndUploadPicture$().subscribe();
 console.log(this.picture)
+console.log(this.picture.url)
     };
 
     cancel() {

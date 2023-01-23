@@ -86,7 +86,7 @@ export class PictureService {
     const requestOptions = {
       headers: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-       // Authorization: `Bearer ${environment.qimgSecret}`,
+       
       },
     };
    

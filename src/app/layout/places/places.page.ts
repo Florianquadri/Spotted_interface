@@ -139,7 +139,7 @@ public coordinate: number[];
         marker.setIcon(defaultIcon);
       });
       console.log(this.mapMarkers);
-      
+      this.addDataToMap();
       
 
     });
@@ -165,7 +165,7 @@ public coordinate: number[];
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
       
-      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon }).bindPopup(this.data[i].name);
+      const marker = L.marker(([this.data[i].location.coordinates[0], this.data[i].location.coordinates[1]]), { icon: defaultIcon });
       await marker.on('click',() => this.displayPlaceModal(this.data[i]))
       this.mapMarkers.push(marker);
     }
