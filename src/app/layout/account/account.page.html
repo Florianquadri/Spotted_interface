@@ -20,11 +20,12 @@
 
 <ion-list [inset]="true" *ngIf=" currentSegment === 'lieux'">
   <li *ngFor="let place of data">
-    {{place.name}}
-    <div *ngFor="let notePassee of notePassee">
-      {{notePassee}}
-    </div>
+    <p tappable (click)="goOnChosenPlace(place)">{{place.name}}</p>
   </li>
+    <div>
+      {{notePassee2}}
+    </div>
+  
 </ion-list>
 
 </ion-content>

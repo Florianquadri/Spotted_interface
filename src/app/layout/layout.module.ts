@@ -8,6 +8,7 @@ import { LayoutPageRoutingModule } from './layout-routing.module';
 
 import { LayoutPage } from './layout.page';
 import { AddPlaceComponent } from '../add-place/add-place.component';
+import { PlaceFromLieuxComponent } from '../place-from-lieux/place-from-lieux.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { AddPlaceComponent } from '../add-place/add-place.component';
     IonicModule,
     LayoutPageRoutingModule
   ],
-  declarations: [LayoutPage,AddPlaceComponent,]
+  declarations: [LayoutPage,AddPlaceComponent,PlaceFromLieuxComponent]
 })
 export class LayoutPageModule {}

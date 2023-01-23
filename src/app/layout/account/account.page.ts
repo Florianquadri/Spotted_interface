@@ -9,6 +9,9 @@ import { Place } from 'src/app/models/place';
 import { Note } from 'src/app/models/note';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { PlaceFromLieuxComponent } from 'src/app/place-from-lieux/place-from-lieux.component';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-account',
@@ -24,11 +27,15 @@ export class AccountPage /* implements OnInit */ {
   public places: Place[];
   public notes: Note[];
   public notePassee = [];
+  public test = [];
+  public notePassee2 =null;
   public currentSegment = null;
   constructor(
     private AuthService: AuthService,
     private placeService: PlacesService,
-    private noteService: NotesService
+    private noteService: NotesService,
+    private router: Router, 
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -54,30 +61,42 @@ export class AccountPage /* implements OnInit */ {
       for (let index = 0; index < this.data.length; index++) {
         this.placeId = this.data[index]._id;
 
-        for (let place of this.data) {
-          this.noteService
-            .getNote$(this.placeId)
-            .pipe(
-              catchError((error) => {
-                return throwError('Erreur lors de la récupération des données');
-              })
-            )
-            .subscribe(
-              (notes) => {
-                if (notes.length > 0) {
-                  this.notePassee[index] = notes[0].stars;
-                  console.log('voici ma note : ' + notes[0].stars);
-                  console.log(this.notePassee);
-                  //console.log(notes);
-                } 
-              },
-              (error) => {
-                console.log('problème ici');
-              }
-            );
+        this.noteService
+          .getNote$(this.placeId).subscribe((
+            (notes) => {
+                this.test[index] = notes[0].stars         
+            })
+          )
+
+        if (this.test[index]="5"||this.test[index]=="1") {
+          
+            this.noteService
+              .getNote$(this.placeId)
+              .pipe(
+                catchError((error) => {
+                  return throwError('Erreur lors de la récupération des données');
+                })
+              )
+              .subscribe(
+                (notes) => {
+                  //console.log("Voici mon notes: "+ notes);
+                    this.notePassee[index] = notes[0].stars;
+                    console.log('voici ma note : ' + notes[0].stars);
+                    //console.log(notes);
+                    this.notePassee2 = this.notePassee[index]
+                },
+                (error) => {
+                  console.log('problème ici');
+                }
+              );
+          
         }
       }
     });
+  }
+
+  goOnChosenPlace(place){
+    this.router.navigate(['src/app/place-from-lieux/place-from-lieux.component', { param: JSON.stringify(place) }]);
   }
 
   segmentChanged(event) {
