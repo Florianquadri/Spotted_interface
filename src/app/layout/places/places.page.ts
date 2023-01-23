@@ -227,12 +227,8 @@ export class PlacesPage implements ViewWillEnter {
       this.data = places;
 
       let placeId = null;
-<<<<<<< Updated upstream
-      this.noteService.getNote$(placeId).subscribe(notes => {
-=======
       this.noteService.getNotes$(placeId).subscribe(notes => {
         console.log(placeId)
->>>>>>> Stashed changes
         console.log(notes)
       });
       this.addDataToMap();
