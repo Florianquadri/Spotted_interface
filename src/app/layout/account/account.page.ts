@@ -7,11 +7,10 @@ import { NotesService } from 'src/app/services/notes.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
 import { Note } from 'src/app/models/note';
-import { catchError } from 'rxjs/operators';
+import { catchError, flatMap, tap, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { PlaceFromLieuxComponent } from 'src/app/place-from-lieux/place-from-lieux.component';
 import { Router, ActivatedRoute } from '@angular/router';
-
 
 @Component({
   selector: 'app-account',
@@ -28,13 +27,13 @@ export class AccountPage /* implements OnInit */ {
   public notes: Note[];
   public notePassee = [];
   public test = [];
-  public notePassee2 =null;
+  public notePassee2 = null;
   public currentSegment = null;
   constructor(
     private AuthService: AuthService,
     private placeService: PlacesService,
     private noteService: NotesService,
-    private router: Router, 
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -53,50 +52,25 @@ export class AccountPage /* implements OnInit */ {
 
     this.placeService.getPlaces$().subscribe((places) => {
       //console.log(places)
-      this.data = places;
-      console.log(this.data);
-      this.placeId = null;
-      this.placeId = this.data[0]._id;
+      this.places = places;
 
-      for (let index = 0; index < this.data.length; index++) {
-        this.placeId = this.data[index]._id;
-
-        this.noteService
-          .getNote$(this.placeId).subscribe((
-            (notes) => {
-                this.test[index] = notes[0].stars         
-            })
-          )
-
-        if (this.test[index]="5"||this.test[index]=="1") {
-          
-            this.noteService
-              .getNote$(this.placeId)
-              .pipe(
-                catchError((error) => {
-                  return throwError('Erreur lors de la récupération des données');
-                })
-              )
-              .subscribe(
-                (notes) => {
-                  //console.log("Voici mon notes: "+ notes);
-                    this.notePassee[index] = notes[0].stars;
-                    console.log('voici ma note : ' + notes[0].stars);
-                    //console.log(notes);
-                    this.notePassee2 = this.notePassee[index]
-                },
-                (error) => {
-                  console.log('problème ici');
-                }
-              );
-          
-        }
+      for (const place of places) {
+        this.noteService.getNotes$(place._id).subscribe((notes) => {
+          place.averageNote =
+            notes.length > 0
+              ? notes.reduce((total, note) => (total += note.stars), 0) /
+                notes.length
+              : undefined;
+        });
       }
     });
   }
 
-  goOnChosenPlace(place){
-    this.router.navigate(['src/app/place-from-lieux/place-from-lieux.component', { param: JSON.stringify(place) }]);
+  goOnChosenPlace(place) {
+    this.router.navigate(
+      ['./place-details', { param: JSON.stringify(place) }],
+      { relativeTo: this.route }
+    );
   }
 
   segmentChanged(event) {

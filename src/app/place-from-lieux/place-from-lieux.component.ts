@@ -15,16 +15,17 @@ export class PlaceFromLieuxComponent implements OnInit {
   public notesTraitees = null;
 
   constructor(private route: ActivatedRoute,
-    private noteService: NotesService) { }
+    private noteService: NotesService) { 
+    }
 
   ngOnInit() {
     this.place = JSON.parse(this.route.snapshot.paramMap.get('param'));
-    this.noteService.getNote$(this.place._id);
+    this.noteService.getNotes$(this.place._id);
   }
 
   ionViewWillEnter(): void {
      console.log("ici ?"+this.place);
-      this.noteService.getNote$(this.place._id).subscribe(e => {
+      this.noteService.getNotes$(this.place._id).subscribe(e => {
         this.notes = e;
           this.notesTraitees=this.notes[0].stars
           console.log("mesnotes"+this.notesTraitees[0].stars);

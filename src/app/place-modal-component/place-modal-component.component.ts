@@ -21,13 +21,13 @@ export class PlaceModalComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.noteService.getNote$(this.data._id);
+    this.noteService.getNotes$(this.data._id);
   }
   
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
      console.log(this.data);
-      this.noteService.getNote$(this.data._id).subscribe(e => {
+      this.noteService.getNotes$(this.data._id).subscribe(e => {
         this.notes = e;
         console.log("ce que je recois",e);
         console.log(this.notes);   

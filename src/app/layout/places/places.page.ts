@@ -33,7 +33,7 @@ export class PlacesPage implements ViewWillEnter {
   @Input() placeId: number = 0;
 
   ngOnInit() {
-    this.noteService.getNote$(this.placeId);
+    this.noteService.getNotes$(this.placeId);
   }
 
 
@@ -227,7 +227,12 @@ export class PlacesPage implements ViewWillEnter {
       this.data = places;
 
       let placeId = null;
+<<<<<<< Updated upstream
       this.noteService.getNote$(placeId).subscribe(notes => {
+=======
+      this.noteService.getNotes$(placeId).subscribe(notes => {
+        console.log(placeId)
+>>>>>>> Stashed changes
         console.log(notes)
       });
       this.addDataToMap();
