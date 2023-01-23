@@ -12,7 +12,7 @@ export class NotesService {
 
   constructor(private http: HttpClient) {}
 
-   getNote$(placeId): Observable<Note[]> {
+   getNotes$(placeId): Observable<Note[]> {
     return this.http.get<Note[]>(`${environment.apiUrl}/places/${placeId}/notes`);
 
   }

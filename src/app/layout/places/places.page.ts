@@ -34,7 +34,7 @@ export class PlacesPage implements ViewWillEnter {
   @Input() placeId: number = 0;
 
   ngOnInit() {
-    this.noteService.getNote$(this.placeId);
+    this.noteService.getNotes$(this.placeId);
   }
 
 
@@ -410,7 +410,7 @@ resetMethod() {
       this.data = places;
 
       let placeId = null;
-      this.noteService.getNote$(placeId).subscribe(notes => {
+      this.noteService.getNotes$(placeId).subscribe(notes => {
         console.log(placeId)
         console.log(notes)
       });

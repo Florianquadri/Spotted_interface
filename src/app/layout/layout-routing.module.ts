@@ -6,30 +6,32 @@ import { LayoutPage } from './layout.page';
 const routes: Routes = [
   {
     path: '',
-/*     redirectTo:"places",
+    /*     redirectTo:"places",
     pathMatch:"full", */
     component: LayoutPage,
-    children: [{
-      path:'',
-      redirectTo:'places',
-      pathMatch:"full"
-    },
+    children: [
+      {
+        path: '',
+        redirectTo: 'places',
+        pathMatch: 'full',
+      },
       {
         path: 'places',
-        loadChildren: () => import('./places/places.module').then(m => m.PlacesPageModule)
+        loadChildren: () =>
+          import('./places/places.module').then((m) => m.PlacesPageModule),
       },
       {
         path: 'account',
-        loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule)
+        loadChildren: () =>
+          import('./account/account.module').then((m) => m.AccountPageModule),
       },
-      { path: 'src/app/place-from-lieux/place-from-lieux.component', component: PlaceFromLieuxComponent },
-    ]
-  }
-
+      { path: 'place-details', component: PlaceFromLieuxComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutPageRoutingModule { }
+export class LayoutPageRoutingModule {}
