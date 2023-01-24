@@ -26,12 +26,13 @@ export class PlaceModalComponentComponent implements OnInit {
   
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
-     console.log(this.data);
-      this.noteService.getNotes$(this.data._id).subscribe(e => {
-        this.notes = e;
-        console.log("ce que je recois",e);
-        console.log(this.notes);   
-      });
+    this.noteService.getNotes$(this.data._id).subscribe((notes) => {
+      this.data.averageNote =
+        notes.length > 0
+          ? notes.reduce((total, note) => (total += note.stars), 0) /
+            notes.length
+          : undefined;
+    });
   }
 
 }

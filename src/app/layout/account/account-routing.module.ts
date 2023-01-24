@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'place-details',
     data: {
-      
+      contexte : 'account'
     },
     component: PlaceFromLieuxComponent,
   },

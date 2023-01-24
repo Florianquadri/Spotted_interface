@@ -25,7 +25,7 @@
 
     <ion-list>
       <ion-item>
-        <ion-select  (ionChange)="filterByCanton($event)" interface="popover" placeholder="Cantons">
+        <ion-select  (ionChange)="filterByCanton()" interface="popover" placeholder="Cantons" [(ngModel)]="chosenCanton">
 <!--           <ion-select-option  selected disabled hidden  > Cantons </ion-select-option>  -->
           <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
         </ion-select>
@@ -34,7 +34,7 @@
 
     <ion-list>
       <ion-item>
-        <ion-select  (ionChange)="filterByTag($event)" interface="popover" placeholder="Tags">
+        <ion-select  (ionChange)="filterByTag()" interface="popover" placeholder="Tags" [(ngModel)]="tagChosen">
           <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -72,7 +72,7 @@
         <p class="space">{{place.name}}</p>
         <p class="space">  10 Km</p>
         <p class="space">*****</p>
-        <p class="space">note</p>
+        <div *ngIf="place.averageNote>=0">Note moyenne : {{place.averageNote}}</div>
  
   
       </div>
