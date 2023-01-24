@@ -14,9 +14,9 @@
     <p *ngIf=" currentSegment === 'lieux'">Mes lieux</p>
   </ion-title>
 
-  <ion-list [inset]="true" *ngIf=" currentSegment === 'lieux'">
-    <li *ngFor="let place of places">
-      <p tappable (click)="goOnChosenPlace(place)">{{place.name}}</p>
+  <ion-list  [inset]="true" *ngIf=" currentSegment === 'lieux'">
+    <li class="listPlace" *ngFor="let place of places">
+      <div tappable (click)="goOnChosenPlace(place)">{{place.name}}</div>
       <div *ngIf="place.averageNote">{{ place.averageNote}}</div>
     </li>
   </ion-list>

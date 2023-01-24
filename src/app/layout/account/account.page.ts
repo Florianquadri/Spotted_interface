@@ -61,6 +61,8 @@ export class AccountPage /* implements OnInit */ {
               ? notes.reduce((total, note) => (total += note.stars), 0) /
                 notes.length
               : undefined;
+        },(error) => {
+          console.log("y a un souci de pas de notes");
         });
       }
     });

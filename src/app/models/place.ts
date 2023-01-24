@@ -6,8 +6,6 @@ export type Place = {
     canton:string;
     location: [number];
     tags : [string]
-    location: [number];
-   
     notes?: Note[];
     averageNote?: number;
   };
