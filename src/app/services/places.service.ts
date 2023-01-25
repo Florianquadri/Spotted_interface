@@ -22,6 +22,9 @@ export class PlacesService {
   getPlaces$(): Observable<Place[]> {
     return this.http.get<Place[]>(`${environment.apiUrl}/places`);
   }
+  getPlacesByUserId$(userId): Observable<Place[]> {
+    return this.http.get<Place[]>(`${environment.apiUrl}/${userId}/places`);
+  }
 
 /*   getPlacesId$(placeId): Observable<Place[]> {
     return this.http.get<Place[]>(`${environment.apiUrl}/places?placeId=${placeId}`);
@@ -37,6 +40,8 @@ export class PlacesService {
     return this.http.post(`${environment.apiUrl}/places`, data);
     
   }
+
+  
 
 addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
