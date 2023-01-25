@@ -23,12 +23,14 @@ export class AccountPage /* implements OnInit */ {
   public pseudo = null;
   public placeId = null;
 
+
+
   public places: Place[];
   public notes: Note[];
   public notePassee = [];
   public test = [];
   public notePassee2 = null;
-  public currentSegment = null;
+  public currentSegment = "photos";
   public pageName = "account"
   constructor(
     private AuthService: AuthService,
