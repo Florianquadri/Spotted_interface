@@ -5,7 +5,8 @@ import { Place } from "../models/place";
 import { Coordinates } from "../models/coordinates";
 import { environment } from "src/environments/environment";
 import { ReplaySubject, Observable, of, from, catchError,tap,map } from "rxjs";
-
+import { FormGroup } from '@angular/forms';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,17 +34,10 @@ export class PlacesService {
 
 
   addPlace$(data: any[]){ 
-  this.http.post(`${environment.apiUrl}/places`, data).subscribe((res)=>{
-    console.log(res)
-  });
+  this.http.post(`${environment.apiUrl}/places`, data);
   }
 
-/*   async addPlaces$(data: any[]): Promise<Observable<any>>{
-    let postResponse = new Response;
-    postResponse = await this.http.post<ArqResponse>(this.arqUrl, request).toPromise();
 
-    return of(postResponse);
-} */
 
 addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
