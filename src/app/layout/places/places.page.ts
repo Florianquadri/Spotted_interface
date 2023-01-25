@@ -374,12 +374,12 @@ export class PlacesPage implements ViewWillEnter {
     this.addDataToMap();
   }
 
-  activateMapView() {
+  activateMapView($event) {
     console.log('vue map activée');
     this.mapViewChosen = true;
   }
 
-  activateListView() {
+  activateListView($event) {
     console.log('vue liste activée');
     this.mapViewChosen = false;
   }
