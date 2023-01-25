@@ -5,8 +5,7 @@ import { Place } from "../models/place";
 import { Coordinates } from "../models/coordinates";
 import { environment } from "src/environments/environment";
 import { ReplaySubject, Observable, of, from, catchError,tap,map } from "rxjs";
-import { FormGroup } from '@angular/forms';
-import { mergeMap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
