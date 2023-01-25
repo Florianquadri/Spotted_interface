@@ -34,7 +34,7 @@ export class PlacesService {
 
 
   addPlace$(data: any[]){ 
-  this.http.post(`${environment.apiUrl}/places`, data);
+  return this.http.post(`${environment.apiUrl}/places`, data);
   }
 
 
