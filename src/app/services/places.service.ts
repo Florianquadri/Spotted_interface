@@ -53,6 +53,12 @@ addPicture$(picture: any[],placeId){
       map((obj) => obj.features[0].center));
   }
 
+  getCantonsByCoordinates$(latitude, longitude): Observable<any> {
+    return this.http.get<any>(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?types=region&language=fr&tcountry=CH&access_token=sk.eyJ1IjoiZmxvd29uZTk2IiwiYSI6ImNsY3l1cDZldzAwOTIzd3JsMmQ2dTVuNzkifQ.dx-pUyyCbKM99Paxg8OzuA`)
+    .pipe(
+      map((obj) => obj.features[0].text));
+  }
+
   getPlacesByTags$(tag): Observable<Place[]> {
     return this.http.get<Place[]>(`${environment.apiUrl}/places?tag=${tag}`);
   }
