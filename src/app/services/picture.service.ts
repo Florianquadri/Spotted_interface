@@ -9,16 +9,26 @@ import {
 } from '@capacitor/camera';
 import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-
 import { environment } from '../../environments/environment';
 import { Image } from '../models/pictures';
+import { Place } from "../models/place";
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * Service to take pictures and upload them 
  */
 @Injectable({ providedIn: 'root' })
 export class PictureService {
-  constructor(private http: HttpClient) {}
+
+  public placeId = null;
+  public place: Place[];
+  public picture = null;
+  private pictureSource = new BehaviorSubject<any>(null);
+  picture$ = this.pictureSource.asObservable();
+
+  constructor(private http: HttpClient,
+    
+    ) {}
 
   /**
    * Takes a picture, uploads it to the API, and returns the created image.
@@ -82,36 +92,23 @@ export class PictureService {
     const requestBody = {
       data: base64,
     };
-    console.log(requestBody)
+    console.log("POR UWU : "+requestBody.data)
     const requestOptions = {
       headers: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
        
       },
     };
-   
-    return this.http.post<Image>(
-      
-      `${environment.apiUrl}/places/placeId/pictures`,
+  
+    this.picture = requestBody.data;
+return this.picture;
+  /*   return this.http.post<Image>(
+      `${environment.apiUrl}/places?placeId=${this.placeId}/pictures`,
       requestBody,
-      requestOptions
-    );
-    
+      requestOptions,)) */
   }
 
-  uploadImage(image: File) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imageData = reader.result;
-      this.http.post('your api endpoint', {image: imageData}, {
-        headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      }).subscribe(response => {
-        console.log(response);
-       /*  this.imageUrl = response.dataUrl; */
-      });
-    };
-    reader.readAsDataURL(image);
-  }
+
 
   
 }

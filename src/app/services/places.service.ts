@@ -24,6 +24,10 @@ export class PlacesService {
     return this.http.get<Place[]>(`${environment.apiUrl}/places`);
   }
 
+/*   getPlacesId$(placeId): Observable<Place[]> {
+    return this.http.get<Place[]>(`${environment.apiUrl}/places?placeId=${placeId}`);
+  } */
+
   getPlacesByCantons$(canton): Observable<Place[]> {
     return this.http.get<Place[]>(`${environment.apiUrl}/places?canton=${canton}`);
   }

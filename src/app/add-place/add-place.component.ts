@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Sanitizer } from '@angular/core';
 import { ModalController } from 'node_modules/@ionic/angular';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { PictureService } from 'src/app/services/picture.service';
@@ -36,6 +36,7 @@ export class AddPlaceComponent {
     public place: Place[];
     imageUrl: any;
   coordinates: number[];
+  public images : any;
 
 
 
@@ -63,30 +64,32 @@ export class AddPlaceComponent {
     }
 
     takePicture = async () => {
-     /*  const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.Uri
-      }); */
-    
-      // image.webPath will contain a path that can be set as an image src.
-      // You can access the original file using image.path, which can be
-      // passed to the Filesystem API to read the raw data of the image,
-      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-      // var imageUrl = image.webPath;
-    
-      // Can be set to the src of an image now
-     // imageElement.src = imageUrl;
+      const image = await Camera.getPhoto({
+        quality: 100,
+        allowEditing: false,
+        resultType: CameraResultType.Base64
+      });
+      this.imgRes = image.base64String;
+     /*  console.log("this.imgRes");
+      console.log(this.imgRes); */
+      
+     /*  this.pictureService.picture$.subscribe(picture => {
+        this.picture = picture;
+      });
+      console.log(this.picture); */
 
-     this.picture = this.pictureService.takeAndUploadPicture$().subscribe();
-console.log(this.picture)
-console.log(this.picture.url)
+     /* this.picture = this.pictureService.takeAndUploadPicture$().subscribe(pictureDataPromise =>{
+      this.picture = pictureDataPromise;
+     }); */
+
+
     };
 
     cancel() {
       return this.modalCtrl.dismiss(null, 'cancel');
     }
   
+    
 
     confirm() {
 
@@ -100,36 +103,26 @@ console.log(this.picture.url)
       this.surnameUser = users.surname;
       }); */
       
+      
+
+
      this.data = {"name": this.dataForm[0].placeName,
                   "canton": this.dataForm[0].placeCanton,
                   "location": {
                     "type": "Point",
                      "coordinates": this.coordinates},
-                     "tags": ["tréjoli","trébo"]};
+                     "picture" : this.imgRes,
+                     "tags": ["tréjoli","trébo"],
+                     "notes": [2,4]};
 
     console.log(this.data);
 
-       this.placeService.addPlace$(this.data).subscribe();
+       /* this.placeService.addPlace$(this.data).subscribe(); */
     
-      this.refreshPlace();
+
       this.form.reset();
       return this.modalCtrl.dismiss(this.name, 'confirm');
     }
-
-    refreshPlace() {
-      /* this.placeService.getPlaces$()
-        .subscribe(data => {
-          console.log(data)
-             this.place = data;
-        })      */
-    }
-
-    onFileSelected(event) {
-      const file = event.target.files[0];
-      this.pictureService.uploadImage(file);
-    }
-
-
     
   ngOnInit() {}
   
