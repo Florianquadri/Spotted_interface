@@ -37,6 +37,10 @@ export class PlacesService {
     return this.http.post(`${environment.apiUrl}/places`, data);
   }
 
+addPicture$(picture: any[],placeId){
+  return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}`, picture);
+}
+
   handleError<T>(arg0: string): (err: any, caught: Observable<any>) => import("rxjs").ObservableInput<any> {
     throw new Error('Method not implemented.');
   }

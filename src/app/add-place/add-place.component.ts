@@ -111,13 +111,19 @@ export class AddPlaceComponent {
                   "location": {
                     "type": "Point",
                      "coordinates": this.coordinates},
-                     "picture" : this.imgRes,
-                     "tags": ["tréjoli","trébo"],
-                     "notes": [2,4]};
+                     "tags": ["tréjoli","trébo"]
+                     };
 
     console.log(this.data);
 
        /* this.placeService.addPlace$(this.data).subscribe(); */
+
+       this.placeService.getPlaces$().subscribe((places) => {
+        console.log(places)
+        /* this.placeId = places */
+       });
+
+      /* this.placeService.addPicture$(this.picture,this.placeId).subscribe(); */
     
 
       this.form.reset();
