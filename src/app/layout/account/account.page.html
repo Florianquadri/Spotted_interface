@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content>
   <ion-title> {{pseudo}} {{name}} </ion-title>
-  <ion-segment (ionChange)="segmentChanged($event)">
+  <ion-segment (ionChange)="segmentChanged($event)"value="photos">
     <ion-segment-button value="photos"> Mes photos </ion-segment-button>
     <ion-segment-button value="lieux"> Lieux visités </ion-segment-button>
   </ion-segment>
@@ -20,4 +20,8 @@
       <div *ngIf="place.averageNote">{{ place.averageNote}}</div>
     </li>
   </ion-list>
+  <div *ngIf=" currentSegment === 'photos'">
+    <app-galerie-photo [maPropriete]="pageName" ></app-galerie-photo>
+  </div>
+  
 </ion-content>

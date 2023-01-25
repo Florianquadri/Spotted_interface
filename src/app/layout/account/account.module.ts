@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AccountPageRoutingModule } from './account-routing.module';
-
+import { GaleriePhotoComponent } from 'src/app/galerie-photo/galerie-photo.component';
 import { AccountPage } from './account.page';
 
 @NgModule({
@@ -13,8 +13,9 @@ import { AccountPage } from './account.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AccountPageRoutingModule
+    AccountPageRoutingModule,
+    
   ],
-  declarations: [AccountPage]
+  declarations: [AccountPage,GaleriePhotoComponent]
 })
 export class AccountPageModule {}
