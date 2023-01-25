@@ -34,10 +34,17 @@ export class PlacesService {
 
 
   addPlace$(data: any[]){ 
-
-    return this.http.post(`${environment.apiUrl}/places`, data);
-    
+  this.http.post(`${environment.apiUrl}/places`, data).subscribe((res)=>{
+    console.log(res)
+  });
   }
+
+/*   async addPlaces$(data: any[]): Promise<Observable<any>>{
+    let postResponse = new Response;
+    postResponse = await this.http.post<ArqResponse>(this.arqUrl, request).toPromise();
+
+    return of(postResponse);
+} */
 
 addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);

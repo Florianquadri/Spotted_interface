@@ -105,14 +105,7 @@ export class AddPlaceComponent {
 
     console.log(this.data);
 
-       this.placeService.addPlace$(this.data).subscribe((response) => {
-        console.log("PARCEQUECESTNOTREPROJET"+response);
-        // Do something with the response
-      },
-      (error) => {
-        console.log(error);
-        // Handle the error
-      });
+       this.placeService.addPlace$(this.data);
 
        this.placeService.getPlaces$().subscribe((places) => {
         console.log(places)
