@@ -29,12 +29,14 @@ export class AccountPage /* implements OnInit */ {
   public test = [];
   public notePassee2 = null;
   public currentSegment = null;
+  public pageName = "account"
   constructor(
     private AuthService: AuthService,
     private placeService: PlacesService,
     private noteService: NotesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    
   ) {}
 
   ngOnInit() {
