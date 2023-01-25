@@ -43,19 +43,18 @@
     <ion-button (click)="reinitialiseFiltres()" fill="outline">Reinitialiser</ion-button>
   </div>
 
-  <div class="containerRow start">
-    <ion-item>
-      <ion-label>Map View</ion-label>
-      <ion-toggle (ionChange)="toggleView($event)" slot="end" [checked]="true"></ion-toggle>
-    </ion-item>
+  <div class="containerRow start verticalSpace">
+    <ion-segment value="map">
+      <ion-segment-button (click)="activateMapView($event)" value="map">
+        <ion-label>Map view</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="activateListView($event)" value="view">
+        <ion-label>List view</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </div>
 
-  <div class="containerRow start">
-    <p>View</p>
-    <ion-button shape="round" (click)="activateMapView()">Map</ion-button>
-    <ion-button shape="round" (click)="activateListView()">Liste</ion-button>
 
-  </div>
 
 <!--   //mettre display none plutôt que ngIf pour éviter erreur console car là disparaît du dom donc certaines fonctions bug -->
 <div [class.hidden]="!mapViewChosen" class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers"
