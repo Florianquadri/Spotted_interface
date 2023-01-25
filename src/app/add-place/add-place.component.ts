@@ -80,18 +80,8 @@ export class AddPlaceComponent {
     confirm() {
 
       this.dataForm.push(this.form.value);
- 
-     /*  this.auth.getUser$().subscribe((users) => {
-
-        this.idUser = null;
-        this.idUser = users.id;
-        this.surnameUser = null;
-      this.surnameUser = users.surname;
-      }); */
       
-      
-
-
+  
      this.data = {"name": this.dataForm[0].placeName,
                   "canton": this.dataForm[0].placeCanton,
                   "location": {
@@ -100,10 +90,16 @@ export class AddPlaceComponent {
                      "tags": ["tréjoli","trébo"]
                      };
 
-    console.log(this.data);
+   /*  console.log(this.data); */
+
+    /* this.placeService.addPlace$(this.data).subscribe(); */
 
        this.placeService.addPlace$(this.data).subscribe((response) => {
-        console.log("PARCEQUECESTNOTREPROJET"+response);
+       
+        console.log(response);
+        this.placeId = response;
+        this.placeId = this.placeId._id;
+        console.log(this.placeId)
         // Do something with the response
       },
       (error) => {
@@ -111,12 +107,11 @@ export class AddPlaceComponent {
         // Handle the error
       });
 
-       this.placeService.getPlaces$().subscribe((places) => {
-        console.log(places)
-        /* this.placeId = places */
-       });
-
-      this.placeService.addPicture$(this.picture,this.placeId).subscribe();
+      
+      this.placeService.addPicture$(this.picture,this.placeId).subscribe((response) => {
+       
+        console.log("PARCEQUEONESTPASCOUCHENANANA"+response);
+      });
     
 
       this.form.reset();
