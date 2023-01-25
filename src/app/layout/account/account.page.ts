@@ -18,9 +18,10 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./account.page.scss'],
 })
 export class AccountPage /* implements OnInit */ {
-  public data = [];
+  public data :Place;
   public name = null;
   public pseudo = null;
+  public userId = null;
   public placeId = null;
 
 
@@ -47,14 +48,16 @@ export class AccountPage /* implements OnInit */ {
 
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
-    console.log('ma data :' + this.data);
+    console.log('ma data :');
+    console.log(this.data);
     this.AuthService.getUser$().subscribe((e) => {
       this.name = e.name;
       this.pseudo = e.surname;
+      this.userId = e.id;
       console.log('ce que je recois', e);
     });
 
-    this.placeService.getPlaces$().subscribe((places) => {
+    this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
       //console.log(places)
       this.places = places;
 
