@@ -25,17 +25,17 @@
 
     <ion-list>
       <ion-item>
-        <ion-select  (ionChange)="filterByCanton()" interface="popover" placeholder="Cantons" [(ngModel)]="chosenCanton">
+        <ion-select class="smallVP"  (ionChange)="filterByCanton()" interface="popover" placeholder="Cantons" [(ngModel)]="chosenCanton">
 <!--           <ion-select-option  selected disabled hidden  > Cantons </ion-select-option>  -->
-          <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
+          <ion-select-option class="smallVP"  *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
 
     <ion-list>
       <ion-item>
-        <ion-select  (ionChange)="filterByTag()" interface="popover" placeholder="Tags" [(ngModel)]="tagChosen">
-          <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
+        <ion-select  class="miniVP" (ionChange)="filterByTag()" interface="popover" placeholder="Tags" [(ngModel)]="tagChosen">
+          <ion-select-option class="miniVP" *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
