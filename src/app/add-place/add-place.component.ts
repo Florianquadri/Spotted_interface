@@ -90,7 +90,10 @@ export class AddPlaceComponent {
     }
   
     
-
+/*     idee : addPlaces$(àenvoyer).then(result){
+      addPictures$(picture, result_id)
+      }
+ */
     confirm() {
 
       this.dataForm.push(this.form.value);
@@ -111,12 +114,12 @@ export class AddPlaceComponent {
                   "location": {
                     "type": "Point",
                      "coordinates": this.coordinates},
-                     "tags": ["tréjoli","trébo"]
+                     "tags": ["trébo"]
                      };
 
     console.log(this.data);
 
-       /* this.placeService.addPlace$(this.data).subscribe(); */
+        this.placeService.addPlace$(this.data).subscribe(); 
 
        this.placeService.getPlaces$().subscribe((places) => {
         console.log(places)

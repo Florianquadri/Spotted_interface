@@ -87,6 +87,7 @@ export class PlacesPage implements ViewWillEnter {
   public tags = [
     'Piscine',
     'forêt',
+    'trébo',
     'street photography',
     'lac',
     'montagne',
