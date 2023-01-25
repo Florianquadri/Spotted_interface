@@ -48,6 +48,8 @@ addPicture$(picture: any[],placeId){
   }
   
   getCoordinatesForCantons$(canton): Observable<Coordinates> {
+    //gère 2 cas spéciaux liés à Bâle
+    if(canton == "Bâle-campagne"){canton = "Basel-Landschaft"} else if(canton == "Bâle-ville"){canton = "Basel-Stadt"}
     return this.http.get<any>(`https://api.mapbox.com/geocoding/v5/mapbox.places/${canton}.json?types=region&country=CH&access_token=sk.eyJ1IjoiZmxvd29uZTk2IiwiYSI6ImNsY3l1cDZldzAwOTIzd3JsMmQ2dTVuNzkifQ.dx-pUyyCbKM99Paxg8OzuA`)
     .pipe(
       map((obj) => obj.features[0].center));

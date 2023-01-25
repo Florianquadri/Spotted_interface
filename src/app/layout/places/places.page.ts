@@ -56,11 +56,11 @@ export class PlacesPage implements ViewWillEnter {
   mapViewChosen: boolean = true;
 
   public cantons = [
-    /* "Tous", */ 'Appenzell Rhodes-Extérieures',
-    'Appenzell Rhodes-Extérieures',
+    /* "Tous", */ 'Appenzell rhodes-extérieures'/* marche pas jsp pq */,
+    'Appenzell rhodes-intérieures',
     'Argovie',
-    'Bâle-Campagne',
-    'Bâle-Stadt',
+    'Bâle-campagne'/* à régler */,
+    'Bâle-ville'/* à régler */,
     'Berne',
     'Fribourg',
     'Genève',
@@ -71,16 +71,16 @@ export class PlacesPage implements ViewWillEnter {
     'Neuchâtel',
     'Nidwald',
     'Obwald',
-    'St. Galles'/* Saint-Gall */,
-    'Schaffhausen'/* exception car envoi Schaffhouse */,
+    'St. galles'/* ok */,
+    'Schaffhausen'/* exception car envoi Schaffhouse OK */,
     'Schwytz',
     'Soleure',
-    'Ticino' /* exception car envoi Tessin */,
-    'Thurgovia'/* exception car envoi Thurgovie */,
+    'Ticino' /* exception car envoi Tessin OK*/,
+    'Thurgovia'/* exception car envoi Thurgovie OK */,
     'Uri',
     'Valais',
     'Vaud',
-    'Zug'/* exception car envoi Zoug */,
+    'Zug'/* exception car envoi Zoug OK */,
     'Zurich',
   ];
 

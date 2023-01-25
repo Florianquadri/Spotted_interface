@@ -77,20 +77,20 @@ export class AddPlaceComponent {
         }
    */
 
-confirm2(){
-  this.placeService.addPlace$(this.data).subscribe((response) => {
+  confirm2() {
+    this.placeService.addPlace$(this.data).subscribe((response) => {
 
-    console.log(response);
-    this.placeId = response;
-    this.placeId = this.placeId._id;
-    console.log(this.placeId)
-    // Do something with the response
-  },
-    (error) => {
-      console.log(error);
-      // Handle the error
-    });
-}
+      console.log(response);
+      this.placeId = response;
+      this.placeId = this.placeId._id;
+      console.log(this.placeId)
+      // Do something with the response
+    },
+      (error) => {
+        console.log(error);
+        // Handle the error
+      });
+  }
 
   confirm() {
     this.dataForm.push(this.form.value);
@@ -100,31 +100,35 @@ confirm2(){
       this.canton = resp;
       //lié à langue différente, l'orthographe de certains cantons doivent être repris pour matcher celle de notre filtre de cantons
 
-/*       switch (resp) {
-        case 'St. Gallen':
-          this.canton = "StGall"
-          break;
-        case 'Aargau':
-          this.canton = "StGall"
-          break;
-        case 'Papayas':
-        default:
-          this.canton = resp;
-      } */
+      /*       switch (resp) {
+              case 'St. Gallen':
+                this.canton = "StGall"
+                break;
+              case 'Aargau':
+                this.canton = "StGall"
+                break;
+              case 'Papayas':
+              default:
+                this.canton = resp;
+            } */
 
-      //juste problème à régler avec accent ou tiret envoyé dans la database
-      console.log(resp.substring(0,9))
-if(resp.substring(0,9) == "canton d'"){this.canton = resp.substring(9)}
-else if(resp.substring(0,9)== "canton du"){this.canton = resp.substring(10)}
-else if(resp.substring(0,10)== "canton des"){this.canton = resp.substring(11)}
-  else if(resp.substring(0,9)== "canton de"){this.canton = resp.substring(10)}
-else {this.canton = resp}
+      //je reçois les noms des cantons avec "canton de / du / des ..., j'enlève la partie pour matcher avec ce que la database et le dropdown menu attende pour que la recherche par filtre fonctionne"
+      console.log(resp.substring(0, 9))
+      if (resp.substring(0, 9) == "canton d'") { this.canton = resp.substring(9) }
+      else if (resp.substring(0, 9) == "canton du") { this.canton = resp.substring(10) }
+      else if (resp.substring(0, 10) == "canton des") { this.canton = resp.substring(11) }
+      else if (resp.substring(0, 9) == "canton de") { this.canton = resp.substring(10) }
+      else { this.canton = resp }
 
+      //il reste à gérer les cantons qui tont exception allemand-français pour coordonner mapbox, notre menu drop-down et notre api
+      if(this.canton =="Saint-Gall"){this.canton = "St. Galles"}
+      else if(this.canton =="Schaffhouse"){this.canton = "Schaffhausen"}
+      else if(this.canton =="Tessin"){this.canton = "Ticino"}
+      else if(this.canton =="Thurgovie"){this.canton = "Thurgovia"}
+      else if(this.canton =="Zoug"){this.canton = "Zug"}
+      //bug avec la la règle par défaut...
+      else if(this.canton == "canton d’Appenzell Rhodes-Extérieures"){this.canton = "Appenzell rhodes-extérieures"}
 
-/*       if(resp == "St. Gallen"){this.canton = "StGall"}
-      else if(resp == "Aargau"){this.canton = "Argovie"}
-      else if(resp == "Basel-Landschaft"){this.canton = "BaleCampagne"}
-      else {this.canton = resp} */
       console.log(this.canton)
       this.dataForm.push(this.form.value);
       this.data = {
@@ -148,18 +152,18 @@ else {this.canton = resp}
 
 
 
-/*     this.placeService.addPlace$(this.data).subscribe((response) => {
-
-      console.log(response);
-      this.placeId = response;
-      this.placeId = this.placeId._id;
-      console.log(this.placeId)
-      // Do something with the response
-    },
-      (error) => {
-        console.log(error);
-        // Handle the error
-      }); */
+    /*     this.placeService.addPlace$(this.data).subscribe((response) => {
+    
+          console.log(response);
+          this.placeId = response;
+          this.placeId = this.placeId._id;
+          console.log(this.placeId)
+          // Do something with the response
+        },
+          (error) => {
+            console.log(error);
+            // Handle the error
+          }); */
 
 
     this.placeService.addPicture$(this.picture, this.placeId).subscribe((response) => {
