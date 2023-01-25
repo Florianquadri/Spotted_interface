@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavParams } from 'node_modules/@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-add-place',
   templateUrl: './add-place.component.html',
@@ -37,6 +38,9 @@ export class AddPlaceComponent {
   imageUrl: any;
   coordinates: number[];
   public images: any;
+  public Array: any;
+
+
 
   constructor(
     private http: HttpClient,
@@ -57,40 +61,46 @@ export class AddPlaceComponent {
 
   }
 
+
   takePicture = async () => {
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
       resultType: CameraResultType.Base64
+      
     });
+    console.log("image")
+    console.log(image)
     this.imgRes = image.base64String;
-    /* console.log("this.imgRes");
-    console.log(this.imgRes); */
 
-  };
+    let formData = this.convertBase64ToFormData(this.imgRes);
+
+    this.Array = formData;
+    console.log("puree");
+    console.log(this.Array);
+    
+}
+
+convertBase64ToFormData(base64: string) {
+  let binaryString = atob(base64);
+  let len = binaryString.length;
+  let bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  let blob = new Blob([bytes], { type: 'image/jpeg' });
+  let formData = new FormData();
+  formData.append('file', blob);
+  return formData;
+}
+
+
+
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
-  /*     idee : addPlaces$(àenvoyer).then(result){
-        addPictures$(picture, result_id)
-        }
-   */
 
-  confirm2() {
-    this.placeService.addPlace$(this.data).subscribe((response) => {
-
-      console.log(response);
-      this.placeId = response;
-      this.placeId = this.placeId._id;
-      console.log(this.placeId)
-      // Do something with the response
-    },
-      (error) => {
-        console.log(error);
-        // Handle the error
-      });
-  }
 
   confirm() {
     this.dataForm.push(this.form.value);
@@ -141,43 +151,53 @@ export class AddPlaceComponent {
         "tags": ["trébo"]
       };
       console.log(this.data);
-      this.confirm2();
+      this.confirm();
     });
 
     //this.coordinates à mapbox
 
 
+      this.dataForm.push(this.form.value);
+      
+  
+     this.data = {"name": this.dataForm[0].placeName,
+                  "canton": this.dataForm[0].placeCanton,
+                  "location": {
+                    "type": "Point",
+                    /* "pictures": this.Array, */
+                     "coordinates": this.coordinates},
+                     "tags": ["tréjoli","trébo"]
+                     };
 
-    /* this.placeService.addPlace$(this.data).subscribe(); */
 
+       this.placeService.addPlace$(this.data).subscribe((response) => {
 
+        console.log(response);
+        this.placeId = response;
+        this.placeId = this.placeId._id;
+        console.log(this.placeId)
+        
+        this.placeService.addPicture$(this.Array,this.placeId).subscribe((response) => {
+          console.log("PARCEQUEONESTPASCOUCHENANANA"+response);
+        });
 
-    /*     this.placeService.addPlace$(this.data).subscribe((response) => {
+      },
+      (error) => {
+        console.log(error);
+        // Handle the error
+      });
+
+      
+      this.form.reset();
+      return this.modalCtrl.dismiss(this.name, 'confirm');
+    }
     
-          console.log(response);
-          this.placeId = response;
-          this.placeId = this.placeId._id;
-          console.log(this.placeId)
-          // Do something with the response
-        },
-          (error) => {
-            console.log(error);
-            // Handle the error
-          }); */
 
 
-    this.placeService.addPicture$(this.picture, this.placeId).subscribe((response) => {
+    
 
-      console.log("PARCEQUEONESTPASCOUCHENANANA" + response);
-    });
-
-
-    this.form.reset();
-    return this.modalCtrl.dismiss(this.name, 'confirm');
-  }
-
-  ngOnInit() { }
-
+  ngOnInit() {}
+  
   public cantons = ["Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
     "Argovie",

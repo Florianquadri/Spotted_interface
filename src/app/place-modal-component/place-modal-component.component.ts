@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from 'node_modules/@ionic/angular';
 import { Place } from '../models/place';
 import { NotesService } from '../services/notes.service';
-
+import { AddPlaceComponent } from '../add-place/add-place.component';
 
 @Component({
   selector: 'app-place-modal-component',

@@ -146,7 +146,7 @@ export class PlacesPage implements ViewWillEnter {
       this.mapMarkers.forEach((marker) => {
         marker.setIcon(defaultIcon);
       });
-      console.log(this.mapMarkers);
+      /* console.log(this.mapMarkers); */
       this.addDataToMap();
     });
   }
@@ -176,7 +176,7 @@ export class PlacesPage implements ViewWillEnter {
       await marker.on('click', () => this.displayPlaceModal(this.data[i]));
       this.mapMarkers.push(marker);
     }
-    console.log(this.mapMarkers);
+    /* console.log(this.mapMarkers); */
   }
 
   async displayPlaceModal(place: []) {
