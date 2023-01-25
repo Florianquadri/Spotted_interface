@@ -38,12 +38,6 @@ export class AddPlaceComponent {
   coordinates: number[];
   public images : any;
 
-
-
-    
-
-
-
     constructor(
       private http: HttpClient,
       private modalCtrl: ModalController,
@@ -70,17 +64,9 @@ export class AddPlaceComponent {
         resultType: CameraResultType.Base64
       });
       this.imgRes = image.base64String;
-     /*  console.log("this.imgRes");
+      /* console.log("this.imgRes");
       console.log(this.imgRes); */
-      
-     /*  this.pictureService.picture$.subscribe(picture => {
-        this.picture = picture;
-      });
-      console.log(this.picture); */
 
-     /* this.picture = this.pictureService.takeAndUploadPicture$().subscribe(pictureDataPromise =>{
-      this.picture = pictureDataPromise;
-     }); */
 
 
     };
@@ -119,14 +105,21 @@ export class AddPlaceComponent {
 
     console.log(this.data);
 
-        this.placeService.addPlace$(this.data).subscribe(); 
+       this.placeService.addPlace$(this.data).subscribe((response) => {
+        console.log("PARCEQUECESTNOTREPROJET"+response);
+        // Do something with the response
+      },
+      (error) => {
+        console.log(error);
+        // Handle the error
+      });
 
        this.placeService.getPlaces$().subscribe((places) => {
         console.log(places)
         /* this.placeId = places */
        });
 
-      /* this.placeService.addPicture$(this.picture,this.placeId).subscribe(); */
+      this.placeService.addPicture$(this.picture,this.placeId).subscribe();
     
 
       this.form.reset();

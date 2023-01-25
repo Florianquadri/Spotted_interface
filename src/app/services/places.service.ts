@@ -34,11 +34,13 @@ export class PlacesService {
 
 
   addPlace$(data: any[]){ 
+
     return this.http.post(`${environment.apiUrl}/places`, data);
+    
   }
 
 addPicture$(picture: any[],placeId){
-  return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}`, picture);
+  return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
 }
 
   handleError<T>(arg0: string): (err: any, caught: Observable<any>) => import("rxjs").ObservableInput<any> {
