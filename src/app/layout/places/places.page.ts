@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { NotesService } from 'src/app/services/notes.service';
 import { PlacesService } from 'src/app/services/places.service';
 import { Place } from 'src/app/models/place';
+import { Coord } from 'src/app/models/coord';
 import { FormsModule } from '@angular/forms';
 import { Note } from 'src/app/models/note';
 import { latLng, MapOptions, tileLayer, Map, marker, Marker } from 'leaflet';
@@ -18,6 +19,8 @@ import * as L from 'leaflet';
 import { ModalController } from 'node_modules/@ionic/angular';
 import { AddPlaceComponent } from '../../add-place/add-place.component';
 import { catchError } from 'rxjs/operators'
+import distance from '@turf/distance';
+import { points, Units } from '@turf/helpers';
 
 @Component({
   selector: 'app-places',
@@ -45,6 +48,13 @@ export class PlacesPage implements ViewWillEnter {
   public coordinate: number[];
   public results = [];
   public data = [];
+  public from: Coord[];
+  public to: Coord[];
+  public options = {  units: 'kilometers' as Units};
+  public distanceWithMe = [];
+  public whereIam: any;
+  public wherIamCoordinates: any;
+
 
   message =
     'This modal example uses the modalController to present and dismiss modals.';
@@ -162,10 +172,10 @@ export class PlacesPage implements ViewWillEnter {
   async addDataToMap() {
     //reinitialiser avant d'ajouter
     this.mapMarkers = [];
-
+    this.distanceWithMe = [];
     for (let i = 0; i < this.data.length; i++) {
       //const e = this.data[i];
-
+      /* console.log(     this.data[i].location.coordinates) */
       const marker = L.marker(
         [
           this.data[i].location.coordinates[0],
@@ -175,8 +185,34 @@ export class PlacesPage implements ViewWillEnter {
       );
       await marker.on('click', () => this.displayPlaceModal(this.data[i]));
       this.mapMarkers.push(marker);
+
+      //calculer distance entre chaque point recherché et notre position
+      this.calculeDist(this.data[i].location.coordinates);
+
     }
     console.log(this.mapMarkers);
+
+  }
+
+  calculeDist(coordPlace : any) {
+/*     const fromm = points(coordPlace);
+    const too = points(this.wherIamCoordinates);
+    console.log(fromm, too)
+
+    this.from = turf.point([
+      fromm
+    ]);
+    this.to = turf.point(this.wherIamCoordinates);
+    const distance = turf.distance(this.from, this.to, this.options);
+    this.distanceWithMe.push(distance); */
+
+/*     const from2 = turf.point(coordPlace)
+    const to2 = turf.point(this.wherIamCoordinates) */
+    const distancePoint = distance([coordPlace[1], coordPlace[0]], this.wherIamCoordinates, this.options)
+    const distArrondie = distancePoint.toFixed(2)
+    console.log(distArrondie);
+    this.distanceWithMe.push(distArrondie);
+    console.log(this.distanceWithMe)
   }
 
   async displayPlaceModal(place: []) {
@@ -330,7 +366,7 @@ export class PlacesPage implements ViewWillEnter {
       this.locateMe();
       /* console.log(this.data)
       console.log(this.data[4]) */
-      
+
     });
   }
 
@@ -338,6 +374,10 @@ export class PlacesPage implements ViewWillEnter {
     const location = await this.map.locate({ setView: true, maxZoom: 16 });
 
     this.map.on('locationfound', (e) => {
+      this.wherIamCoordinates = [e.latlng.lng, e.latlng.lat];
+      /*       this.whereIam = e.latlng; */
+      /*       console.log(e.latlng) */
+      console.log(this.wherIamCoordinates)
       const radius = e.accuracy / 2;
       marker(e.latlng, { icon: locateMeIcon })
         .addTo(this.map)
@@ -402,22 +442,22 @@ export class PlacesPage implements ViewWillEnter {
       this.data = places;
 
       let placeId = null;
-      
-        for (const place of places) {
-          this.noteService.getNotes$(place._id)
+
+      for (const place of places) {
+        this.noteService.getNotes$(place._id)
           .subscribe((notes) => {
             place.averageNote =
               notes.length > 0
                 ? notes.reduce((total, note) => (total += note.stars), 0) /
-                  notes.length
+                notes.length
                 : undefined;
-          },(error) => {
+          }, (error) => {
             console.log("y a un souci de pas de notes");
           });
-        }
-      
-      
-      
+      }
+
+
+
       this.addDataToMap();
       /* console.log(this.data)
       console.log(this.data[4]) */
