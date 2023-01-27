@@ -16,4 +16,10 @@ export class NotesService {
     return this.http.get<Note[]>(`${environment.apiUrl}/places/${placeId}/notes`);
 
   }
+
+  getAverageNoteForAPlace$(placeId): any {
+    return this.http.get<any>(`${environment.apiUrl}/places/${placeId}/score`);
+
+  }
+
 }
