@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ModalController } from 'node_modules/@ionic/angular';
 import { Place } from '../models/place';
 import { NotesService } from '../services/notes.service';
 import { AddPlaceComponent } from '../add-place/add-place.component';
+import { PlacesService } from '../services/places.service';
+import { HttpClient } from "@angular/common/http";
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-place-modal-component',
@@ -13,12 +16,44 @@ import { AddPlaceComponent } from '../add-place/add-place.component';
 export class PlaceModalComponentComponent implements OnInit {
   public data : Place;
   public notes = null;
+  public chooseNote = [1,2,3,4,5];
+  public noteChosen = 1;
+  form: FormGroup;
+  dataForm: any[] = [];
+
+/*   @Output() eventClickAddPlace = new EventEmitter<any>();
+
+  addNoteToPlace(id){
+    this.eventClickAddPlace.emit(id);
+      } */
 
   constructor(private modalCtrl: ModalController,
-    private noteService: NotesService,) { }
+    private noteService: NotesService, private placesService: PlacesService, private http: HttpClient,     private fb: FormBuilder,) {
+      this.form = this.fb.group({
+        notePlace: [''],
+      });
+     }
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
+
+  confirmFormAddNoteToPlace(){
+    console.log("click add note", this.data._id);
+          //créér la note
+          let newNote = {
+            stars: this.form.value.notePlace,
+     /*        text: req.body.text, */
+            place: this.data._id
+          }
+    this.placesService.addNote$(newNote, this.data._id).subscribe((resp)=>{
+console.log(resp)
+this.cancel();
+    },
+    (error) => {
+      console.log(error);
+      console.log("ça marche pas frérow");  
+    })
+      }
 
   ngOnInit() {
     this.noteService.getNotes$(this.data._id);

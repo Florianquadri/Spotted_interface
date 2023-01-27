@@ -15,8 +15,21 @@
   <ion-item>
     <ion-label position="stacked">Note : {{data.averageNote}}</ion-label>
   </ion-item>
-  
+
   <ion-item>
     <ion-label position="stacked">Tags associés: {{data.tags}}</ion-label>
   </ion-item>
+
+  <form (ngSubmit)="confirmFormAddNoteToPlace()" [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Note cette place</ion-label>
+        <ion-select required name="notePlace" formControlName="notePlace" interface="popover" placeholder="Choisis la note">
+          <ion-select-option *ngFor="let noteChosen of this.chooseNote"
+            [value]="noteChosen">{{noteChosen}}</ion-select-option>
+        </ion-select>
+      </ion-item>⁄
+    </ion-list>
+    <ion-button type="submit" [disabled]="!form.valid" expand="block">Submit</ion-button>
+  </form>
 </ion-content>
