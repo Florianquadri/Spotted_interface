@@ -15,20 +15,24 @@
   <form (ngSubmit)="confirm()" [formGroup]="form">
     <!-- <form > -->
   <ion-item>
-    <ion-label position="stacked">Nom de la place</ion-label>
+    <ion-label position="stacked">Nom de la place *</ion-label>
     <ion-input required [clearInput]="true" formControlName="placeName" placeholder="Name of the place"></ion-input>
   </ion-item>
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Note</ion-label>
+      <ion-label position="stacked">Note *</ion-label>
       <ion-select required name="note" formControlName="note" interface="popover" placeholder="Note la place">
         <ion-select-option *ngFor="let note of chooseNote" [value]="note">{{note}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-list>
+  <ion-item>
+    <ion-label position="stacked">Commentaire</ion-label>
+    <ion-input [clearInput]="true" formControlName="noteEcrite" placeholder="Ton commentaire"></ion-input>
+  </ion-item>
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Tag</ion-label>
+      <ion-label position="stacked">Tag *</ion-label>
       <ion-select required name="tag" formControlName="tag" interface="popover" placeholder="Choisis ton tag">
         <ion-select-option *ngFor="let tag of this.tags" [value]="tag">{{tag}}</ion-select-option>
       </ion-select>

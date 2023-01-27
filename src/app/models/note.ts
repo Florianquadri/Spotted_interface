@@ -1,4 +1,5 @@
 export type Note = {
     stars: number,
-    place: string
+    place: string,
+    text?: any
   };

@@ -68,13 +68,20 @@ this.cancel();
   ionViewWillEnter(): void {
     
     // Make an HTTP request to retrieve the trips.
-/*     this.noteService.getNotes$(this.data._id).subscribe((notes) => {
-      this.data.averageNote =
+     this.noteService.getNotes$(this.data._id).subscribe((notes) => {
+      this.data.commentaire = notes[0].text;
+      console.log(this.data.commentaire)
+      
+/*       this.data.averageNote =
         notes.length > 0
           ? notes.reduce((total, note) => (total += note.stars), 0) /
             notes.length
-          : undefined;
-    }); */
+          : undefined; */
+    }); 
+
+/*     this.placesService.getPlacesById$(this.data._id).subscribe((place) => {
+      this.data.commentaire = place.notes;
+    });  */
 
     this.noteService.getAverageNoteForAPlace$(this.data._id).subscribe((scoreNote) => {
       this.data.averageNote = scoreNote.score;

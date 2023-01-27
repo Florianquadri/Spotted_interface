@@ -54,7 +54,8 @@ public imageElement;
     this.form = this.fb.group({
       placeName: [''],
       note:[''],
-      tag:['']
+      tag:[''],
+      noteEcrite:['']
       /*       placeCanton: [''] */
     });
     this.coordinates = this.navParams.get('coordinates');
@@ -180,12 +181,12 @@ public imageElement;
       //créér la note
       let newNote = {
         stars: this.dataForm[0].note,
- /*        text: req.body.text, */
+       text: this.dataForm[0].noteEcrite, 
         place: this.placeId
       }
       // Do something with the response
       this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
-        console.log("Place ajoutée")
+        console.log("Place ajoutée", newNote)
       })
       this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {
 

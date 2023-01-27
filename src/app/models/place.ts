@@ -10,4 +10,5 @@ export type Place = {
     averageNote?: number;
     numberReviews?:number;
     distanceWithMe?:number;
+    commentaire?: any;
   };
