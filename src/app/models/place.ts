@@ -8,4 +8,6 @@ export type Place = {
     tags : [string]
     notes?: Note[];
     averageNote?: number;
+    numberReviews?:number;
+    distanceWithMe?:number;
   };

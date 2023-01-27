@@ -39,7 +39,7 @@ export class AddPlaceComponent {
   coordinates: number[];
   public images: any;
   public Array: any;
-public formDataMieux;
+public imageElement;
 
   public chooseNote = [1,2,3,4,5];
 
@@ -62,7 +62,7 @@ public formDataMieux;
 
   }
 
-  convertBase64ToFormData(base64: string) {
+/*   convertBase64ToFormData(base64: string) {
     let binaryString = atob(base64);
     let len = binaryString.length;
     let bytes = new Uint8Array(len);
@@ -73,20 +73,28 @@ public formDataMieux;
     let blob = new Blob([bytes], { type: 'image/jpeg/png' });
     
     return blob;
-  }
+  } */
 
   takePicture = async () => {
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
-      resultType: CameraResultType.Base64
+      resultType: CameraResultType.Uri
+      
       
     });
 
+/*     var imageUrl = image.webPath;
+
+    // Can be set to the src of an image now
+    this.imageElement.src = imageUrl;
+    console.log("por aquador");
+    console.log(imageUrl); */
+
     console.log(image)
-    this.imgRes = image.base64String;
+    this.imgRes = image;
     
-    this.imgRes = this.convertBase64ToFormData(this.imgRes);
+   /*  this.imgRes = this.convertBase64ToFormData(this.imgRes); */
  
     console.log("puree");
     console.log(this.imgRes);
@@ -154,10 +162,7 @@ public formDataMieux;
     });
 
 
-    this.placeService.addPicture$(this.picture, this.placeId).subscribe((response) => {
-
-      console.log("PARCEQUEONESTPASCOUCHENANANA" + response);
-    });
+   
 
 
     this.form.reset();
@@ -182,6 +187,11 @@ public formDataMieux;
       this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
         console.log("Place ajoutée")
       })
+      this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {
+
+        console.log( response);
+        console.log("image ajoutée");
+      });
     },
       (error) => {
         console.log(error);

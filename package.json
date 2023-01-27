@@ -32,6 +32,7 @@
     "@ionic/storage-angular": "^3.0.6",
     "@turf/along": "^6.5.0",
     "@turf/distance": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "ionicons": "^6.1.1",
     "leaflet": "^1.9.3",
