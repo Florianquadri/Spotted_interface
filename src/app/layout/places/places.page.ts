@@ -19,8 +19,8 @@ import * as L from 'leaflet';
 import { ModalController } from 'node_modules/@ionic/angular';
 import { AddPlaceComponent } from '../../add-place/add-place.component';
 import { catchError } from 'rxjs/operators'
-import distance from '@turf/distance';
-import { points, Units } from '@turf/helpers';
+import distance from 'node_modules/@turf/distance';
+import { points, Units } from 'node_modules/@turf/helpers';
 
 @Component({
   selector: 'app-places',
