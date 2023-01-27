@@ -19,6 +19,14 @@
     <ion-input required [clearInput]="true" formControlName="placeName" placeholder="Name of the place"></ion-input>
   </ion-item>
   <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Note</ion-label>
+      <ion-select required name="note" formControlName="note" interface="popover" placeholder="Note la place">
+        <ion-select-option *ngFor="let note of chooseNote" [value]="note">{{note}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-list>
 <!--     <ion-item>
       <ion-label position="stacked">Canton</ion-label>
       <ion-select required  formControlName="placeCanton"name="placeCanton" placeholder="Cantons">

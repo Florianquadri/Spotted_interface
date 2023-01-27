@@ -25,17 +25,17 @@
 
     <ion-list>
       <ion-item>
-        <ion-select class="smallVP"  (ionChange)="filterByCanton()" interface="popover" placeholder="Cantons" [(ngModel)]="chosenCanton">
+        <ion-select  (ionChange)="filterByCanton()" interface="popover" placeholder="Cantons" [(ngModel)]="chosenCanton">
 <!--           <ion-select-option  selected disabled hidden  > Cantons </ion-select-option>  -->
-          <ion-select-option class="smallVP"  *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
+          <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
 
     <ion-list>
       <ion-item>
-        <ion-select  class="miniVP" (ionChange)="filterByTag()" interface="popover" placeholder="Tags" [(ngModel)]="tagChosen">
-          <ion-select-option class="miniVP" *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
+        <ion-select  (ionChange)="filterByTag()" interface="popover" placeholder="Tags" [(ngModel)]="tagChosen">
+          <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -67,9 +67,9 @@
   <div *ngIf="!mapViewChosen">
     <p>Résultat</p>
     <ul class="fullspace">
-      <div class="containerRow listPlace" *ngFor="let place of data">
+      <div class="containerRow listPlace" *ngFor="let place of data; let i = index">
         <p class="space">{{place.name}}</p>
-        <p class="space">  10 Km</p>
+        <p class="space">{{this.distanceWithMe[i]}} Km</p>
         <p class="space">*****</p>
         <div *ngIf="place.averageNote>=0">Note moyenne : {{place.averageNote}}</div>
  

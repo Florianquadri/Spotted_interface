@@ -41,6 +41,7 @@ export class AddPlaceComponent {
   public Array: any;
 
 
+  public chooseNote = [1,2,3,4,5];
 
   constructor(
     private http: HttpClient,
@@ -54,6 +55,7 @@ export class AddPlaceComponent {
   ) {
     this.form = this.fb.group({
       placeName: [''],
+      note:['']
       /*       placeCanton: [''] */
     });
     this.coordinates = this.navParams.get('coordinates');
@@ -101,7 +103,6 @@ convertBase64ToFormData(base64: string) {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-
   confirm() {
     this.dataForm.push(this.form.value);
     console.log(this.coordinates)
@@ -131,13 +132,13 @@ convertBase64ToFormData(base64: string) {
       else { this.canton = resp }
 
       //il reste à gérer les cantons qui tont exception allemand-français pour coordonner mapbox, notre menu drop-down et notre api
-      if(this.canton =="Saint-Gall"){this.canton = "St. Galles"}
-      else if(this.canton =="Schaffhouse"){this.canton = "Schaffhausen"}
-      else if(this.canton =="Tessin"){this.canton = "Ticino"}
-      else if(this.canton =="Thurgovie"){this.canton = "Thurgovia"}
-      else if(this.canton =="Zoug"){this.canton = "Zug"}
+      if (this.canton == "Saint-Gall") { this.canton = "St. Galles" }
+      else if (this.canton == "Schaffhouse") { this.canton = "Schaffhausen" }
+      else if (this.canton == "Tessin") { this.canton = "Ticino" }
+      else if (this.canton == "Thurgovie") { this.canton = "Thurgovia" }
+      else if (this.canton == "Zoug") { this.canton = "Zug" }
       //bug avec la la règle par défaut...
-      else if(this.canton == "canton d’Appenzell Rhodes-Extérieures"){this.canton = "Appenzell rhodes-extérieures"}
+      else if (this.canton == "canton d’Appenzell Rhodes-Extérieures") { this.canton = "Appenzell rhodes-extérieures" }
 
       console.log(this.canton)
       this.dataForm.push(this.form.value);
@@ -151,52 +152,48 @@ convertBase64ToFormData(base64: string) {
         "tags": ["trébo"]
       };
       console.log(this.data);
-      this.confirm();
+      this.addMyPlace();
     });
 
-    //this.coordinates à mapbox
+
+    this.placeService.addPicture$(this.picture, this.placeId).subscribe((response) => {
+
+      console.log("PARCEQUEONESTPASCOUCHENANANA" + response);
+    });
 
 
-      this.dataForm.push(this.form.value);
-      
-  
-     this.data = {"name": this.dataForm[0].placeName,
-                  "canton": this.dataForm[0].placeCanton,
-                  "location": {
-                    "type": "Point",
-                    /* "pictures": this.Array, */
-                     "coordinates": this.coordinates},
-                     "tags": ["tréjoli","trébo"]
-                     };
+    this.form.reset();
+    return this.modalCtrl.dismiss(this.name, 'confirm');
+  }
 
+  addMyPlace() {
+    this.placeService.addPlace$(this.data).subscribe((response) => {
 
-       this.placeService.addPlace$(this.data).subscribe((response) => {
+      console.log(response);
+      this.placeId = response;
+      this.placeId = this.placeId._id;
+      console.log(this.placeId)
 
-        console.log(response);
-        this.placeId = response;
-        this.placeId = this.placeId._id;
-        console.log(this.placeId)
-        
-        this.placeService.addPicture$(this.Array,this.placeId).subscribe((response) => {
-          console.log("PARCEQUEONESTPASCOUCHENANANA"+response);
-        });
-
-      },
+      //créér la note
+      let newNote = {
+        stars: this.dataForm[0].note,
+ /*        text: req.body.text, */
+        place: this.placeId
+      }
+      // Do something with the response
+      this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
+        console.log("Place ajoutée")
+      })
+    },
       (error) => {
         console.log(error);
         // Handle the error
       });
+  }
 
-      
-      this.form.reset();
-      return this.modalCtrl.dismiss(this.name, 'confirm');
-    }
-    
+  ngOnInit() { }
 
 
-    
-
-  ngOnInit() {}
   
   public cantons = ["Appenzell Rhodes-Extérieures",
     "Appenzell Rhodes-Extérieures",
