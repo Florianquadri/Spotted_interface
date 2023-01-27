@@ -11,7 +11,7 @@ import { catchError, flatMap, tap, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { PlaceFromLieuxComponent } from 'src/app/place-from-lieux/place-from-lieux.component';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { GaleriePhotoComponent } from 'src/app/galerie-photo/galerie-photo.component';
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
@@ -24,7 +24,7 @@ export class AccountPage /* implements OnInit */ {
   public userId = null;
   public placeId = null;
 
-
+  public dataPlaceAccount:Place[];
 
   public places: Place[];
   public notes: Note[];
@@ -48,19 +48,16 @@ export class AccountPage /* implements OnInit */ {
 
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
-    console.log('ma data :');
-    console.log(this.data);
+
     this.AuthService.getUser$().subscribe((e) => {
       this.name = e.name;
       this.pseudo = e.surname;
-      this.userId = e.id;
-      console.log('ce que je recois', e);
+      this.userId = e._id;
     });
 
     this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
-      //console.log(places)
       this.places = places;
-
+      this.dataPlaceAccount=places;
       for (const place of places) {
         this.noteService.getNotes$(place._id).subscribe((notes) => {
           place.averageNote =
@@ -68,10 +65,12 @@ export class AccountPage /* implements OnInit */ {
               ? notes.reduce((total, note) => (total += note.stars), 0) /
                 notes.length
               : undefined;
+              
         },(error) => {
           console.log("y a un souci de pas de notes");
         });
-      }
+      } 
+     
     });
   }
 

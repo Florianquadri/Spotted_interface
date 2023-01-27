@@ -13,6 +13,10 @@ import { AddPlaceComponent } from '../add-place/add-place.component';
 export class PlaceModalComponentComponent implements OnInit {
   public data : Place;
   public notes = null;
+  public pageName = null;
+  public dataplacemodal:Place;
+  
+
 
   constructor(private modalCtrl: ModalController,
     private noteService: NotesService,) { }
@@ -22,9 +26,12 @@ export class PlaceModalComponentComponent implements OnInit {
 
   ngOnInit() {
     this.noteService.getNotes$(this.data._id);
+    this.dataplacemodal=this.data
+    this.pageName = "mapmodal";
   }
   
   ionViewWillEnter(): void {
+    
     // Make an HTTP request to retrieve the trips.
     this.noteService.getNotes$(this.data._id).subscribe((notes) => {
       this.data.averageNote =
@@ -33,6 +40,12 @@ export class PlaceModalComponentComponent implements OnInit {
             notes.length
           : undefined;
     });
+     
   }
-
+  ionViewDidEnter():void {
+    
+  }
+  ionViewDidLeave(){
+    this.pageName=null
+  }
 }

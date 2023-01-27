@@ -24,7 +24,7 @@ export class PlacesService {
     return this.http.get<Place[]>(`${environment.apiUrl}/places`);
   }
   getPlacesByUserId$(userId): Observable<Place[]> {
-    return this.http.get<Place[]>(`${environment.apiUrl}/${userId}/places`);
+    return this.http.get<Place[]>(`${environment.apiUrl}/users/${userId}/visitedPlaces`);
   }
 
 /*   getPlacesId$(placeId): Observable<Place[]> {

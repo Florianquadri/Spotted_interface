@@ -18,7 +18,7 @@ export class LayoutPage /* implements OnInit */ {
 
   constructor() { 
     this.tabs = [
-      { title: "Search places", icon: "map", path: "places" },
+      { title: "Map", icon: "map", path: "places" },
       { title: "Account", icon: "logo-octocat", path: "account" },
     ];
   }
