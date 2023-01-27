@@ -9,9 +9,7 @@ import { Place } from 'src/app/models/place';
 import { Note } from 'src/app/models/note';
 import { catchError, flatMap, tap, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { PlaceFromLieuxComponent } from 'src/app/place-from-lieux/place-from-lieux.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GaleriePhotoComponent } from 'src/app/galerie-photo/galerie-photo.component';
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',

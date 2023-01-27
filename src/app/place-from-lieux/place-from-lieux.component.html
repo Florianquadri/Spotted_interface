@@ -13,9 +13,11 @@
     <ion-label position="stacked">{{place.canton}}</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked">Note : {{notesTraitees}}</ion-label>
+    <ion-label position="stacked">Note moyenne : {{notesTraitees}}</ion-label>
   </ion-item>
   <ion-item>
     <ion-label position="stacked">Tags associés: {{place.tags}}</ion-label>
   </ion-item>
+  <app-galerie-photo [maPropriete]="pageName" [maDataPlace]="dataPlaceFromLieux"></app-galerie-photo>
+
 </ion-content>

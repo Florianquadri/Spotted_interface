@@ -1,25 +1,21 @@
-import { PlaceModalComponentComponent } from './../../place-modal-component/place-modal-component.component';
+import { PlaceFromLieuxComponent } from 'src/app/place-from-lieux/place-from-lieux.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PlacesPageRoutingModule } from './places-routing.module';
-import { PlacesPage } from './places.page';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PlacesPageRoutingModule,
     LeafletModule,
     ReactiveFormsModule,
     SharedModule,
   ],
-  declarations: [PlacesPage,PlaceModalComponentComponent]
+  declarations: [PlaceFromLieuxComponent],
+  exports: [PlaceFromLieuxComponent]
 })
-export class PlacesPageModule {}
+export class PlaceFromLieuxModule {}

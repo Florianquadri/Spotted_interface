@@ -24,6 +24,9 @@
     <ion-label position="stacked">Tags associés: {{data.tags}}</ion-label>
   </ion-item>
 
+
+
+
   <form (ngSubmit)="confirmFormAddNoteToPlace()" [formGroup]="form">
     <ion-list>
       <ion-item>
@@ -36,5 +39,8 @@
     </ion-list>
     <ion-button type="submit" [disabled]="!form.valid" expand="block">Noter la place</ion-button>
   </form>
-  <app-galerie-photo [maPropriete]="pageName" [maData]="dataplacemodal"></app-galerie-photo>
+    <app-galerie-photo [maPropriete]="pageName" 
+  [maData]="dataplacemodal"></app-galerie-photo>
+ 
+
 </ion-content>
