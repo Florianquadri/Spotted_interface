@@ -27,12 +27,7 @@
     </ion-item>
   </ion-list>
   <ion-list>
-<!--     <ion-item>
-      <ion-label position="stacked">Canton</ion-label>
-      <ion-select required  formControlName="placeCanton"name="placeCanton" placeholder="Cantons">
-        <ion-select-option *ngFor="let canton of cantons" [value]="canton">{{canton}}</ion-select-option>
-      </ion-select>
-    </ion-item> -->
+
   </ion-list>
 
   <ion-item>
@@ -43,9 +38,7 @@
 
   </ion-item>
 
-  <ion-item>
-    <img *ngIf="imgRes" [src]="imgRes.url" />
-  </ion-item>
+ 
   <ion-button type="submit" [disabled]="!form.valid" expand="block">Submit</ion-button>
 </form>
 

@@ -45,9 +45,22 @@ export class PlacesService {
     }
 
 
-addPicture$(picture: any[],placeId){
+  addPicture$(picture,placeId){
+    console.log("picture")
+    console.log(picture)
+    const formData = new FormData();
+    formData.append('File', picture);
+    console.log(formData)
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    const options = { headers: headers, responseType: 'text' as const}
+    return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, formData, options)
+  }
+
+
+/* addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
-}
+} */
 
   handleError<T>(arg0: string): (err: any, caught: Observable<any>) => import("rxjs").ObservableInput<any> {
     throw new Error('Method not implemented.');

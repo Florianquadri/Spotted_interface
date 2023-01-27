@@ -39,19 +39,17 @@ export class AddPlaceComponent {
   coordinates: number[];
   public images: any;
   public Array: any;
-
+public formDataMieux;
 
   public chooseNote = [1,2,3,4,5];
 
   constructor(
     private http: HttpClient,
     private modalCtrl: ModalController,
-    private pictureService: PictureService,
+   /*  private pictureService: PictureService, */
     private placeService: PlacesService,
-    private auth: AuthService,
     private fb: FormBuilder,
     private navParams: NavParams,
-    private sanitizer: DomSanitizer
   ) {
     this.form = this.fb.group({
       placeName: [''],
@@ -63,6 +61,18 @@ export class AddPlaceComponent {
 
   }
 
+  convertBase64ToFormData(base64: string) {
+    let binaryString = atob(base64);
+    let len = binaryString.length;
+    let bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+   
+    let blob = new Blob([bytes], { type: 'image/jpeg/png' });
+    
+    return blob;
+  }
 
   takePicture = async () => {
     const image = await Camera.getPhoto({
@@ -71,32 +81,17 @@ export class AddPlaceComponent {
       resultType: CameraResultType.Base64
       
     });
-    console.log("image")
+
     console.log(image)
     this.imgRes = image.base64String;
-
-    let formData = this.convertBase64ToFormData(this.imgRes);
-
-    this.Array = formData;
+    
+    this.imgRes = this.convertBase64ToFormData(this.imgRes);
+ 
     console.log("puree");
-    console.log(this.Array);
+    console.log(this.imgRes);
+  
     
 }
-
-convertBase64ToFormData(base64: string) {
-  let binaryString = atob(base64);
-  let len = binaryString.length;
-  let bytes = new Uint8Array(len);
-  for (let i = 0; i < len; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
-  }
-  let blob = new Blob([bytes], { type: 'image/jpeg' });
-  let formData = new FormData();
-  formData.append('file', blob);
-  return formData;
-}
-
-
 
 
   cancel() {
@@ -141,7 +136,9 @@ convertBase64ToFormData(base64: string) {
       else if (this.canton == "canton d’Appenzell Rhodes-Extérieures") { this.canton = "Appenzell rhodes-extérieures" }
 
       console.log(this.canton)
+
       this.dataForm.push(this.form.value);
+
       this.data = {
         "name": this.dataForm[0].placeName,
         "canton": this.canton,
@@ -187,7 +184,7 @@ convertBase64ToFormData(base64: string) {
     },
       (error) => {
         console.log(error);
-        // Handle the error
+        console.log("ça marche pas frérow");  
       });
   }
 
