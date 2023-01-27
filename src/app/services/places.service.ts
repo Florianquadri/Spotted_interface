@@ -22,6 +22,10 @@ export class PlacesService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  getPlacesById$(id): Observable<Place> {
+    return this.http.get<Place>(`${environment.apiUrl}/places/${id}`);
+  }
+
   getPlaces$(): Observable<Place[]> {
     return this.http.get<Place[]>(`${environment.apiUrl}/places`);
   }
