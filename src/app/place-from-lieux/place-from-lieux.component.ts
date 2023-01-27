@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotesService } from '../services/notes.service';
 import { Place } from '../models/place';
+import { SharedModule } from '../shared/shared.module';
 
 
 @Component({
@@ -13,6 +14,8 @@ export class PlaceFromLieuxComponent implements OnInit {
   public place: Place;
   public notes = null;
   public notesTraitees = null;
+  public pageName ="placeDetail";
+  public dataPlaceFromLieux;
 
   constructor(private route: ActivatedRoute,
     private noteService: NotesService) { 
@@ -21,15 +24,15 @@ export class PlaceFromLieuxComponent implements OnInit {
   ngOnInit() {
     this.place = JSON.parse(this.route.snapshot.paramMap.get('param'));
     this.noteService.getNotes$(this.place._id);
+    this.dataPlaceFromLieux=this.place._id
   }
 
   ionViewWillEnter(): void {
-     console.log("ici ?"+this.place);
+    
+     console.log(this.place);
       this.noteService.getNotes$(this.place._id).subscribe(e => {
         this.notes = e;
           this.notesTraitees=this.notes[0].stars
-          console.log("mesnotes"+this.notesTraitees[0].stars);
-
         
       });
   }

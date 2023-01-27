@@ -15,6 +15,7 @@ export class GaleriePhotoComponent implements OnInit {
   @Input() maPropriete: string;
   @Input() maData: Place;
   @Input() maDataAccount: Place[];
+  @Input() maDataPlace: Place;
 
   constructor(private http: HttpClient,
     private AuthService: AuthService,) {}
@@ -65,6 +66,24 @@ export class GaleriePhotoComponent implements OnInit {
           /* console.log("ma data traitée dans les photos : ");
               console.log(this.imageGot); */
         });
+    }
+    
+    if (this.maPropriete=="placeDetail") {
+      console.log("ca marche lààà");
+      console.log(this.maDataPlace);
+      (this.data = this.http
+        .get(
+          `https://spotted-rest-api.onrender.com/places/${this.maDataPlace}/pictures`
+        )
+        .subscribe((data) => {
+          this.imageBinary = data[0].picture.data;
+          this.imageGot =
+            'data:image/png;base64,' +
+            Buffer.from(this.imageBinary).toString('base64');
+        })),
+        (error) => {
+          console.log("y a un souci de pas d'images là");
+        };
     }
   }
 

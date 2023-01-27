@@ -1,3 +1,4 @@
+import { PlaceFromLieuxModule } from './../place-from-lieux/place-from-lieux.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlaceFromLieuxComponent } from '../place-from-lieux/place-from-lieux.component';
@@ -31,7 +32,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes),PlaceFromLieuxModule],
   exports: [RouterModule],
 })
 export class LayoutPageRoutingModule {}
