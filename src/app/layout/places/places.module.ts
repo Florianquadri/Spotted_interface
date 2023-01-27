@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 import { PlacesPageRoutingModule } from './places-routing.module';
-
+import { GaleriePhotoComponent } from 'src/app/galerie-photo/galerie-photo.component';
 import { PlacesPage } from './places.page';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
@@ -19,6 +19,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     PlacesPageRoutingModule,
     LeafletModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   declarations: [PlacesPage,PlaceModalComponentComponent]
 })
