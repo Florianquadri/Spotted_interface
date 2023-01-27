@@ -55,7 +55,8 @@ export class AddPlaceComponent {
   ) {
     this.form = this.fb.group({
       placeName: [''],
-      note:['']
+      note:[''],
+      tag:['']
       /*       placeCanton: [''] */
     });
     this.coordinates = this.navParams.get('coordinates');
@@ -149,7 +150,7 @@ convertBase64ToFormData(base64: string) {
           "type": "Point",
           "coordinates": this.coordinates
         },
-        "tags": ["trébo"]
+        "tags": [this.dataForm[0].tag]
       };
       console.log(this.data);
       this.addMyPlace();
@@ -223,6 +224,25 @@ convertBase64ToFormData(base64: string) {
     "Zurich"
   ]
 
+  public tags = [
+    'Piscine',
+    'forêt',
+    'trébo',
+    'street photography',
+    'lac',
+    'montagne',
+    'sunrise',
+    'sunset',
+    'treck',
+    'monument',
+    'panorama',
+    'urbex',
+    'glacier',
+    'barrage',
+    'incontournable',
+    'astrophotographie',
+    'lost but worth it',
+  ];
 }
 
 
