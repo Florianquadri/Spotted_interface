@@ -67,7 +67,7 @@
   <div *ngIf="!mapViewChosen">
     <p>Résultat</p>
     <ul class="fullspace">
-      <div class="containerRow listPlace greyHover" *ngFor="let place of data; let i = index" (click)="viewInfoPlace()">
+      <div class="containerRow listPlace greyHover" *ngFor="let place of data; let i = index" (click)="viewInfoPlace(place)">
         <p class="space">{{place.name}}</p>
 <!--         <p class="space">{{this.distanceWithMe[i]}} Km</p> -->
         <p class="space">{{place.distanceWithMe}} Km</p>

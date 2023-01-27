@@ -382,11 +382,9 @@ this.data[i].distanceWithMe = distArrondie;
     });
   }
 
-  viewInfoPlace(){
-    setTimeout(() => {
-      this.openModal();
-    }, 200);
-    this.canActivate = false;
+  viewInfoPlace(data){
+    this.displayPlaceModal(data);
+
   }
 
   addMarker() {
