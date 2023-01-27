@@ -187,19 +187,21 @@ export class PlacesPage implements ViewWillEnter {
       this.mapMarkers.push(marker);
 
       //calculer distance entre chaque point recherché et notre position
-      this.calculeDist(this.data[i].location.coordinates);
+      this.calculeDist(this.data[i].location.coordinates,i);
 
     }
     console.log(this.mapMarkers);
 
   }
 
-  calculeDist(coordPlace : any) {
+  calculeDist(coordPlace : any, i : any) {
 
     const distancePoint = distance([coordPlace[1], coordPlace[0]], this.wherIamCoordinates, this.options)
     const distArrondie = distancePoint.toFixed(2)
 /*     console.log(distArrondie); */
+this.data[i].distanceWithMe = distArrondie;
     this.distanceWithMe.push(distArrondie);
+    console.log(this.data[i])
 /*     console.log(this.distanceWithMe) */
   }
 
@@ -380,6 +382,11 @@ export class PlacesPage implements ViewWillEnter {
     });
   }
 
+  viewInfoPlace(data){
+    this.displayPlaceModal(data);
+
+  }
+
   addMarker() {
     this.resetMethod();
     this.map.on('click', (e) => {
@@ -440,7 +447,7 @@ export class PlacesPage implements ViewWillEnter {
                 notes.length
                 : undefined;
           }, (error) => {
-            console.log("y a un souci de pas de notes");
+/*             console.log("y a un souci de pas de notes"); */
           });
       }
 

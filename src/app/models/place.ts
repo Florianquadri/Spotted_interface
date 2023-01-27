@@ -9,4 +9,5 @@ export type Place = {
     notes?: Note[];
     averageNote?: number;
     numberReviews?:number;
+    distanceWithMe?:number;
   };
