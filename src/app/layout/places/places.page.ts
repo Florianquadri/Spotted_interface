@@ -195,24 +195,12 @@ export class PlacesPage implements ViewWillEnter {
   }
 
   calculeDist(coordPlace : any) {
-/*     const fromm = points(coordPlace);
-    const too = points(this.wherIamCoordinates);
-    console.log(fromm, too)
 
-    this.from = turf.point([
-      fromm
-    ]);
-    this.to = turf.point(this.wherIamCoordinates);
-    const distance = turf.distance(this.from, this.to, this.options);
-    this.distanceWithMe.push(distance); */
-
-/*     const from2 = turf.point(coordPlace)
-    const to2 = turf.point(this.wherIamCoordinates) */
     const distancePoint = distance([coordPlace[1], coordPlace[0]], this.wherIamCoordinates, this.options)
     const distArrondie = distancePoint.toFixed(2)
-    console.log(distArrondie);
+/*     console.log(distArrondie); */
     this.distanceWithMe.push(distArrondie);
-    console.log(this.distanceWithMe)
+/*     console.log(this.distanceWithMe) */
   }
 
   async displayPlaceModal(place: []) {
@@ -256,6 +244,8 @@ export class PlacesPage implements ViewWillEnter {
     );
     this.results = [];
   }
+
+
   filterByTag() {
     console.log(this.tagChosen);
 
@@ -348,7 +338,6 @@ export class PlacesPage implements ViewWillEnter {
           this.map.setView([coordinates[1], coordinates[0]], 8);
           /*         this.mapOptions.zoom = 10; */
         });
-      //faire filtre en faisant appel à l'api
     }
   }
 
@@ -364,8 +353,7 @@ export class PlacesPage implements ViewWillEnter {
       this.data = places;
       this.addDataToMap();
       this.locateMe();
-      /* console.log(this.data)
-      console.log(this.data[4]) */
+      /* console.log(this.data) */
 
     });
   }

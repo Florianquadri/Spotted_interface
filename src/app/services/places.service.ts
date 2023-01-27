@@ -40,7 +40,10 @@ export class PlacesService {
   return this.http.post(`${environment.apiUrl}/places`, data);
   }
 
-  
+  addNote$(data, placeId){ 
+    return this.http.post(`${environment.apiUrl}/places/${placeId}/notes`, data);
+    }
+
 
 addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
