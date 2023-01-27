@@ -37,6 +37,7 @@
     "leaflet": "^1.9.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.4.1",
+    "turf": "^3.0.14",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
