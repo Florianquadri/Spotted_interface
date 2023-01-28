@@ -63,7 +63,7 @@ public imageElement;
 
   }
 
-/*   convertBase64ToFormData(base64: string) {
+ /*  convertBase64ToFormData(base64: string) {
     let binaryString = atob(base64);
     let len = binaryString.length;
     let bytes = new Uint8Array(len);
@@ -80,7 +80,7 @@ public imageElement;
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.Base64
       
       
     });
@@ -95,7 +95,7 @@ public imageElement;
     console.log(image)
     this.imgRes = image;
     
-   /*  this.imgRes = this.convertBase64ToFormData(this.imgRes); */
+ /*    this.imgRes = this.convertBase64ToFormData(this.imgRes); */
  
     console.log("puree");
     console.log(this.imgRes);

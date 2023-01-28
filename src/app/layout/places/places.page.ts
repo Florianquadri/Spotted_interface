@@ -190,7 +190,7 @@ export class PlacesPage implements ViewWillEnter {
       this.calculeDist(this.data[i].location.coordinates,i);
 
     }
-    console.log(this.mapMarkers);
+    /* console.log(this.mapMarkers); */
 
   }
 

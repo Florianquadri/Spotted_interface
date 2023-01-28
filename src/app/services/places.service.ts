@@ -6,9 +6,6 @@ import { Note } from "../models/note";
 import { Coordinates } from "../models/coordinates";
 import { environment } from "src/environments/environment";
 import { ReplaySubject, Observable, of, from, catchError,tap,map } from "rxjs";
-import { FormGroup } from '@angular/forms';
-import { mergeMap } from 'rxjs/operators';
-/* import { PlaceModalComponentComponent } from './../place-modal-component/place-modal-component.component'; */
 
 @Injectable({
   providedIn: 'root'
@@ -52,15 +49,19 @@ export class PlacesService {
 
 
   addPicture$(picture,placeId){
-    console.log("picture")
+  /*   console.log("picture")
     console.log(picture)
+    console.log("placeId")
+    console.log(placeId ) */
     const formData = new FormData();
-    formData.append('File', picture);
-    console.log(formData)
+    formData.append("place", placeId);
+    formData.append("picture", picture);
+    console.log(" Formadata de ")
+    console.log(formData.get("File"))
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     const options = { headers: headers, responseType: 'text' as const}
-    return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, formData, options)
+    return this.http.post(`${environment.apiUrl}/pictures`, formData/* , options */)
   }
 
 
