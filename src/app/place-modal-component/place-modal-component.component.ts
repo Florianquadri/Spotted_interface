@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
 import { ModalController } from 'node_modules/@ionic/angular';
 import { Place } from '../models/place';
 import { NotesService } from '../services/notes.service';
@@ -7,6 +7,7 @@ import { PlacesService } from '../services/places.service';
 import { HttpClient } from "@angular/common/http";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-place-modal-component',
@@ -19,6 +20,7 @@ export class PlaceModalComponentComponent implements OnInit {
   public notes = null;
   public pageName = null;
   public dataplacemodal: Place;
+  @Output() eventShowListOfAvis = new EventEmitter<any>();
 
 
   public chooseNote = [1, 2, 3, 4, 5];
@@ -34,7 +36,8 @@ export class PlaceModalComponentComponent implements OnInit {
         } */
 
   constructor(private modalCtrl: ModalController,
-    private noteService: NotesService, private placesService: PlacesService, private http: HttpClient, private fb: FormBuilder,) {
+    private noteService: NotesService, private placesService: PlacesService, private http: HttpClient, private fb: FormBuilder,
+    private ngZone: NgZone,     private router: Router,    private route: ActivatedRoute) {
     this.form = this.fb.group({
       notePlace: [''],
       noteEcrite: ['']
@@ -62,8 +65,12 @@ export class PlaceModalComponentComponent implements OnInit {
       })
   }
 
-  viewAvis(){
-    //si on a le temps, page pour voir tous les avis
+  viewAvis(allAvis){
+    this.router.navigate(
+      ['./view-avis-list', { param: JSON.stringify(allAvis) }],
+      { relativeTo: this.route }
+    );
+    this.cancel();
   }
 
   ngOnInit() {
@@ -78,8 +85,9 @@ export class PlaceModalComponentComponent implements OnInit {
     this.noteService.getNotes$(this.data._id).subscribe((notes) => {
       this.data.commentaire = [];
       for (let oneNote of notes){
+        console.log(oneNote)
         if(oneNote.text){
-          this.data.commentaire.push({"text" : oneNote.text, "author" : oneNote.author})
+          this.data.commentaire.push({"text" : oneNote.text, "author" : oneNote.author, "id" : oneNote._id, "place": oneNote.place})
         }
       }
       console.log(this.data.commentaire)

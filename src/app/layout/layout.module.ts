@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { LayoutPageRoutingModule } from './layout-routing.module';
 import { LayoutPage } from './layout.page';
 import { AddPlaceComponent } from '../add-place/add-place.component';
+import { PlaceFromLieuxComponent } from '../place-from-lieux/place-from-lieux.component';
+import {ViewAvisListComponent} from '../view-avis-list/view-avis-list.component'
 
 
 
@@ -17,6 +19,6 @@ import { AddPlaceComponent } from '../add-place/add-place.component';
     ReactiveFormsModule,
 
   ],
-  declarations: [LayoutPage,AddPlaceComponent]
+  declarations: [LayoutPage,AddPlaceComponent,PlaceFromLieuxComponent, ViewAvisListComponent]
 })
 export class LayoutPageModule {}

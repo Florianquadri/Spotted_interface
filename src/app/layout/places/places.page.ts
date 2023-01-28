@@ -1,6 +1,6 @@
 import { PlaceModalComponentComponent } from './../../place-modal-component/place-modal-component.component';
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 // TODO: import Angular's HTTP client.
 import { HttpClient } from '@angular/common/http';
@@ -123,7 +123,8 @@ export class PlacesPage implements ViewWillEnter {
     // Inject the router
     private router: Router,
     private http: HttpClient,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private route: ActivatedRoute
   ) {
     this.mapOptions = {
       layers: [
@@ -140,6 +141,7 @@ export class PlacesPage implements ViewWillEnter {
     const modal = await this.modalCtrl.create({
       component: AddPlaceComponent,
       componentProps: { coordinates: this.coordinate },
+      
     });
 
     modal.present();
@@ -213,6 +215,7 @@ this.data[i].distanceWithMe = distArrondie;
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
+
   }
 
   getMapCurrentPosition() {
@@ -428,6 +431,15 @@ this.data[i].distanceWithMe = distArrondie;
   resetMethod() {
     this.canActivate = true;
   }
+
+  viewAvisForThisPlace(avisPlace) {
+    this.router.navigate(
+      ['./view-avis-list', { param: JSON.stringify(avisPlace) }],
+      { relativeTo: this.route }
+    );
+  }
+
+  oneventShowListOfAvis(event) { console.log(event); }
 
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.

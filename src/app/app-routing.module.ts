@@ -1,3 +1,5 @@
+import { PlaceFromLieuxComponent } from './place-from-lieux/place-from-lieux.component';
+import {ViewAvisListComponent} from './view-avis-list/view-avis-list.component'
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from "./auth/auth.guard";

@@ -72,6 +72,8 @@ public values;
 
   }
 
+  
+
 
 /* addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
