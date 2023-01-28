@@ -67,10 +67,10 @@ export class GaleriePhotoComponent implements OnInit {
               console.log(this.imageGot); */
         });
     }
-    
+
     if (this.maPropriete=="placeDetail") {
-      console.log("ca marche lààà");
-      console.log(this.maDataPlace);
+      /* console.log("ca marche lààà");
+      console.log(this.maDataPlace); */
       (this.data = this.http
         .get(
           `https://spotted-rest-api.onrender.com/places/${this.maDataPlace}/pictures`
