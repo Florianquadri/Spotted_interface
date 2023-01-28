@@ -6,12 +6,14 @@ import { Note } from "../models/note";
 import { Coordinates } from "../models/coordinates";
 import { environment } from "src/environments/environment";
 import { ReplaySubject, Observable, of, from, catchError,tap,map } from "rxjs";
+import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PlacesService {
+public values;
 
   constructor(private http: HttpClient) {};
 
@@ -48,20 +50,26 @@ export class PlacesService {
     }
 
 
-  addPicture$(picture,placeId){
+  addPicture$(picture: File,placeId){
   /*   console.log("picture")
     console.log(picture)
     console.log("placeId")
     console.log(placeId ) */
+    
     const formData = new FormData();
     formData.append("place", placeId);
     formData.append("picture", picture);
     console.log(" Formadata de ")
-    console.log(formData.get("File"))
+    console.log(formData.get('place'))
+    console.log(formData.get('picture'))
+    console.log("values parrraas")
+    
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     const options = { headers: headers, responseType: 'text' as const}
-    return this.http.post(`${environment.apiUrl}/pictures`, formData/* , options */)
+    return this.http.post(`${environment.apiUrl}/pictures`, formData, options)
+    
+
   }
 
 

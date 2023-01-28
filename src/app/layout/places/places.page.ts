@@ -201,7 +201,7 @@ export class PlacesPage implements ViewWillEnter {
 /*     console.log(distArrondie); */
 this.data[i].distanceWithMe = distArrondie;
     this.distanceWithMe.push(distArrondie);
-    console.log(this.data[i])
+    /* console.log(this.data[i]) */
 /*     console.log(this.distanceWithMe) */
   }
 

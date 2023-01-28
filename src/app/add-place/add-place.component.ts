@@ -93,7 +93,8 @@ public imageElement;
     console.log(imageUrl); */
 
     console.log(image)
-    this.imgRes = image;
+    this.imgRes = image.base64String;
+  /*   this.imgRes = image; */
     
  /*    this.imgRes = this.convertBase64ToFormData(this.imgRes); */
  
@@ -192,7 +193,12 @@ public imageElement;
 
         console.log( response);
         console.log("image ajoutée");
+      },
+      (error) => {
+        console.log(error);
+        console.log("ça marche pas vraiment brow");  
       });
+      
     },
       (error) => {
         console.log(error);
