@@ -6,6 +6,7 @@ import { LayoutPageRoutingModule } from './layout-routing.module';
 import { LayoutPage } from './layout.page';
 import { AddPlaceComponent } from '../add-place/add-place.component';
 import { PlaceFromLieuxComponent } from '../place-from-lieux/place-from-lieux.component';
+import {ViewAvisListComponent} from '../view-avis-list/view-avis-list.component'
 
 
 
@@ -18,6 +19,6 @@ import { PlaceFromLieuxComponent } from '../place-from-lieux/place-from-lieux.co
     ReactiveFormsModule,
 
   ],
-  declarations: [LayoutPage,AddPlaceComponent,PlaceFromLieuxComponent]
+  declarations: [LayoutPage,AddPlaceComponent,PlaceFromLieuxComponent, ViewAvisListComponent]
 })
 export class LayoutPageModule {}

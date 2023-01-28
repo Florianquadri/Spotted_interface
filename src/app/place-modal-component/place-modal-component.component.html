@@ -44,7 +44,7 @@
         <ion-label position="stacked">{{avis.author}}</ion-label>
       </ion-item>
     </div>
-    <ion-button  *ngIf="data.commentaire.length>3" (click)="viewAvis()">Voir tous le avis</ion-button>
+    <ion-button  *ngIf="data.commentaire.length>3" (click)="viewAvis(data.commentaire)">Voir tous le avis</ion-button>
   </div>
 <div>
   <p>Note cette place</p>

@@ -184,7 +184,7 @@ public imageElement;
        text: this.dataForm[0].noteEcrite, 
         place: this.placeId
       }
-      // Do something with the response
+      // Ajoute note
       this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
         console.log("Place ajoutée", newNote)
       })

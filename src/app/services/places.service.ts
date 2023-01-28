@@ -63,6 +63,8 @@ export class PlacesService {
     return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, formData, options)
   }
 
+  
+
 
 /* addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
