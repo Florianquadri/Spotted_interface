@@ -35,4 +35,6 @@ Dans le cadre de cette application, nous avons :
 
 PS : Si vous souhaitez voir une place présentant toutes les fonctionnalités, vous pouvez soit chercher "Carrefour illarsaz" dans la barre de recherche, soit créer votre place et commencer à ajouter des notes et avis à des places existantes !
 
+Ah, et détail super important : tu peux savoir où tu te trouves sur la map grâce à la super loutre qui représente ta position !
+
 
