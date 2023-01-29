@@ -57,8 +57,20 @@ export class AccountPage /* implements OnInit */ {
     this.photoViewChosen = !this.photoViewChosen;
     this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
       console.log(places)
-
-      
+      this.places = places;
+      this.dataPlaceAccount=places;
+      for (const place of places) {
+        this.noteService.getNotes$(place._id).subscribe((notes) => {
+          place.averageNote =
+            notes.length > 0
+              ? notes.reduce((total, note) => (total += note.stars), 0) /
+                notes.length
+              : undefined;
+              
+        },(error) => {
+          console.log("y a un souci de pas de notes");
+        });
+      } 
      
     });
   }
