@@ -23,7 +23,7 @@ export class NotesService {
   }
 
   deleteNotes$(noteId : string, placeId : string){
-    return this.http.delete(`${environment.apiUrl}/places/${placeId}/${noteId}`);
+    return this.http.delete(`${environment.apiUrl}/places/${placeId}/notes/${noteId}`);
   }
   
 
