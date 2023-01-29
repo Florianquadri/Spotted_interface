@@ -124,15 +124,14 @@ export class PlaceModalComponentComponent implements OnInit {
       name: this.formPatch.value.namePlaceUpdate,
       canton: this.data.canton
     }
-    console.log("dataPatch")
-    console.log(this.updates.name)
-    console.log(this.dataPatch)
+/*     console.log(this.updates.name)
+    console.log(this.dataPatch) */
     this.placesService.patchPlace$(this.data._id, this.updates)
       .subscribe(
         (response) => {
           console.log('Place successfully updated.');
-          this.actualiseDataPlace();
-          this.getNotes();
+          console.log(response)
+          this.actualiseDataPlace(this.data._id);
 
         },
         (error) => {
@@ -158,7 +157,6 @@ export class PlaceModalComponentComponent implements OnInit {
   }
 
   getNotes() {
-    // Make an HTTP request to retrieve the trips.
     this.noteService.getNotes$(this.data._id).subscribe((notes) => {
       this.data.commentaire = [];
       for (let oneNote of notes) {
@@ -173,10 +171,10 @@ export class PlaceModalComponentComponent implements OnInit {
     });
   }
 
-   actualiseDataPlace(){
-    this.placesService.getOnePlace$(this.data._id).subscribe((resp)=>{
+   actualiseDataPlace(id : string){
+    this.placesService.getOnePlace$(id).subscribe((resp)=>{
       console.log(resp);
-      this.data = resp
+      this.data.name = resp.name;
     })
   } 
 
