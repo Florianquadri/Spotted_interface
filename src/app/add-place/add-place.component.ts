@@ -17,6 +17,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AlertController } from '@ionic/angular';
 import { Buffer } from 'buffer';
 
+
 @Component({
   selector: 'app-add-place',
   templateUrl: './add-place.component.html',
@@ -243,10 +244,10 @@ async presentAlertComment() {
         console.log( response);
         console.log("image ajoutée");
       },
-      /* (error) => {
+       (error) => {
         console.log(error);
         console.log("ça marche pas vraiment brow");  
-      } */);
+      } );
       
     },
       (error) => {

@@ -51,10 +51,10 @@ public values;
 
 
   addPicture$(picture: File,placeId){
-  /*   console.log("picture")
-    console.log(picture)
-    console.log("placeId")
-    console.log(placeId ) */
+    console.log("picture")
+    console.log(picture) 
+    /* console.log("placeId")
+    console.log(placeId )  */
     
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'image/png');
@@ -64,10 +64,10 @@ public values;
     formData.append("place", placeId);
     formData.append("picture", picture);
     console.log(" Formadata de ")
-    console.log(formData.get('place'))
+   /*  console.log(formData.get('place')) */
     console.log(formData.get('picture'))
-    console.log("values paraas")
-    
+  
+      
 
     return this.http.post(`${environment.apiUrl}/pictures`, formData, options)
 
