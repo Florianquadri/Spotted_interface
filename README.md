@@ -1,6 +1,6 @@
 # Spotted : Découvre et partage les best spots photos de Suisse !
 
-Bienvenue sur la partie FrontEnd de notre App "Spotted".
+Bienvenue sur la partie FrontEnd de notre App "Spotted". Cette app a été développée par Neib Ouakel, Florian Quadri et Sébastien Traversini, dans le cadre du cours "DevMobil", présent dans le cursus d'Ingéniérie des médias à la HEIG-VD (3ème année).
 
 Spotted est une application web et mobile, basée sur Ionic et Angular, et permettant aux amateurs de photographie de découvrir et partager
 les best spots photo en Suisse, afin que d'autres passionnés y aient accès. L'app permet de créer de nouvelles places, de les noter, de laisser un avis et de leur donner un tag (+ d'ajouter des photos mais bug en cours de résolution)
