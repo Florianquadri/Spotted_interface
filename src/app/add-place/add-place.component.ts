@@ -87,14 +87,15 @@ private patternChiffres = /^\d+$/;
       quality: 100,
       allowEditing: false,
       resultType: CameraResultType.Base64,
-      
+      /////Nous récupérons d'abord l'image en base64
       
     });
 
     console.log(image)
     this.imgRes = image.base64String;
     this.imgRes = new Buffer(this.imgRes, 'base64');
-  
+  /////Dans notre API, nous avions intégré le fait de pouvoir stocké des images en BufferImage donc 
+  /////nous convertissons notre image base64 en Buffer
     console.log("puree");
     console.log(this.imgRes);
   
@@ -240,7 +241,7 @@ async presentAlertComment() {
 
       
         this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {
-
+////Nous envoyons l'image et le placeId qui est nécessaire dans notre API
         console.log( response);
         console.log("image ajoutée");
       },

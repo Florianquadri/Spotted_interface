@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Welcome</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<form (ngSubmit)="confirm()" [formGroup]="formUser">
+
+  <ion-item>
+    <ion-label position="stacked">Your name</ion-label>
+    <ion-input formControlName="name" placeholder="Your name" required minlength="3" appForbiddenName="Bob"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Your surname</ion-label>
+    <ion-input formControlName="surname"  placeholder="Your surname" required minlength="3" appForbiddenName="Sinclair"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Your password</ion-label>
+    <ion-input formControlName="password" required minlength="3" placeholder="Your password"></ion-input>
+  </ion-item>
+
+
+<ion-button type="submit" [disabled]="!formUser.valid" expand="block">créer un user</ion-button>
+</form>
+</ion-content>

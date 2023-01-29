@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 
 import { AuthService } from "../auth.service";
 import { AuthRequest } from "../../models/auth-request";
+import { ModalController } from '@ionic/angular';
+import { ModalUserComponent  } from '../../modal-user/modal-user.component';
 
 /**
  * Login page.
@@ -25,12 +27,15 @@ export class LoginPage {
    */
   loginError: boolean;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router,private modalCtrl: ModalController ) {
     this.authRequest = {
       name: undefined,
       password: undefined,
     };
   }
+
+
+  
 
   /**
    * Called when the login form is submitted.
@@ -52,5 +57,14 @@ export class LoginPage {
         console.warn(`Authentication failed: ${err.message}`);
       },
     });
+  }
+
+  async openModalUser() {
+    const modal = await this.modalCtrl.create({
+      component: ModalUserComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
   }
 }
