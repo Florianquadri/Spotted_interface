@@ -24,6 +24,7 @@ export class PlaceModalComponentComponent implements OnInit {
   public dataplacemodal: Place;
   public whoIsConnected: string;
   @Output() eventShowListOfAvis = new EventEmitter<any>();
+  public wantToEdit :boolean = false;
 
 
   imgRes: any;
@@ -54,15 +55,16 @@ export class PlaceModalComponentComponent implements OnInit {
     });
 
     this.formPatch = this.fb.group({
-      name: [''],
-      
-      
-      /*       placeCanton: [''] */
+      namePlaceUpdate: [''],
     });
 
   }
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  showFormModifyPlace(){
+    this.wantToEdit = !this.wantToEdit
   }
 
   confirmFormAddNoteToPlace() {
@@ -113,12 +115,15 @@ export class PlaceModalComponentComponent implements OnInit {
     );
     this.cancel();
   }
-  update() {
+  patchPlace() {
     this.dataPatch = this.formPatch.value;
+    console.log(this.formPatch.value.namePlaceUpdate)
    this.updates = {
-    "name": this.dataPatch.name,
+    name: this.formPatch.value.namePlaceUpdate,
+    canton : this.data.canton
   }
   console.log("dataPatch")
+  console.log(this.updates.name)
   console.log(this.dataPatch)
     this.placesService.patchPlace$(this.data._id, this.updates)
     .subscribe(

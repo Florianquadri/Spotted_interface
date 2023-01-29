@@ -117,8 +117,6 @@ public values;
   }
 
   patchPlace$(placeId: string, updates: any){
-
-  
     return this.http.patch(`${environment.apiUrl}/places/${placeId}`, updates)
   }
 

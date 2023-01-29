@@ -5,16 +5,20 @@
     </ion-buttons>
     <ion-title>{{data.name}}</ion-title>
     <ion-buttons slot="end">
+      <ion-item>
+        <ion-label hidden position="stacked">Modifier</ion-label>
+        <ion-button color="medium"  name="modifyPlaceName" (click)="showFormModifyPlace()">Edit</ion-button> 
+      </ion-item>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <form (ngSubmit)="update()" [formGroup]="formPatch">
-  <ion-item>
-    <ion-input  formControlName="name" placeholder="Changer le nom de la place"></ion-input>
-    <ion-button type="submit" expand="block">Mettre à jour la place</ion-button>
-  </ion-item>
-</form>
+  <form *ngIf="this.wantToEdit" (ngSubmit)="patchPlace()" [formGroup]="formPatch">
+    <ion-item>
+      <ion-input formControlName="namePlaceUpdate" placeholder="Nouveau nom"></ion-input>
+      <ion-button type="submit" expand="block">Mettre à jour</ion-button>
+    </ion-item>
+  </form>
   <div class="containerRow spaceBetween">
     <p>Canton</p>
     <ion-item>
