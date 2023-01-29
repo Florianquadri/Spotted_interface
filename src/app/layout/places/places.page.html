@@ -72,8 +72,6 @@
 <!--         <p class="space">{{this.distanceWithMe[i]}} Km</p> -->
         <p class="space">{{place.distanceWithMe}} Km</p>
         <div *ngIf="place.averageNote>=0">Stars: {{place.averageNote}}</div>
- 
-  
       </div>
     </ul> 
   </div>
@@ -85,7 +83,6 @@
 
   <ion-button *ngIf="mapViewChosen" class="addMarker" (click)="addMarker()">Add Marker
   </ion-button>
-
   <!--  <ion-button expand="block" (click)="openModal()">Open</ion-button>
   <p>{{ message }}</p>  -->
 

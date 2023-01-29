@@ -9,43 +9,76 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+  <form (ngSubmit)="update()" [formGroup]="formPatch">
   <ion-item>
-    <ion-label position="stacked">{{data.canton}}</ion-label>
+    <ion-input  formControlName="name" placeholder="Changer le nom de la place"></ion-input>
+    <ion-button type="submit" expand="block">Mettre à jour la place</ion-button>
   </ion-item>
-  <div class="containerRow">
+</form>
+  <div class="containerRow spaceBetween">
+    <p>Canton</p>
     <ion-item>
-      <ion-label position="stacked">Note : {{data.averageNote}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">{{data.numberReviews}} reviews</ion-label>
+      <ion-label position="stacked">{{data.canton}}</ion-label>
     </ion-item>
   </div>
-  <div *ngIf="data.commentaire">
+
+  <div class="containerRow spaceBetween">
+    <p>Tag associé</p>
     <ion-item>
-      <ion-label position="stacked">Avis : {{data.commentaire}}</ion-label>
+      <ion-label position="stacked">{{data.tags}}</ion-label>
     </ion-item>
+  </div> 
+
+  <div>
+    <p>Note de la place</p>
+    <div class="containerRow spaceBetween">
+      <ion-item>
+        <ion-label position="stacked">Note : {{data.averageNote}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{data.numberReviews}} reviews</ion-label>
+      </ion-item>
+    </div>
   </div>
+
+  <div *ngIf="arrayCommentsLength > 0">
+    <p>Avis</p>
+    <div *ngFor="let avis of data.commentaire.slice(0,3)" class="containerRow spaceBetween">
+      <ion-item>
+        <ion-label position="stacked">{{avis.text}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">{{avis.author}}</ion-label>
+      </ion-item>
+    </div>
+    <ion-button  *ngIf="data.commentaire.length>3" (click)="viewAvis(data.commentaire)">Voir tous le avis</ion-button>
+  </div>
+
   <ion-item>
-    <ion-label position="stacked">Tags associés: {{data.tags}}</ion-label>
+    <ion-label position="stacked">Pictures</ion-label>
+    <ion-button  name="placePicture" (click)="takePicture()">Take picture</ion-button> 
   </ion-item>
 
 
-
-
+<div>
+  <p>Note cette place</p>
   <form (ngSubmit)="confirmFormAddNoteToPlace()" [formGroup]="form">
     <ion-list>
       <ion-item>
-        <ion-label position="stacked">Note cette place</ion-label>
+        <ion-label position="stacked">Note cette place *</ion-label>
         <ion-select required name="notePlace" formControlName="notePlace" interface="popover" placeholder="Choisis la note">
           <ion-select-option *ngFor="let noteChosen of this.chooseNote"
             [value]="noteChosen">{{noteChosen}}</ion-select-option>
         </ion-select>
-      </ion-item>⁄
+      </ion-item>
     </ion-list>
-    <ion-button type="submit" [disabled]="!form.valid" expand="block">Noter la place</ion-button>
+    <ion-item>
+      <ion-label position="stacked">Avis</ion-label>
+      <ion-input [clearInput]="true" formControlName="noteEcrite" placeholder="Ton avis"></ion-input>
+    </ion-item>
+    <ion-button type="submit" [disabled]="!form.valid" expand="block">Envoyer mon avis</ion-button>
   </form>
-    <app-galerie-photo [maPropriete]="pageName" 
-  [maData]="dataplacemodal"></app-galerie-photo>
- 
+</div>
 
+  <app-galerie-photo [maPropriete]="pageName" [maData]="dataplacemodal"></app-galerie-photo>
 </ion-content>

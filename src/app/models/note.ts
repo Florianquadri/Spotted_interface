@@ -1,5 +1,7 @@
 export type Note = {
+  _id?:any,
     stars: number,
     place: string,
-    text?: any
+    author?: string,
+    text?: string
   };

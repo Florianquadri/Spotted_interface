@@ -82,17 +82,10 @@ public imageElement;
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
-      resultType: CameraResultType.Base64
+      resultType: CameraResultType.Base64,
       
       
     });
-
-/*     var imageUrl = image.webPath;
-
-    // Can be set to the src of an image now
-    this.imageElement.src = imageUrl;
-    console.log("por aquador");
-    console.log(imageUrl); */
 
     console.log(image)
     this.imgRes = image.base64String;
@@ -208,8 +201,8 @@ async presentAlertName() {
        text: this.dataForm[0].noteEcrite, 
         place: this.placeId
       }
-      // Do something with the response
-       this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
+      // Ajoute note
+      this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
         console.log("Place ajoutée", newNote)
       })
         this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {

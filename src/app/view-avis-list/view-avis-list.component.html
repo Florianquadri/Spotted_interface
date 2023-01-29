@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <p>Les avis des utilisateurs</p>
+  <div *ngFor="let avis of this.avis" class="containerRow spaceBetween">
+    <ion-item>
+      <ion-label position="stacked">{{avis.text}}</ion-label>
+    </ion-item>
+<!--     <ion-item>
+     <ion-label position="stacked">{{avis.author}}</ion-label> 
+    </ion-item> -->
+    <ion-button *ngIf="avis.author == this.whoIsConnected" (click)="deleteNote(avis.id, avis.place)">Supprimer</ion-button>
+  </div>
+
+</ion-content>
+<!-- *ngIf="personne=auteur de cette note" sur le bouton -->

@@ -1,0 +1,15 @@
+.listPlace{
+    padding: 15px 5px;
+    margin-bottom:10px;
+    border: 1px solid rgb(70, 70, 70);
+    border-radius:50px;
+   }
+
+   .containerRow {
+    display:flex;
+    flex-direction: row;
+   }
+
+   .spaceBetween{
+    justify-content: space-between;
+   }
