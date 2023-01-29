@@ -4,8 +4,6 @@ import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from "src/app/auth/auth.service";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment"
-import { User } from '../models/user';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -17,8 +15,12 @@ export class ModalUserComponent {
   formUser: FormGroup;
 public DataUser :any[] = [];
 public dataUs: any;
+public Tableau: any;
+public TableauNom: any;
+public compteur = 0;
 private pattern = /^[a-zA-Z\sÀ-ÿ-]+$/;
 private patternChiffres = /^\d+$/;
+
 
   constructor(
     private modalCtrl: ModalController,
@@ -34,6 +36,16 @@ private patternChiffres = /^\d+$/;
       surname: [''],
       password: [''],
     });
+
+    //// ici nous voulions faire que cela vérifiait en frontend si le name du user existait déjà, mais nous n'avons
+    ///////////// pas réussi pu, car il faut être identifié pour récupérer tous les users
+    this.authService.getAllUsers$().subscribe((response) => {
+      console.log(response)
+      this.Tableau = response;
+      console.log(this.Tableau)
+      
+    })
+
      }
 
      async presentAlertName() {
@@ -75,6 +87,15 @@ private patternChiffres = /^\d+$/;
       });
       await alert.present();
     }
+    async presentAlertExist() {
+      const alert = await this.AlertController.create({
+        header: 'Alerte : échec',
+        subHeader: 'Name déjà utilisé',
+        message: "Veuillez choisir un autre name ",
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
 
 
   cancel() {
@@ -82,6 +103,8 @@ private patternChiffres = /^\d+$/;
   }
 
   confirm() {
+
+
 
 
     this.DataUser.push(this.formUser.value);
@@ -94,6 +117,12 @@ private patternChiffres = /^\d+$/;
     console.log("dataUs")
     console.log(this.dataUs)
 
+    for (let index = 0; index < this.Tableau.length; index++) {
+      if(this.dataUs.name==this.Tableau[index].name){
+        this.compteur++;
+        console.log("compteur"+this.compteur)
+      }       
+    }
 
     let result= this.pattern.test(this.dataUs.name)
     let result2= this.pattern.test(this.dataUs.surname)
@@ -103,23 +132,25 @@ private patternChiffres = /^\d+$/;
 
 
     
-    if (this.dataUs.name.length <=2|| result==false|| resultName==false) {
+    if (this.dataUs.name.length <=2|| result==false|| resultName!=false) {
       this.presentAlertName()
-      return this.modalCtrl.dismiss(this.dataUs.name, 'confirm');
-      }if (this.dataUs.surname.length <=2|| result2==false||resultSurname==false) {
+      return this.modalCtrl.dismiss( 'confirm');
+      }
+      if (this.dataUs.surname.length <=2|| result2==false||resultSurname!=false) {
         this.presentAlertSurname()
-        return this.modalCtrl.dismiss(this.dataUs.name, 'confirm');
+        return this.modalCtrl.dismiss( 'confirm');
         }
         if (this.dataUs.password.length <=2|| result3==false) {
           this.presentAlertPassword()
-          return this.modalCtrl.dismiss(this.dataUs.name, 'confirm');
-          } else  {
-          this.addUser();
-          return this.modalCtrl.dismiss(this.dataUs.name, 'confirm');
-      }
-
-      
-      return (this.dataUs);
+          return this.modalCtrl.dismiss( 'confirm');
+          } 
+            if(this.compteur==0){
+              this.addUser();
+              return this.modalCtrl.dismiss('confirm');
+            }
+            this.presentAlertExist()
+            return this.modalCtrl.dismiss('confirm');
+          
   }
 
 
@@ -131,6 +162,7 @@ private patternChiffres = /^\d+$/;
     },
     (error) => {
       console.log(error);
+      this.presentAlertExist()
       console.log("Utilisateur pas créé car bug");  
     });
   }

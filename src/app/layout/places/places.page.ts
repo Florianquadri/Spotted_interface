@@ -397,7 +397,15 @@ this.data[i].distanceWithMe = distArrondie;
     await alert.present();
   }
 
-
+  async presentAlertCoord() {
+    const alert = await this.AlertController.create({
+      header: 'Alerte : échec',
+      subHeader: 'Erreur de chargement',
+      message: "Veuillez recharger la page ",
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
 
 
   viewInfoPlace(data){
@@ -483,6 +491,9 @@ this.data[i].distanceWithMe = distArrondie;
       this.addDataToMap();
       /* console.log(this.data)
       console.log(this.data[4]) */
+    },(error) => {
+      this.presentAlertCoord();
+      console.log("y a un souci de pas de places");
     });
   }
 

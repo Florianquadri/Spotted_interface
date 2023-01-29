@@ -59,6 +59,10 @@ addUser$(data: any[]){
   return this.http.post(`${environment.apiUrl}/users`, data);
 }
 
+getAllUsers$(){
+  return this.http.get(`${environment.apiUrl}/users` );
+}
+
 
   logOut() {
     this.#auth$.next(null);
