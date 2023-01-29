@@ -9,12 +9,19 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+  <form (ngSubmit)="update()" [formGroup]="formPatch">
+  <ion-item>
+    <ion-input  formControlName="name" placeholder="Changer le nom de la place"></ion-input>
+    <ion-button type="submit" expand="block">Mettre à jour la place</ion-button>
+  </ion-item>
+</form>
   <div class="containerRow spaceBetween">
     <p>Canton</p>
     <ion-item>
       <ion-label position="stacked">{{data.canton}}</ion-label>
     </ion-item>
   </div>
+
   <div class="containerRow spaceBetween">
     <p>Tag associé</p>
     <ion-item>
@@ -46,6 +53,13 @@
     </div>
     <ion-button  *ngIf="data.commentaire.length>3" (click)="viewAvis(data.commentaire)">Voir tous le avis</ion-button>
   </div>
+
+  <ion-item>
+    <ion-label position="stacked">Pictures</ion-label>
+    <ion-button  name="placePicture" (click)="takePicture()">Take picture</ion-button> 
+  </ion-item>
+
+
 <div>
   <p>Note cette place</p>
   <form (ngSubmit)="confirmFormAddNoteToPlace()" [formGroup]="form">

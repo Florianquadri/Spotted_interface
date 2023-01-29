@@ -75,6 +75,16 @@ public values;
   
 
 
+  addPictureToPlace$(picture: File,placeId){
+    const formData = new FormData();
+    formData.append("picture", picture);
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    const options = { headers: headers, responseType: 'text' as const}
+    return this.http.post(`${environment.apiUrl}/places/${placeId}/pictures`, formData, options)
+  }
+
+
 /* addPicture$(picture: any[],placeId){
   return this.http.post(`${environment.apiUrl}/places?placeId=${placeId}/pictures`, picture);
 } */
@@ -103,6 +113,12 @@ public values;
 
   getPlacesByTagsAndCantons$(tag, canton): Observable<Place[]> {
     return this.http.get<Place[]>(`${environment.apiUrl}/places?tag=${tag}&canton=${canton}`);
+  }
+
+  patchPlace$(placeId: string, updates: any){
+
+  
+    return this.http.patch(`${environment.apiUrl}/places/${placeId}`, updates)
   }
 
 }

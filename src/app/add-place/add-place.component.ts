@@ -80,17 +80,10 @@ public imageElement;
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
-      resultType: CameraResultType.Base64
+      resultType: CameraResultType.Base64,
       
       
     });
-
-/*     var imageUrl = image.webPath;
-
-    // Can be set to the src of an image now
-    this.imageElement.src = imageUrl;
-    console.log("por aquador");
-    console.log(imageUrl); */
 
     console.log(image)
     this.imgRes = image.base64String;

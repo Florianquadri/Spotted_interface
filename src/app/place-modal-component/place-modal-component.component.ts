@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-place-modal-component',
@@ -23,9 +24,16 @@ export class PlaceModalComponentComponent implements OnInit {
   @Output() eventShowListOfAvis = new EventEmitter<any>();
 
 
+  imgRes: any;
+  options: any;
+  picture: any;
+  updates : any;
+  dataPatch : any;
+  
   public chooseNote = [1, 2, 3, 4, 5];
   public noteChosen = 1;
   form: FormGroup;
+  formPatch: FormGroup;
   dataForm: any[] = [];
   public arrayCommentsLength : Number;
 
@@ -42,6 +50,14 @@ export class PlaceModalComponentComponent implements OnInit {
       notePlace: [''],
       noteEcrite: ['']
     });
+
+    this.formPatch = this.fb.group({
+      name: [''],
+      
+      
+      /*       placeCanton: [''] */
+    });
+
   }
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
@@ -58,6 +74,19 @@ export class PlaceModalComponentComponent implements OnInit {
     this.placesService.addNote$(newNote, this.data._id).subscribe((resp) => {
       console.log(resp)
       this.cancel();
+
+      /// AJOUT PHOTO PLACE
+      this.placesService.addPictureToPlace$(this.imgRes, this.data._id).subscribe((response) => {
+
+        console.log( response);
+        console.log("image ajoutée");
+      },
+      (error) => {
+        console.log(error);
+        console.log("ça marche pas vraiment brow");  
+      });
+
+      ////FIN AJOUT PHOTO PALCE
     },
       (error) => {
         console.log(error);
@@ -72,6 +101,39 @@ export class PlaceModalComponentComponent implements OnInit {
     );
     this.cancel();
   }
+  update() {
+    this.dataPatch = this.formPatch.value;
+   this.updates = {
+    "name": this.dataPatch.name,
+  }
+  console.log("dataPatch")
+  console.log(this.dataPatch)
+    this.placesService.patchPlace$(this.data._id, this.updates)
+    .subscribe(
+      (response) => {
+        console.log('Place successfully updated.');
+      },
+      (error) => {
+        console.log('Error updating place:', error);
+      }
+    );
+  
+  }
+
+
+  takePicture = async () => {
+    const image = await Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      
+    });
+    console.log(image)
+    this.imgRes = image.base64String;
+
+    console.log("puree");
+    console.log(this.imgRes);
+}
 
   ngOnInit() {
     this.noteService.getNotes$(this.data._id);
