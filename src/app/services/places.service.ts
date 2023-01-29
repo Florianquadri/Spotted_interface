@@ -60,6 +60,9 @@ public values;
     headers.append('Content-Type', 'image/png');
     const options = { headers: headers, responseType: 'text' as const}
 
+
+    ///// Nous avons tenté d'envoyer un form-data contenant les informations nécessaires pour upload une image.
+    //// nous avons tenté de modifier l'API mais rien ne nous as permis d'envoyer des images depuis notre application.
     const formData = new FormData();
     formData.append("picture", picture);
     formData.append("place", placeId);

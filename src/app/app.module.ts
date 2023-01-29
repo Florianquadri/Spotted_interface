@@ -14,11 +14,11 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FormsModule } from '@angular/forms';
 import { PlacesPage } from './layout/places/places.page';
 import { Observable } from 'rxjs'; 
-
+import { ModalUserComponent  } from './modal-user/modal-user.component';
 
 //test
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent,ModalUserComponent],
   imports: [LeafletModule,ReactiveFormsModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true,},

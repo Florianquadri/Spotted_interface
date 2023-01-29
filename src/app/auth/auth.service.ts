@@ -55,6 +55,11 @@ export class AuthService {
     );
   }
 
+addUser$(data: any[]){
+  return this.http.post(`${environment.apiUrl}/users`, data);
+}
+
+
   logOut() {
     this.#auth$.next(null);
     // Remove the stored authentication from storage when logging out.
