@@ -6,21 +6,21 @@
 <ion-content>
   <ion-title> {{pseudo}} {{name}} </ion-title>
   <ion-segment (ionChange)="segmentChanged($event)"value="photos">
-    <ion-segment-button value="photos"> Mes photos </ion-segment-button>
-    <ion-segment-button value="lieux"> Lieux visités </ion-segment-button>
+    <ion-segment-button (click)="activatePictureView($event)" value="photos"> Mes photos </ion-segment-button>
+    <ion-segment-button (click)="activateMyVisitedPlacesView($event)" value="lieux"> Lieux visités </ion-segment-button>
   </ion-segment>
   <ion-title>
-    <p *ngIf=" currentSegment === 'photos'">Mes photos</p>
-    <p *ngIf=" currentSegment === 'lieux'">Mes lieux</p>
+    <p *ngIf=" photoViewChosen">Mes photos</p>
+    <p *ngIf=" !photoViewChosen">Mes lieux</p>
   </ion-title>
 
-  <ion-list  [inset]="true" *ngIf=" currentSegment === 'lieux'">
+  <ion-list  [inset]="true" *ngIf="!photoViewChosen">
     <li class="listPlace" *ngFor="let place of places">
       <div tappable (click)="goOnChosenPlace(place)">{{place.name}}</div>
       <div *ngIf="place.averageNote">{{ place.averageNote}}</div>
     </li>
   </ion-list>
-  <div *ngIf="currentSegment === 'photos'">
+  <div *ngIf="photoViewChosen">
     <app-galerie-photo [maPropriete]="pageName" [maDataAccount]="dataPlaceAccount" ></app-galerie-photo>
   </div>
 </ion-content>
