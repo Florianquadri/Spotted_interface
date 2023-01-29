@@ -10,8 +10,8 @@
     <ion-segment-button (click)="activateMyVisitedPlacesView($event)" value="lieux"> Lieux visités </ion-segment-button>
   </ion-segment>
   <ion-title>
-    <p *ngIf=" photoViewChosen">Mes photos</p>
-    <p *ngIf=" !photoViewChosen">Mes lieux</p>
+    <p *ngIf="photoViewChosen">Mes photos</p>
+    <p *ngIf="!photoViewChosen">Mes lieux</p>
   </ion-title>
 
   <ion-list  [inset]="true" *ngIf="!photoViewChosen">

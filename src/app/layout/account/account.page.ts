@@ -82,7 +82,7 @@ export class AccountPage /* implements OnInit */ {
       this.pseudo = e.surname;
       this.userId = e._id;
     });
-
+/* 
     this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
       this.places = places;
       this.dataPlaceAccount=places;
@@ -99,7 +99,7 @@ export class AccountPage /* implements OnInit */ {
         });
       } 
      
-    });
+    }); */
   }
 
   goOnChosenPlace(place) {
