@@ -56,19 +56,20 @@ public values;
     console.log("placeId")
     console.log(placeId ) */
     
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'image/png');
+    const options = { headers: headers, responseType: 'text' as const}
+
     const formData = new FormData();
     formData.append("place", placeId);
     formData.append("picture", picture);
     console.log(" Formadata de ")
     console.log(formData.get('place'))
     console.log(formData.get('picture'))
-    console.log("values parrraas")
+    console.log("values paraas")
     
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-    const options = { headers: headers, responseType: 'text' as const}
+
     return this.http.post(`${environment.apiUrl}/pictures`, formData, options)
-    
 
   }
 

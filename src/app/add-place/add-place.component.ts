@@ -14,7 +14,7 @@ import { User } from '../models/user';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavParams } from 'node_modules/@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-place',
@@ -50,6 +50,8 @@ public imageElement;
     private placeService: PlacesService,
     private fb: FormBuilder,
     private navParams: NavParams,
+    private AlertController: AlertController,
+
   ) {
     this.form = this.fb.group({
       placeName: [''],
@@ -104,12 +106,26 @@ public imageElement;
     
 }
 
+async presentAlertName() {
+  const alert = await this.AlertController.create({
+    header: 'Alerte',
+    subHeader: 'Erreur de Nom',
+    message: "Veuillez entrer un nom d'au moins 3 caractères et qui contient uniquement des lettres",
+    buttons: ['OK'],
+  });
+
+  await alert.present();
+}
+
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
   confirm() {
+    
+
+
     this.dataForm.push(this.form.value);
     console.log(this.coordinates)
     this.placeService.getCantonsByCoordinates$(this.coordinates[0], this.coordinates[1]).subscribe((resp) => {
@@ -159,8 +175,15 @@ public imageElement;
         },
         "tags": [this.dataForm[0].tag]
       };
-      console.log(this.data);
-      this.addMyPlace();
+     
+
+      if (this.data.name.length <=2) {
+      this.presentAlertName()
+      }
+      else{
+        this.addMyPlace();
+      }
+      
     });
 
 
@@ -186,18 +209,18 @@ public imageElement;
         place: this.placeId
       }
       // Do something with the response
-      this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
+       this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
         console.log("Place ajoutée", newNote)
       })
-      this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {
+        this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {
 
         console.log( response);
         console.log("image ajoutée");
       },
-      (error) => {
+      /* (error) => {
         console.log(error);
         console.log("ça marche pas vraiment brow");  
-      });
+      } */);
       
     },
       (error) => {
@@ -206,7 +229,7 @@ public imageElement;
       });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
 
   
