@@ -24,15 +24,15 @@ export class PlaceModalComponentComponent implements OnInit {
   public dataplacemodal: Place;
   public whoIsConnected: string;
   @Output() eventShowListOfAvis = new EventEmitter<any>();
-  public wantToEdit :boolean = false;
+  public wantToEdit: boolean = false;
 
 
   imgRes: any;
   options: any;
   picture: any;
-  updates : any;
-  dataPatch : any;
-  
+  updates: any;
+  dataPatch: any;
+
   public chooseNote = [1, 2, 3, 4, 5];
   public noteChosen = 1;
   form: FormGroup;
@@ -63,7 +63,7 @@ export class PlaceModalComponentComponent implements OnInit {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  showFormModifyPlace(){
+  showFormModifyPlace() {
     this.wantToEdit = !this.wantToEdit
   }
 
@@ -82,13 +82,13 @@ export class PlaceModalComponentComponent implements OnInit {
       /// AJOUT PHOTO PLACE
       this.placesService.addPictureToPlace$(this.imgRes, this.data._id).subscribe((response) => {
 
-        console.log( response);
+        console.log(response);
         console.log("image ajoutée");
       },
-      (error) => {
-        console.log(error);
-        console.log("ça marche pas vraiment brow");  
-      });
+        (error) => {
+          console.log(error);
+          console.log("ça marche pas vraiment brow");
+        });
 
       ////FIN AJOUT PHOTO PALCE
     },
@@ -103,8 +103,9 @@ export class PlaceModalComponentComponent implements OnInit {
     console.log("je tente de supprimer la note", idNote, "de la place", idPlace)
     this.noteService.deleteNotes$(idNote, idPlace).subscribe((resp) => {
       console.log(resp, "bien supprimé")
+      this.getNotes();
     })
-    this.getNotes();
+  
     console.log(idNote)
   }
 
@@ -115,26 +116,30 @@ export class PlaceModalComponentComponent implements OnInit {
     );
     this.cancel();
   }
+
   patchPlace() {
     this.dataPatch = this.formPatch.value;
     console.log(this.formPatch.value.namePlaceUpdate)
-   this.updates = {
-    name: this.formPatch.value.namePlaceUpdate,
-    canton : this.data.canton
-  }
-  console.log("dataPatch")
-  console.log(this.updates.name)
-  console.log(this.dataPatch)
+    this.updates = {
+      name: this.formPatch.value.namePlaceUpdate,
+      canton: this.data.canton
+    }
+    console.log("dataPatch")
+    console.log(this.updates.name)
+    console.log(this.dataPatch)
     this.placesService.patchPlace$(this.data._id, this.updates)
-    .subscribe(
-      (response) => {
-        console.log('Place successfully updated.');
-      },
-      (error) => {
-        console.log('Error updating place:', error);
-      }
-    );
-  
+      .subscribe(
+        (response) => {
+          console.log('Place successfully updated.');
+          this.actualiseDataPlace();
+          this.getNotes();
+
+        },
+        (error) => {
+          console.log('Error updating place:', error);
+        }
+      );
+    this.cancel();
   }
 
 
@@ -143,14 +148,14 @@ export class PlaceModalComponentComponent implements OnInit {
       quality: 100,
       allowEditing: false,
       resultType: CameraResultType.Base64,
-      
+
     });
     console.log(image)
     this.imgRes = image.base64String;
 
     console.log("puree");
     console.log(this.imgRes);
-}
+  }
 
   getNotes() {
     // Make an HTTP request to retrieve the trips.
@@ -164,35 +169,35 @@ export class PlaceModalComponentComponent implements OnInit {
       }
       console.log(this.data.commentaire)
       this.arrayCommentsLength = this.data.commentaire.length;
-      /*       this.data.commentaire = notes[0].text; */
-      /*    console.log(this.data.commentaire) */
+
     });
   }
 
+   actualiseDataPlace(){
+    this.placesService.getOnePlace$(this.data._id).subscribe((resp)=>{
+      console.log(resp);
+      this.data = resp
+    })
+  } 
+
   ngOnInit() {
-    this.noteService.getNotes$(this.data._id);
+
+  }
+
+  ionViewWillEnter(): void {
+    this.getNotes();
     this.dataplacemodal = this.data
     this.pageName = "mapmodal";
 
     this.AuthService.getUser$().subscribe((resp) => {
-      console.log(resp)
+/*       console.log(resp) */
       this.whoIsConnected = resp._id;
       console.log(this.whoIsConnected)
     })
-  }
-
-  ionViewWillEnter(): void {
-
-    this.getNotes();
-
-    /*     this.placesService.getPlacesById$(this.data._id).subscribe((place) => {
-          this.data.commentaire = place.notes;
-        });  */
 
     this.noteService.getAverageNoteForAPlace$(this.data._id).subscribe((scoreNote) => {
       this.data.averageNote = scoreNote.score;
       this.data.numberReviews = scoreNote.nbReview;
-      console.log(scoreNote)
     })
 
   }

@@ -120,4 +120,8 @@ public values;
     return this.http.patch(`${environment.apiUrl}/places/${placeId}`, updates)
   }
 
+  getOnePlace$(idPlace): Observable<Place> {
+    return this.http.get<Place>(`${environment.apiUrl}/places/${idPlace}`);
+  }
+
 }
