@@ -10,6 +10,7 @@ import { Note } from 'src/app/models/note';
 import { catchError, flatMap, tap, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
@@ -31,6 +32,7 @@ export class AccountPage /* implements OnInit */ {
   public notePassee2 = null;
   public currentSegment = "photos";
   public pageName = "account"
+  public photoViewChosen: boolean = true;
   constructor(
     private AuthService: AuthService,
     private placeService: PlacesService,
@@ -44,6 +46,23 @@ export class AccountPage /* implements OnInit */ {
     this.AuthService.getUser$();
   }
 
+  activatePictureView($event) {
+    console.log('vue photo activée');
+    this.photoViewChosen = true;
+  }
+
+  activateMyVisitedPlacesView($event) {
+    console.log('vue place visitée activée');
+    console.log(this.userId)
+    this.photoViewChosen = !this.photoViewChosen;
+    this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
+      console.log(places)
+
+      
+     
+    });
+  }
+
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
 
@@ -53,7 +72,8 @@ export class AccountPage /* implements OnInit */ {
       this.userId = e._id;
     });
 
-    this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
+/*     this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
+      console.log(places)
       this.places = places;
       this.dataPlaceAccount=places;
       for (const place of places) {
@@ -69,7 +89,7 @@ export class AccountPage /* implements OnInit */ {
         });
       } 
      
-    });
+    }); */
   }
 
   goOnChosenPlace(place) {
