@@ -16,7 +16,7 @@
     <!-- <form > -->
   <ion-item>
     <ion-label position="stacked">Nom de la place *</ion-label>
-    <ion-input required [clearInput]="true" formControlName="placeName" placeholder="Name of the place"></ion-input>
+    <ion-input required [clearInput]="true" formControlName="placeName" placeholder="Nom de la place" ng-pattern="/^[a-zA-Z]+$/"></ion-input>
   </ion-item>
   <ion-list>
     <ion-item>

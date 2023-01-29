@@ -41,6 +41,8 @@ export class AddPlaceComponent {
   public images: any;
   public Array: any;
 public imageElement;
+private pattern = /^[a-zA-Z\sÀ-ÿ-]+$/;
+private patternChiffres = /^\d+$/;
 
   public chooseNote = [1,2,3,4,5];
 
@@ -106,6 +108,23 @@ async presentAlertName() {
     buttons: ['OK'],
   });
 
+
+  
+
+  await alert.present();
+}
+
+async presentAlertComment() {
+  const alert = await this.AlertController.create({
+    header: 'Alerte',
+    subHeader: 'Commentaire invalide',
+    message: "Veuillez insérer un commentaire valable",
+    buttons: ['OK'],
+  });
+
+
+  
+
   await alert.present();
 }
 
@@ -168,12 +187,20 @@ async presentAlertName() {
         "tags": [this.dataForm[0].tag]
       };
      
+      
+      let result= this.pattern.test(this.data.name)
 
-      if (this.data.name.length <=2) {
+      if (this.data.name.length <=2|| result==false) {
       this.presentAlertName()
       }
       else{
         this.addMyPlace();
+      }
+
+      let resultComment= this.patternChiffres.test(this.dataForm[0].noteEcrite)
+
+      if (result==true||this.dataForm[0].noteEcrite.length<=2) {
+        this.presentAlertComment()
       }
       
     });
@@ -197,13 +224,20 @@ async presentAlertName() {
       //créér la note
       let newNote = {
         stars: this.dataForm[0].note,
-       text: this.dataForm[0].noteEcrite, 
+        text: this.dataForm[0].noteEcrite, 
         place: this.placeId
       }
       // Ajoute note
-      this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
-        console.log("Place ajoutée", newNote)
-      })
+      
+      
+      
+        this.placeService.addNote$(newNote, this.placeId).subscribe((resp)=>{
+          console.log("Place ajoutée", newNote)
+        })
+
+      
+
+      
         this.placeService.addPicture$(this.imgRes, this.placeId).subscribe((response) => {
 
         console.log( response);
@@ -221,7 +255,9 @@ async presentAlertName() {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
 
   
