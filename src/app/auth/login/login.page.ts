@@ -10,6 +10,7 @@ import { AuthRequest } from "../../models/auth-request";
  */
 @Component({
   templateUrl: "login.page.html",
+  styleUrls: ['login.page.scss'],
 })
 export class LoginPage {
   /**
