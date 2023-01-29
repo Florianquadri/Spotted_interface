@@ -43,6 +43,7 @@
       <ion-item>
         <ion-label position="stacked">{{avis.author}}</ion-label>
       </ion-item>
+      <ion-button *ngIf="avis.author == this.whoIsConnected" (click)="deleteNote(avis.id, avis.place)">X</ion-button>
     </div>
     <ion-button  *ngIf="data.commentaire.length>3" (click)="viewAvis(data.commentaire)">Voir tous le avis</ion-button>
   </div>
