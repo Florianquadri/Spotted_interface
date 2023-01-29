@@ -61,15 +61,14 @@ public values;
     const options = { headers: headers, responseType: 'text' as const}
 
     const formData = new FormData();
-    formData.append("place", placeId);
     formData.append("picture", picture);
+    formData.append("place", placeId);
+ 
     console.log(" Formadata de ")
-   /*  console.log(formData.get('place')) */
-    console.log(formData.get('picture'))
-  
-      
+  /*   console.log(formData.get('place')) */
+    console.log(formData.get('picture')) 
 
-    return this.http.post(`${environment.apiUrl}/pictures`, formData, options)
+    return this.http.post(`${environment.apiUrl}/pictures`,formData, options)
 
   }
 
