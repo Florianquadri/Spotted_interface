@@ -31,4 +31,6 @@ Dans le cadre de cette application, nous avons :
 - Utilisé l'API de Mapbox afin de faire du forward et reverse géocoding, pour faire la liaison entre les coordonnées géographiques des cantons et les noms de ces derniers. Le but était d'éviter que l'utilisateur puisse choisir le canton (et que ce soit automatique), afin d'éviter des erreurs.
 - Utilisé le plugin "Camera" de Capacitor pour gérer la prise de photo depuis la camera du smartphone.
 
+PS : Si vous souhaitez voir une place présentant toutes les fonctionnalités, vous pouvez soit chercher "Carrefour illarsaz" dans la barre de recherche, soit créer votre place et commencer à ajouter des notes et avis à des places existantes !
+
 
