@@ -7,7 +7,7 @@
     <ion-buttons slot="end">
       <ion-item>
         <ion-label hidden position="stacked">Modifier</ion-label>
-        <ion-button color="medium"  name="modifyPlaceName" (click)="showFormModifyPlace()">Edit</ion-button> 
+        <ion-button *ngIf="this.data.creator == this.whoIsConnected" color="medium"  name="modifyPlaceName" (click)="showFormModifyPlace()">Edit</ion-button> 
       </ion-item>
     </ion-buttons>
   </ion-toolbar>
