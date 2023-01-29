@@ -5,10 +5,7 @@
     </ion-buttons>
     <ion-title>{{data.name}}</ion-title>
     <ion-buttons slot="end" *ngIf="this.data.creator == this.whoIsConnected">
-      <ion-item>
-        <ion-label hidden position="stacked">Modifier</ion-label>
         <ion-button color="medium"  name="modifyPlaceName" (click)="showFormModifyPlace()">Edit</ion-button> 
-      </ion-item>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -59,11 +56,6 @@
     <ion-button  *ngIf="data.commentaire.length>3" (click)="viewAvis(data.commentaire)">Voir tous le avis</ion-button>
   </div>
 
-  <ion-item>
-    <ion-label position="stacked">Pictures</ion-label>
-    <ion-button  name="placePicture" (click)="takePicture()">Take picture</ion-button> 
-  </ion-item>
-
 
 <div>
   <p>Note cette place</p>
@@ -84,6 +76,12 @@
     <ion-button type="submit" [disabled]="!form.valid" expand="block">Envoyer mon avis</ion-button>
   </form>
 </div>
+
+
+<ion-item>
+  <ion-label position="stacked">Pictures</ion-label>
+  <ion-button  name="placePicture" (click)="takePicture()">Take picture</ion-button> 
+</ion-item>
 
   <app-galerie-photo [maPropriete]="pageName" [maData]="dataplacemodal"></app-galerie-photo>
 </ion-content>
