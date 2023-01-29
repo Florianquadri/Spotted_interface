@@ -23,6 +23,7 @@ export class PlaceModalComponentComponent implements OnInit {
   public pageName = null;
   public dataplacemodal: Place;
   public whoIsConnected: string;
+  public whoIsConnectedName: string;
   @Output() eventShowListOfAvis = new EventEmitter<any>();
   public wantToEdit: boolean = false;
 
@@ -188,8 +189,9 @@ export class PlaceModalComponentComponent implements OnInit {
     this.pageName = "mapmodal";
 
     this.AuthService.getUser$().subscribe((resp) => {
-/*       console.log(resp) */
+      console.log(resp)
       this.whoIsConnected = resp._id;
+      this.whoIsConnectedName = resp.name;
       console.log(this.whoIsConnected)
     })
 
