@@ -245,7 +245,7 @@ this.data[i].distanceWithMe = distArrondie;
         chosenPlace.location.coordinates[0],
         chosenPlace.location.coordinates[1],
       ],
-      13
+      18
     );
     this.results = [];
   }

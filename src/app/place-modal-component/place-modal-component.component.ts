@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { AuthService } from '../auth/auth.service'
 
 @Component({
   selector: 'app-place-modal-component',
@@ -21,6 +22,7 @@ export class PlaceModalComponentComponent implements OnInit {
   public notes = null;
   public pageName = null;
   public dataplacemodal: Place;
+  public whoIsConnected: string;
   @Output() eventShowListOfAvis = new EventEmitter<any>();
 
 
@@ -35,7 +37,7 @@ export class PlaceModalComponentComponent implements OnInit {
   form: FormGroup;
   formPatch: FormGroup;
   dataForm: any[] = [];
-  public arrayCommentsLength : Number;
+  public arrayCommentsLength: Number;
 
   /*   @Output() eventClickAddPlace = new EventEmitter<any>();
   
@@ -45,7 +47,7 @@ export class PlaceModalComponentComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController,
     private noteService: NotesService, private placesService: PlacesService, private http: HttpClient, private fb: FormBuilder,
-    private ngZone: NgZone,     private router: Router,    private route: ActivatedRoute) {
+    private ngZone: NgZone, private router: Router, private route: ActivatedRoute, private AuthService: AuthService,) {
     this.form = this.fb.group({
       notePlace: [''],
       noteEcrite: ['']
@@ -94,7 +96,17 @@ export class PlaceModalComponentComponent implements OnInit {
       })
   }
 
-  viewAvis(allAvis){
+
+  deleteNote(idNote, idPlace) {
+    console.log("je tente de supprimer la note", idNote, "de la place", idPlace)
+    this.noteService.deleteNotes$(idNote, idPlace).subscribe((resp) => {
+      console.log(resp, "bien supprimé")
+    })
+    this.getNotes();
+    console.log(idNote)
+  }
+
+  viewAvis(allAvis) {
     this.router.navigate(
       ['./view-avis-list', { param: JSON.stringify(allAvis) }],
       { relativeTo: this.route }
@@ -135,28 +147,38 @@ export class PlaceModalComponentComponent implements OnInit {
     console.log(this.imgRes);
 }
 
-  ngOnInit() {
-    this.noteService.getNotes$(this.data._id);
-    this.dataplacemodal = this.data
-    this.pageName = "mapmodal";
-  }
-
-  ionViewWillEnter(): void {
-
+  getNotes() {
     // Make an HTTP request to retrieve the trips.
     this.noteService.getNotes$(this.data._id).subscribe((notes) => {
       this.data.commentaire = [];
-      for (let oneNote of notes){
+      for (let oneNote of notes) {
         console.log(oneNote)
-        if(oneNote.text){
-          this.data.commentaire.push({"text" : oneNote.text, "author" : oneNote.author, "id" : oneNote._id, "place": oneNote.place})
+        if (oneNote.text) {
+          this.data.commentaire.push({ "text": oneNote.text, "author": oneNote.author, "id": oneNote._id, "place": oneNote.place })
         }
       }
       console.log(this.data.commentaire)
       this.arrayCommentsLength = this.data.commentaire.length;
-/*       this.data.commentaire = notes[0].text; */
-   /*    console.log(this.data.commentaire) */
+      /*       this.data.commentaire = notes[0].text; */
+      /*    console.log(this.data.commentaire) */
     });
+  }
+
+  ngOnInit() {
+    this.noteService.getNotes$(this.data._id);
+    this.dataplacemodal = this.data
+    this.pageName = "mapmodal";
+
+    this.AuthService.getUser$().subscribe((resp) => {
+      console.log(resp)
+      this.whoIsConnected = resp._id;
+      console.log(this.whoIsConnected)
+    })
+  }
+
+  ionViewWillEnter(): void {
+
+    this.getNotes();
 
     /*     this.placesService.getPlacesById$(this.data._id).subscribe((place) => {
           this.data.commentaire = place.notes;
