@@ -10,7 +10,6 @@ import { Note } from 'src/app/models/note';
 import { catchError, flatMap, tap, mergeMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
@@ -32,7 +31,7 @@ export class AccountPage /* implements OnInit */ {
   public notePassee2 = null;
   public currentSegment = "photos";
   public pageName = "account"
-  public photoViewChosen: boolean = true;
+  public photoViewChosen : boolean = true;
   constructor(
     private AuthService: AuthService,
     private placeService: PlacesService,
@@ -84,8 +83,7 @@ export class AccountPage /* implements OnInit */ {
       this.userId = e._id;
     });
 
-/*     this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
-      console.log(places)
+    this.placeService.getPlacesByUserId$(this.userId).subscribe((places) => {
       this.places = places;
       this.dataPlaceAccount=places;
       for (const place of places) {
@@ -101,7 +99,7 @@ export class AccountPage /* implements OnInit */ {
         });
       } 
      
-    }); */
+    });
   }
 
   goOnChosenPlace(place) {
