@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavParams } from 'node_modules/@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlertController } from '@ionic/angular';
+import { Buffer } from 'buffer';
 
 @Component({
   selector: 'app-add-place',
@@ -89,10 +90,8 @@ public imageElement;
 
     console.log(image)
     this.imgRes = image.base64String;
-  /*   this.imgRes = image; */
-    
- /*    this.imgRes = this.convertBase64ToFormData(this.imgRes); */
- 
+    this.imgRes = new Buffer(this.imgRes, 'base64');
+  
     console.log("puree");
     console.log(this.imgRes);
   
