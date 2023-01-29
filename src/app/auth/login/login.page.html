@@ -3,12 +3,13 @@
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
-<div class="titleDiv">
-  <p class="miniText">Welcome on</p>
-  <h1>Spotted</h1>
-  <h2>Partage et découvre les meilleurs spots photo de Suisse !</h2>
-</div>
 <ion-content>
+  <div class="divLogin">
+    <p class="miniText">Welcome on</p>
+    <ion-img class="cadre" src="assets/spotted.png" alt="The Wisconsin State Capitol building in Madison, WI at night"></ion-img>
+    <h1 hidden>Spotted</h1>
+    <h2>Partage et découvre les meilleurs spots photo de Suisse !</h2>
+  </div>
   <form #loginForm="ngForm" (submit)="onSubmit(loginForm)">
     <ion-list>
       <!-- Username input -->
@@ -59,8 +60,11 @@
       >
     </div>
   </form>
+<div class="divLogin">
+  <p class="center">Vous n'avez pas de compte ?</p>
+  <ion-button expand="button" (click)="openModalUser()">Créer son compte</ion-button>
+</div>
 
-    <p>Vous n'avez pas de compte ?</p><ion-button expand="button" (click)="openModalUser()">Create user</ion-button>
     
 
 </ion-content>
