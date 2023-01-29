@@ -4,10 +4,10 @@
       <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
     </ion-buttons>
     <ion-title>{{data.name}}</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="this.data.creator == this.whoIsConnected">
       <ion-item>
         <ion-label hidden position="stacked">Modifier</ion-label>
-        <ion-button *ngIf="this.data.creator == this.whoIsConnected" color="medium"  name="modifyPlaceName" (click)="showFormModifyPlace()">Edit</ion-button> 
+        <ion-button color="medium"  name="modifyPlaceName" (click)="showFormModifyPlace()">Edit</ion-button> 
       </ion-item>
     </ion-buttons>
   </ion-toolbar>
