@@ -8,6 +8,7 @@ les best spots photo en Suisse, afin que d'autres passionnés y aient accès. L'
 En tant qu'utilisateur, notre app possède plusieurs features :
 
 - La possibilité de se log pour un compte existant (username "Flow" et password "Flow" pour tester)
+- La possibilité de créer un compte sur la page de login
 - La possiblité d'observer les spots déjà créés et de choisir entre une obsrvation via une vue map ou sur une vue liste.
 - La possibilité de filtrer les endroits par canton ou par tag (liste de 15-20 tags) --> en fonction des filtres, cela resitue les utilisateurs sur la map
     - en filtrant par tag, cela replace l'utilisateur au centre de la Suisse, avec du recul (via Zoom large) afin qu'il puisse observer toutes les places correspondant à ce tag en Suisse
