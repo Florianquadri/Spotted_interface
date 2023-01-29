@@ -1,5 +1,5 @@
 import { PlaceModalComponentComponent } from './../../place-modal-component/place-modal-component.component';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ErrorHandler, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 // TODO: import Angular's HTTP client.
@@ -21,6 +21,7 @@ import { AddPlaceComponent } from '../../add-place/add-place.component';
 import { catchError } from 'rxjs/operators'
 import distance from 'node_modules/@turf/distance';
 import { points, Units } from 'node_modules/@turf/helpers';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-places',
@@ -119,6 +120,7 @@ export class PlacesPage implements ViewWillEnter {
     private auth: AuthService,
     private placeService: PlacesService,
     private noteService: NotesService,
+    private AlertController: AlertController,
 
     // Inject the router
     private router: Router,
@@ -380,10 +382,23 @@ this.data[i].distanceWithMe = distArrondie;
     });
 
     this.map.on('locationerror', (e) => {
-      console.log(e);
-      alert(e.message);
+      this.presentAlertLocation();
     });
   }
+
+  async presentAlertLocation() {
+    const alert = await this.AlertController.create({
+      header: 'Alerte',
+      subHeader: 'Erreur de géolocalisation',
+      message: "La géolocalisation n'a pas marché",
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
+
+
 
   viewInfoPlace(data){
     this.displayPlaceModal(data);

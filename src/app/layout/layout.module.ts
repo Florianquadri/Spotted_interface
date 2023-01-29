@@ -19,6 +19,6 @@ import {ViewAvisListComponent} from '../view-avis-list/view-avis-list.component'
     ReactiveFormsModule,
 
   ],
-  declarations: [LayoutPage,AddPlaceComponent,PlaceFromLieuxComponent, ViewAvisListComponent]
+  declarations: [LayoutPage,AddPlaceComponent, ViewAvisListComponent]
 })
 export class LayoutPageModule {}
